@@ -1,12 +1,18 @@
 \documentclass{article}
-\usepackage{amsmath}
+\usepackage{amsmath,amsfonts}
 \begin{document}
-The receiver receives the signal
+\noindent $e$ is distributed according to the PDF
 \begin{equation}
-	\widetilde{m}=q+e
+	f(e)=x(e)^{a-1}(1-x(e))^{b-1}
 \end{equation}
-where $e$ is Beta distributed with parameters $(\alpha,\beta)$: 
+where
 \begin{equation}
-	f_{\alpha,\beta}(x)=\frac{x^{\alpha-1}(1-x)^{\beta-1}}{\text{B}(\alpha,\beta)}
+	x(e)=\frac{1}{2}\left[1+\frac{e}{\bar{e}}\right]
 \end{equation}
+We want
+\begin{align}
+	I_{k}(\widetilde{m})&=\int_{\alpha}^{\beta}{q^{k}f(\tilde{m}-q)dq}\\
+	&=\int_{\alpha}^{\beta}{q^{k}x(\tilde{m}-q)^{a-1}(1-x(\tilde{m}-q))^{b-1}dq}\\
+\end{align}
+Note that the normalizing constant cancels out when computing the conditional expectation. 
 \end{document}
