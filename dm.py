@@ -105,4 +105,3 @@ def eplot(I,nplot=4):
     plt.ylabel('$\\log_{10}$(Relative $L^{2}$ Error)')
     plt.grid()
     plt.show()
-
