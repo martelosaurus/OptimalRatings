@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import uniform
 from error import error
+from scipy.integrate import fixed_quad
 
 # -----------------------------------------------------------------------------
 # parameters

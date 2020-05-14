@@ -1,18 +1,47 @@
 \documentclass{article}
 \usepackage{amsmath,amsfonts}
 \begin{document}
-\noindent $e$ is distributed according to the PDF
+\noindent Let $x:[-\overline{e},\overline{e}]\rightarrow[0,1]$ be given by
+\begin{equation}
+	x(e)=\frac{1}{2}\left[1+\frac{e}{\overline{e}}\right]
+\end{equation}
+Define
+\begin{align}
+	I_{(\alpha,\beta,\gamma)}(\widetilde{m})\equiv\int_{\alpha}^{\beta}{q^{\gamma}f(\tilde{m}-q)dq}
+\end{align}
+and
+\begin{equation}
+	A(\widetilde{m})=
+	\begin{cases}
+		\overline{a}(\widetilde{m}) & \text{ if } 1-\overline{e}<\widetilde{m}\leq 1+\overline{e}\\
+		a(\widetilde{m}) & \text{ if } \overline{e}<\widetilde{m}\leq 1-\overline{e}\\
+		\underline{a}(\widetilde{m}) & \text{ if } -\overline{e}\leq\widetilde{m}\leq \overline{e}
+	\end{cases}
+\end{equation}
+where
+\begin{align}
+	\overline{a}(\widetilde{m})&=\frac{I_{(\widetilde{m}-\bar{e},1,1)}(\widetilde{m})}{I_{(\widetilde{m}-\bar{e},1,0)}(\widetilde{m})}\\
+	a(\widetilde{m})&=\frac{I_{(\widetilde{m}-\bar{e},\widetilde{m}+\bar{e},1)}(\widetilde{m})}{I_{(\widetilde{m}-\bar{e},\widetilde{m}+\bar{e},0)}(\widetilde{m})}\\
+	\underline{a}(\widetilde{m})&=\frac{I_{(0,\widetilde{m}+\bar{e},1)}(\widetilde{m})}{I_{(0,\widetilde{m}+\bar{e},0)}(\widetilde{m})}
+\end{align}
+Note that the normalizing constant cancels out when computing the conditional expectation. We need three sets of weights and knots. The cost is given by
+\begin{align}
+	C[m_{i}]&=\int_{-\bar{e}}^{1+\bar{e}}{\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-A(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}.
+\end{align}
+where
+\begin{align}
+	q_{+}(\widetilde{m})&=\min\{\widetilde{m}+\bar{e},1\}\\
+	q_{-}(\widetilde{m})&=\max\{\widetilde{m}-\bar{e},0\}
+\end{align}
+Define
+\begin{align}
+	\overline{z}&=\int_{1-\bar{e}}^{1+\bar{e}}{\int_{\widetilde{m}-\bar{e}}^{1}{(q-\overline{a}(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}\\
+	z&=\int_{\bar{e}}^{1-\bar{e}}{\int_{\widetilde{m}-\bar{e}}^{\widetilde{m}+\bar{e}}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}\\
+	\underline{z}&=\int_{-\bar{e}}^{\bar{e}}{\int_{0}^{\widetilde{m}+\bar{e}}{(q-\underline{a}(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}
+\end{align}
+Consider, as an example, the Beta PDF:
 \begin{equation}
 	f(e)=x(e)^{a-1}(1-x(e))^{b-1}
 \end{equation}
-where
-\begin{equation}
-	x(e)=\frac{1}{2}\left[1+\frac{e}{\bar{e}}\right]
-\end{equation}
-We want
-\begin{align}
-	I_{k}(\widetilde{m})&=\int_{\alpha}^{\beta}{q^{k}f(\tilde{m}-q)dq}\\
-	&=\int_{\alpha}^{\beta}{q^{k}x(\tilde{m}-q)^{a-1}(1-x(\tilde{m}-q))^{b-1}dq}\\
-\end{align}
-Note that the normalizing constant cancels out when computing the conditional expectation. 
+for constants $a>0$ and $b>0$. 
 \end{document}

@@ -1,3 +1,6 @@
+"""
+This is a sandbox script for the discrete message module
+"""
 import numpy as np
 import discmess as dm
 
@@ -6,7 +9,6 @@ I = {
         'i1' : lambda x: x**3., 
         'i2' : lambda x: x**(-1.5),
         'i3' : lambda x: (6.*(x-.5)**2.+.5)**3.
-        
     }
 
 # for each importance function, plot discrete messages of size 5, 20, 100 
