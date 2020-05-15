@@ -2,7 +2,7 @@
 This is a sandbox script for the discrete message module
 """
 import numpy as np
-import discmess as dm
+import dm as dm
 
 # importance function(s)
 I = {
