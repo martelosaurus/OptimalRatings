@@ -4,6 +4,7 @@ This is a sandbox script for the discrete message module
 import numpy as np
 from optrat import *
 from scipy.integrate import fixed_quad
+from functools import lru_cache
 #import dm as dm
 
 if False:
@@ -24,40 +25,55 @@ if False:
 # beta test
 N = 10
 e_bar = .5/N
-a = 2.
-b = 2.
+
 @np.vectorize
-def beta(x):
-    p = (2.*x-1.)*e_bar 
-    f = p**(a-1.)*(1.-p)**(b-1.)
-    w = fixed_quad(f,-e_bar,e_bar)
-    return f/w
+def cost_comp(a,b):
+
+    print('({a:.3f}, {b:.3f})'.format(a=a,b=b))
+    @np.vectorize
+    def _beta(e):
+        p = .5*(1.+e/e_bar)
+        f = p**(a-1.)*(1.-p)**(b-1.)
+        return f
+
+    w = fixed_quad(_beta,-e_bar,e_bar)[0]
+
+    @np.vectorize
+    def beta(e):
+        if e < -e_bar or e > e_bar:
+            raise Exception('Trying to evaluate error PDF outside of its support')
+        return _beta(e)/w
+
+    return discrete_cost(beta,N)-identity_cost(beta,e_bar)
 
 # -----------------------------------------------------------------------------
 # plotting
-if False:
 
-    # plotting vectors, matrices
-    a_vec = np.linspace(0.,a_max,n_plot)
-    b_vec = np.linspace(0.,b_max,n_plot)
-    A, B = np.meshgrid(a_vec,b_vec)
+n_plot = 100 
+a_max = 2.
+b_max = 2.
 
-    # main plot calls
-    fig, axs = plt.subplots()
-    axs.contour(A,B,A**2.+B**2.,[1.])
-    axs.plot(a_vec,a_vec,'k--')
-    axs.plot(1.,1.,'ok')
+# plotting vectors, matrices
+a_vec = np.linspace(1.,a_max,n_plot)
+b_vec = np.linspace(1.,b_max,n_plot)
+A, B = np.meshgrid(a_vec,b_vec)
+I = cost_comp(A,B)
 
-    # axes
-    axs.set_xticks([0.,1.])
-    axs.set_yticks([0.,1.])
-    axs.set_xticklabels(['$0$','$1$'])
-    axs.set_yticklabels(['$0$','$1$'])
-    axs.set_xlabel('$\\alpha$')
-    axs.set_ylabel('$\\beta$')
-    axs.set_aspect('equal','box')
+# main plot calls
+fig, axs = plt.subplots()
+axs.contour(A,B,I)
+axs.plot(a_vec,a_vec,'k--')
+axs.plot(1.,1.,'ok')
 
-    # figure
-    fig.tight_layout()
-    fig.show()
-        
+# axes
+axs.set_xticks([0.,1.])
+axs.set_yticks([0.,1.])
+axs.set_xticklabels(['$0$','$1$'])
+axs.set_yticklabels(['$0$','$1$'])
+axs.set_xlabel('$\\alpha$')
+axs.set_ylabel('$\\beta$')
+axs.set_aspect('equal','box')
+
+# figure
+fig.tight_layout()
+fig.show()

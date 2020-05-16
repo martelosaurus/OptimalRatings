@@ -108,20 +108,13 @@ if False:
         plt.grid()
         plt.show()
 
-# -----------------------------------------------------------------------------
-# parameters
-n_plot = 100 
-a_max = 2.
-b_max = 2.
-e_bar = .1 # raise an exception if this doesnt divide 1
-
-def _fixed_quad(args,kwargs):
+def _fixed_quad(*args,**kwargs):
     """Wrapper for fixed_quad that returns the integral (without the error)"""
     return fixed_quad(*args,**kwargs)[0]
 
 # -----------------------------------------------------------------------------
 # functions
-def identity_cost(func,e_bar):
+def identity_cost(func,e_bar,tol=1.e-10):
     """
     Cost of identity message function
     
@@ -142,35 +135,38 @@ def identity_cost(func,e_bar):
     There are 9 anonymous functions. Guido would not approve.
     """
 
-    if np.abs(_fixed_quad(func,-e_bar,e_bar)[0]-1.)>tol:
+    if np.abs(_fixed_quad(func,-e_bar,e_bar)-1.)>tol:
         raise Exception('PDF of error does not integrate to one')
 
     # quasi-expectation
-    I = lambda m_til,a,b,g : _fixed_quad(lambda x: func(m_til-x)*x**g,a,b)
+    def A(m_til,a,b):
+        if a == b:
+            return a
+        else:
+            I0 = _fixed_quad(lambda x: func(m_til-x)*x**0.,a,b)
+            I1 = _fixed_quad(lambda x: func(m_til-x)*x**1.,a,b)
+            return I1/I0
 
     # non-constant m_tilde limits of integration (see dblquad documentation)
     gfun = lambda m_til : m_til-e_bar # lower
     hfun = lambda m_til : m_til+e_bar # upper 
 
-    # integration over [1-e_bar,1+e_bar]
-    a_up = lambda m_til: (I(m_til,m_til-e_bar,1.,1.)
-        /I(m_til,m_til-e_bar,1.,0.))
-    f_up = lambda m_til, q: func(m_til-q)*(q-a_up(m_til))**2.
-    z_up = dblquad(f_up,-e_bar,1.+e_bar,gfun,1.)
-
     # integration over [+e_bar,1-e_bar]
-    a_md = lambda m_til: (I(m_til,m_til-e_bar,m_til+e_bar,1.)
-        /I(m_til,m_til-e_bar,m_til+e_bar,0.))
-    f_md = lambda m_til, q: func(m_til-q)*(q-a_md(m_til))**2.
-    z_md = dblquad(f_md,-e_bar,1.+e_bar,gfun,hfun)
+    a_md = lambda m_til: A(m_til,m_til-e_bar,m_til+e_bar)
+    f_md = lambda q, m_til: func(m_til-q)*(q-a_md(m_til))**2.
+    z_md = dblquad(f_md,e_bar,1.-e_bar,gfun,hfun)
+
+    # integration over [1-e_bar,1+e_bar]
+    a_up = lambda m_til: A(m_til,m_til-e_bar,1.)
+    f_up = lambda q, m_til: func(m_til-q)*(q-a_up(m_til))**2.
+    z_up = dblquad(f_up,1.-e_bar,1.+e_bar,gfun,1.)
 
     # integration over [-e_bar,+e_bar]
-    a_dn = lambda m_til: (I(m_til,0.,m_til+e_bar,1.)
-        /I(m_til,0.,m_til+e_bar,0.))
-    f_dn = lambda m_til, q: func(m_til-q)*(q-a_dn(m_til))**2.
-    z_dn = dblquad(f_dn,-e_bar,1.+e_bar,0.,hfun)
+    a_dn = lambda m_til: A(m_til,0.,m_til+e_bar)
+    f_dn = lambda q, m_til: func(m_til-q)*(q-a_dn(m_til))**2.
+    z_dn = dblquad(f_dn,-e_bar,e_bar,0.,hfun)
 
-    return z_up + z_md + z_dn
+    return z_up[0] + z_md[0] + z_dn[0]
 
 def discrete_cost(func,N,tol=1.e-10):
     """
@@ -187,10 +183,9 @@ def discrete_cost(func,N,tol=1.e-10):
 
     e_bar = 1./(2.*N) 
     
-    if np.abs(_fixed_quad(func,-e_bar,e_bar)[0]-1.)>tol:
+    if np.abs(_fixed_quad(func,-e_bar,e_bar)-1.)>tol:
         raise Exception('PDF of error does not integrate to one')
 
     _exp = _fixed_quad(lambda e : func(e)*e,-e_bar,e_bar)
     _var = _fixed_quad(lambda e : func(e)*(e-_exp)**2.,-e_bar,e_bar)
     return (N+1.)*_var
-
