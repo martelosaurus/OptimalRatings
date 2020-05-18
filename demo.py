@@ -2,6 +2,7 @@
 This is a sandbox script for the discrete message module
 """
 import numpy as np
+import pandas as pd
 from optrat import *
 from scipy.integrate import fixed_quad
 from functools import lru_cache
@@ -26,10 +27,15 @@ if False:
 N = 10
 e_bar = .5/N
 
+def uniform_identity_cost():
+    return (1./3.)*(e_bar**2.)*(1.-e_bar)
+
+def uniform_discrete_cost():
+    return (1./3.)*(e_bar**2.)/(1.+2.*e_bar)**2.
+
 @np.vectorize
 def cost_comp(a,b):
 
-    print('({a:.3f}, {b:.3f})'.format(a=a,b=b))
     @np.vectorize
     def _beta(e):
         p = .5*(1.+e/e_bar)
@@ -44,35 +50,50 @@ def cost_comp(a,b):
             raise Exception('Trying to evaluate error PDF outside of its support')
         return _beta(e)/w
 
-    return discrete_cost(beta,N)-identity_cost(beta,e_bar)
+    dc = discrete_cost(N)
+    ic = identity_cost(beta,e_bar)
+
+    #print('{:.5f}, {:.5f}'.format(dc,ic))
+    return dc-ic
 
 # -----------------------------------------------------------------------------
 # plotting
-
-n_plot = 100 
+n_plot = 40 
 a_max = 2.
 b_max = 2.
 
 # plotting vectors, matrices
-a_vec = np.linspace(1.,a_max,n_plot)
-b_vec = np.linspace(1.,b_max,n_plot)
+a_vec = np.linspace(0.,a_max,n_plot)
+b_vec = np.linspace(0.,b_max,n_plot)
 A, B = np.meshgrid(a_vec,b_vec)
-I = cost_comp(A,B)
+#I = cost_comp(A,B)
+@np.vectorize
+def heaviside(x):
+    if x>0:
+        return x
+    else:
+        return np.nan
+I = pd.read_csv('Imat.csv',header=None).to_numpy()
+#I = heaviside(I)
 
 # main plot calls
 fig, axs = plt.subplots()
-axs.contour(A,B,I)
-axs.plot(a_vec,a_vec,'k--')
+axs.contourf(A,B,I,[0.,1.],colors=['lightgrey'])
+axs.plot(a_vec,a_vec,color='grey',linestyle='-',linewidth=.5)
 axs.plot(1.,1.,'ok')
+axs.annotate('Identity is Optimal',(1.2,1.5))
+axs.annotate('Discrete is Optimal',(.2,.5))
+axs.annotate('Uniform Distribution',(1.05,.9))
 
 # axes
-axs.set_xticks([0.,1.])
-axs.set_yticks([0.,1.])
-axs.set_xticklabels(['$0$','$1$'])
-axs.set_yticklabels(['$0$','$1$'])
+axs.set_xticks([0.,1.,a_max])
+axs.set_yticks([0.,1.,b_max])
+axs.set_xticklabels(['$0$','$1$','$2$'])
+axs.set_yticklabels(['$0$','$1$','$2$'])
 axs.set_xlabel('$\\alpha$')
 axs.set_ylabel('$\\beta$')
 axs.set_aspect('equal','box')
+axs.grid(color='grey',linestyle='-',linewidth=.5)
 
 # figure
 fig.tight_layout()

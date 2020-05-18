@@ -108,12 +108,23 @@ if False:
         plt.grid()
         plt.show()
 
+# -----------------------------------------------------------------------------
+# functions
 def _fixed_quad(*args,**kwargs):
     """Wrapper for fixed_quad that returns the integral (without the error)"""
     return fixed_quad(*args,**kwargs)[0]
 
-# -----------------------------------------------------------------------------
-# functions
+def fixed_dblquad_tri(func,a,b,gfun,hfun):
+    """
+    Homebrewed double quadrature using scipy.integrate.fixed_quad.
+
+    Parameters 
+    ----------
+    See help(scipy.integrate.dblquad)
+    """
+    f = lambda x: _fixed_quad(lambda y: func(y,x),gfun(x),hfun(x))
+    return _fixed_quad(np.vectorize(f),a,b)
+
 def identity_cost(func,e_bar,tol=1.e-10):
     """
     Cost of identity message function
@@ -129,7 +140,7 @@ def identity_cost(func,e_bar,tol=1.e-10):
     -----
     The action function kinks at 1-e_bar and 1+e_bar. Therefore, identity_cost 
     breaks the integration problem into three parts. The action function is 
-    computed using scipy.integrate._fixed_quad, which caches weights/knots, so
+    computed using scipy.integrate.fixed_quad, which caches weights/knots, so
     should be fast. 
 
     There are 9 anonymous functions. Guido would not approve.
@@ -139,6 +150,7 @@ def identity_cost(func,e_bar,tol=1.e-10):
         raise Exception('PDF of error does not integrate to one')
 
     # quasi-expectation
+    @np.vectorize
     def A(m_til,a,b):
         if a == b:
             return a
@@ -151,41 +163,31 @@ def identity_cost(func,e_bar,tol=1.e-10):
     gfun = lambda m_til : m_til-e_bar # lower
     hfun = lambda m_til : m_til+e_bar # upper 
 
-    # integration over [+e_bar,1-e_bar]
-    a_md = lambda m_til: A(m_til,m_til-e_bar,m_til+e_bar)
-    f_md = lambda q, m_til: func(m_til-q)*(q-a_md(m_til))**2.
-    z_md = dblquad(f_md,e_bar,1.-e_bar,gfun,hfun)
-
     # integration over [1-e_bar,1+e_bar]
     a_up = lambda m_til: A(m_til,m_til-e_bar,1.)
     f_up = lambda q, m_til: func(m_til-q)*(q-a_up(m_til))**2.
-    z_up = dblquad(f_up,1.-e_bar,1.+e_bar,gfun,1.)
+    z_up = fixed_dblquad_tri(f_up,1.-e_bar,1.+e_bar,gfun,lambda _:1.)
+
+    # integration over [+e_bar,1-e_bar]
+    a_md = lambda m_til: A(m_til,m_til-e_bar,m_til+e_bar)
+    f_md = lambda q, m_til: func(m_til-q)*(q-a_md(m_til))**2.
+    z_md = fixed_dblquad_tri(f_md,e_bar,1.-e_bar,gfun,hfun)
 
     # integration over [-e_bar,+e_bar]
     a_dn = lambda m_til: A(m_til,0.,m_til+e_bar)
     f_dn = lambda q, m_til: func(m_til-q)*(q-a_dn(m_til))**2.
-    z_dn = dblquad(f_dn,-e_bar,e_bar,0.,hfun)
+    z_dn = fixed_dblquad_tri(f_dn,-e_bar,e_bar,lambda _:0.,hfun)
 
-    return z_up[0] + z_md[0] + z_dn[0]
+    return z_up + z_md + z_dn
 
-def discrete_cost(func,N,tol=1.e-10):
+def discrete_cost(N,tol=1.e-10):
     """
     Cost of discrete message function
     
     Parameters
     ----------
-    func : callable
-        PDF of error distribution. identity_cost assumes func has support
-        [-e_bar,e_bar] where e_bar = 1/2N 
     N : int
         There are N+1 messages
     """
-
     e_bar = 1./(2.*N) 
-    
-    if np.abs(_fixed_quad(func,-e_bar,e_bar)-1.)>tol:
-        raise Exception('PDF of error does not integrate to one')
-
-    _exp = _fixed_quad(lambda e : func(e)*e,-e_bar,e_bar)
-    _var = _fixed_quad(lambda e : func(e)*(e-_exp)**2.,-e_bar,e_bar)
-    return (N+1.)*_var
+    return (1./3.)*(e_bar**2.)/(1.+2.*e_bar)**2.
