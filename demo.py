@@ -1,6 +1,4 @@
-"""
-This is a sandbox script for the discrete message module
-"""
+"""This is a sandbox script for the discrete message module"""
 import numpy as np
 import pandas as pd
 from optrat import *
@@ -47,7 +45,7 @@ def cost_comp(a,b):
     @np.vectorize
     def beta(e):
         if e < -e_bar or e > e_bar:
-            raise Exception('Trying to evaluate error PDF outside of its support')
+            raise Exception('Trying to evaluate error PDF out of its support')
         return _beta(e)/w
 
     dc = discrete_cost(N)
