@@ -1,7 +1,7 @@
 # OptimalRatings
 Numerical solutions for Optimal Ratings
 
-```markdown
+```python
 # importance function(s)
 I = {
 		'i1' : lambda x: x**3., 
