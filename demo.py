@@ -81,8 +81,8 @@ fig, axs = plt.subplots()
 axs.contourf(A,B,I,[0.,1.],colors=['lightgrey'])
 axs.plot(a_vec,a_vec,color='grey',linestyle='-',linewidth=.5)
 axs.plot(1.,1.,'ok')
-axs.annotate('Identity is Optimal',(1.2,1.5))
-axs.annotate('Discrete is Optimal',(.2,.5))
+axs.annotate('Identity $\\succsim$ Discrete',(1.2,1.5))
+axs.annotate('Discrete $\\succsim$ Identity',(.2,.5))
 axs.annotate('Uniform Distribution',(1.05,.9))
 
 # axes
