@@ -39,96 +39,38 @@ def _Q(I,i,j,a,b,_n=11):
 	"""
 	return fixed_quad(lambda q: (q**i)*(I(q)**j),a,b,n=_n)[0]
 
-#------------------------------------------------------------
 class Message:
 
-	def __init__(self):
+	def __init__(self,func):
+		"""
+		func : callable
+			PDF of error. identity_cost assumes func has support [-e_bar,e_bar]
+		"""
 
-class Continuous(Message):
+# -----------------------------------------------------------------------------
+# functions that operate on lists of messages
+@np.vectorize
+def cost_comp(a,b):
 
-	def __init__(self):
+    @np.vectorize
+    def _beta(e):
+        p = .5*(1.+e/e_bar)
+        f = p**(a-1.)*(1.-p)**(b-1.)
+        return f
 
-class Discrete(Message):
+    w = fixed_quad(_beta,-e_bar,e_bar)[0]
 
-	def __init__(self):
+    @np.vectorize
+    def beta(e):
+        if e < -e_bar or e > e_bar:
+            raise Exception('Trying to evaluate error PDF out of its support')
+        return _beta(e)/w
 
-class Identity(Message):
+    dc = discrete_cost(N)
+    ic = identity_cost(beta,e_bar)
 
-	def __init__(self):
-#------------------------------------------------------------
-
-def _A(I,x1,x2):
-	"""
-	Optimal [A]ction given that x1 < q < x2
-	
-	Parameters
-	----------
-	I : callable
-		Importance function I:[0,1]->[0,1]
-	x1, x2 : float, float
-		Given x1 < q < x2
-	"""
-	if x1 == x2:
-		return x1
-	else:
-		return _Q(I,1.,1.,x1,x2)/_Q(I,0.,1.,x1,x2)
-	
-def _X(I,x1,x2):
-	"""
-	ne[X]t step
-	
-	Parameters
-	----------
-	I : callable
-		Importance function I:[0,1]->[0,1]
-
-	"""
-	if x1 == x2:
-		return x1
-	else:
-		f = lambda x3: x2-(_A(I,x1,x2)+_A(I,x2,x3))/2.
-		return optimize.newton(f,x2)
-
-def _S(I,x1,N):
-	"""
- 	non-linear [S]hooting
-	
-	Parameters
-	----------
-	I : callable
-		Importance function I:[0,1]->[0,1]
-
-	"""
-	x = np.zeros(N+1)
-	x[1] = x1
-	for n in range(0,N-1): 
-		x[n+2] = _X(I,x[n],x[n+1]) 
-	return x
-
-def D(I,N):
-	"""
-	optimal [D]iscrete message function
-	
-	Parameters
-	----------
-	I : callable
-		Importance function I:[0,1]->[0,1]
-
-	"""
-	x1s = optimize.newton(lambda x1: _S(I,x1,N)[-1]-1.,1./N)
-	return _S(I,x1s,N) 
-
-def _cts_msg_fun(I,q):
-	"""
-	optimal [C]ontinuous message function
-	
-	Parameters
-	----------
-	I : callable
-		Importance function I:[0,1]->[0,1]
-
-	"""
-	return _Q(I,0.,(1./3),0.,q)/_Q(I,0.,(1./3),0.,1.)
+    #print('{:.5f}, {:.5f}'.format(dc,ic))
+    return dc-ic
 
 class Message():
 
@@ -137,7 +79,7 @@ class Message():
 		Parameters 
 		----------
 		N : int
-			?
+			Number of messages
 		M : 
 			?
 		I : callable
@@ -158,6 +100,59 @@ class Message():
 			f = lambda x: (n/(1.*self.N)-_cts_msg_fun(self.I,x))**2
 			E = E + integrate.quad(f,self.M[n],self.M[n+1])[0]
 		return np.sqrt(E/I0)
+
+def comp_plot(m1,m2,a_max=2,b_max=2,n_plot=40):
+	"""
+	Message comparison plot
+
+	Parameters
+	----------
+	m1, m2 : Message
+		Messages to compare
+	a_max, b_max : float
+		Maximum 'a' and 'b' parameters (the minimums are zero for both)
+	n_plot : int
+		Square root of the number of (a,b) knots at which to compare the 
+		message errors
+	"""
+
+	# plotting vectors, matrices
+	a_vec = np.linspace(0.,a_max,n_plot)
+	b_vec = np.linspace(0.,b_max,n_plot)
+	A, B = np.meshgrid(a_vec,b_vec)
+	#I = cost_comp(A,B)
+	@np.vectorize
+	def heaviside(x):
+		if x>0:
+			return x
+		else:
+			return np.nan
+	I = pd.read_csv('Imat.csv',header=None).to_numpy()
+	#I = heaviside(I)
+
+	# main plot calls
+	fig, axs = plt.subplots()
+	axs.contourf(A,B,I,[0.,1.],colors=['lightgrey'])
+	axs.plot(a_vec,a_vec,color='grey',linestyle='-',linewidth=.5)
+	axs.plot(1.,1.,'ok')
+	axs.annotate('Identity $\\succsim$ Discrete',(1.2,1.5))
+	axs.annotate('Discrete $\\succsim$ Identity',(.2,.5))
+	axs.annotate('Uniform Distribution',(1.05,.9))
+
+	# axes
+	axs.set_xticks([0.,1.,a_max])
+	axs.set_yticks([0.,1.,b_max])
+	axs.set_xticklabels(['$0$','$1$','$2$'])
+	axs.set_yticklabels(['$0$','$1$','$2$'])
+	axs.set_xlabel('$\\alpha$')
+	axs.set_ylabel('$\\beta$')
+	axs.set_aspect('equal','box')
+	axs.grid(color='grey',linestyle='-',linewidth=.5)
+
+	# figure
+	fig.tight_layout()
+	fig.show()
+
 
 def mplot(M,nplot=1000):
 	"""
@@ -212,9 +207,9 @@ def mdrop(M,fname='messages.csv',ndrop=1000):
 				R = R + [np.digitize(q[n],m.M)/(1.*m.N)] 
 			writer.writerow(R)
 
-def eplot(I,nplot=4):
+def eplot(m,nplot=4):
 	"""
-	Plots the error against the number of messages
+	Plots the error against the N or e_bar
 	
 	Parameters
 	----------
@@ -229,97 +224,3 @@ def eplot(I,nplot=4):
 	plt.ylabel('$\\log_{10}$(Relative $L^{2}$ Error)')
 	plt.grid()
 	plt.show()
-
-# -----------------------------------------------------------------------------
-# functions
-def _fixed_quad(*args,**kwargs):
-    """Wrapper for fixed_quad that returns the integral (without the error)"""
-    return fixed_quad(*args,**kwargs)[0]
-
-def fixed_dblquad_tri(func,a,b,gfun,hfun):
-    """
-    Homebrewed double quadrature using scipy.integrate.fixed_quad.
-
-    Parameters 
-    ----------
-    See help(scipy.integrate.dblquad)
-    """
-    f = lambda x: _fixed_quad(lambda y: func(y,x),gfun(x),hfun(x))
-    return _fixed_quad(np.vectorize(f),a,b)
-
-def identity_cost(func,e_bar,tol=1.e-10):
-    """
-    Cost of identity message function with constant importance function
-
-	'identity_cost' stands alone because it needs to run faster than 
-	Smooth.cost. 
-    
-    Parameters
-    ----------
-    func : callable
-        PDF of error. identity_cost assumes func has support [-e_bar,e_bar]
-    e_bar : float
-        Support parameter for the error distribution (see above).
-	tol : float
-		Error PDF should integrate to unity (+/- tol)
-
-    Notes
-    -----
-    The action function kinks at 1-e_bar and 1+e_bar. Therefore, identity_cost 
-    breaks the integration problem into three parts. The action function is 
-    computed using scipy.integrate.fixed_quad, which caches weights/knots, so
-    should be fast. 
-
-    There are 9 anonymous functions. Guido would not approve.
-    """
-
-    if np.abs(_fixed_quad(func,-e_bar,e_bar)-1.)>tol:
-        raise Exception('PDF of error does not integrate to one')
-
-    # quasi-expectation
-    @np.vectorize
-    def A(m_til,a,b):
-        if a == b:
-            return a
-        else:
-            I0 = _fixed_quad(lambda x: func(m_til-x)*x**0.,a,b)
-            I1 = _fixed_quad(lambda x: func(m_til-x)*x**1.,a,b)
-            return I1/I0
-
-    # non-constant m_tilde limits of integration (see dblquad documentation)
-    gfun = lambda m_til : m_til-e_bar # lower
-    hfun = lambda m_til : m_til+e_bar # upper 
-
-    # integration over [1-e_bar,1+e_bar]
-    a_up = lambda m_til: A(m_til,m_til-e_bar,1.)
-    f_up = lambda q, m_til: func(m_til-q)*(q-a_up(m_til))**2.
-    z_up = fixed_dblquad_tri(f_up,1.-e_bar,1.+e_bar,gfun,lambda _:1.)
-
-    # integration over [+e_bar,1-e_bar]
-    a_md = lambda m_til: A(m_til,m_til-e_bar,m_til+e_bar)
-    f_md = lambda q, m_til: func(m_til-q)*(q-a_md(m_til))**2.
-    z_md = fixed_dblquad_tri(f_md,e_bar,1.-e_bar,gfun,hfun)
-
-    # integration over [-e_bar,+e_bar]
-    a_dn = lambda m_til: A(m_til,0.,m_til+e_bar)
-    f_dn = lambda q, m_til: func(m_til-q)*(q-a_dn(m_til))**2.
-    z_dn = fixed_dblquad_tri(f_dn,-e_bar,e_bar,lambda _:0.,hfun)
-
-    return z_up + z_md + z_dn
-
-def discrete_cost(N):
-    """
-    Cost of discrete message function with constant importance function
-    
-    Parameters
-    ----------
-    N : int
-        There are N+1 messages
-
-	Notes
-	-----
-	The discrete message function has the same cost regardless of the error 
-	distribution. 
-    """
-    e_bar = 1./(2.*N) 
-    return (1./3.)*(e_bar**2.)/(1.+2.*e_bar)**2.
