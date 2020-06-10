@@ -6,7 +6,6 @@ from scipy.integrate import fixed_quad
 from functools import lru_cache
 #import dm as dm
 
-if False:
     # importance function(s)
     I = {
             'i1' : lambda x: x**3., 

@@ -39,6 +39,24 @@ def _Q(I,i,j,a,b,_n=11):
 	"""
 	return fixed_quad(lambda q: (q**i)*(I(q)**j),a,b,n=_n)[0]
 
+#------------------------------------------------------------
+class Message:
+
+	def __init__(self):
+
+class Continuous(Message):
+
+	def __init__(self):
+
+class Discrete(Message):
+
+	def __init__(self):
+
+class Identity(Message):
+
+	def __init__(self):
+#------------------------------------------------------------
+
 def _A(I,x1,x2):
 	"""
 	Optimal [A]ction given that x1 < q < x2
@@ -231,7 +249,10 @@ def fixed_dblquad_tri(func,a,b,gfun,hfun):
 
 def identity_cost(func,e_bar,tol=1.e-10):
     """
-    Cost of identity message function
+    Cost of identity message function with constant importance function
+
+	'identity_cost' stands alone because it needs to run faster than 
+	Smooth.cost. 
     
     Parameters
     ----------
@@ -239,6 +260,8 @@ def identity_cost(func,e_bar,tol=1.e-10):
         PDF of error. identity_cost assumes func has support [-e_bar,e_bar]
     e_bar : float
         Support parameter for the error distribution (see above).
+	tol : float
+		Error PDF should integrate to unity (+/- tol)
 
     Notes
     -----
@@ -286,7 +309,7 @@ def identity_cost(func,e_bar,tol=1.e-10):
 
 def discrete_cost(N):
     """
-    Cost of discrete message function
+    Cost of discrete message function with constant importance function
     
     Parameters
     ----------
