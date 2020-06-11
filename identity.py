@@ -25,7 +25,7 @@ class Identity(Message):
 		action function is computed using scipy.integrate.fixed_quad, which 
 		caches weights/knots, so should be fast. 
 
-		Note that when the error is uniformly distributed, the cost is given by
+		Note if the error is uniformly distributed, then 
 
 			cost[identity] = (1./3.)*(e_bar**2.)*(1.-e_bar)
 

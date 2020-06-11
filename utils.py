@@ -13,6 +13,20 @@ def fixed_dblquad_tri(func,a,b,gfun,hfun):
     f = lambda x: _fixed_quad(lambda y: func(y,x),gfun(x),hfun(x))
     return _fixed_quad(np.vectorize(f),a,b)
 
+def _Q(I,i,j,a,b,_n=11):
+	"""
+	[Q]uadrature: returns \int_{a}^{b}{q^{i}I(q)^{j}dq)
+	
+	Parameters
+	----------
+	I : callable
+		Importance function I:[0,1]->[0,1]
+	_n : int
+		Number of quadrature points
+
+	"""
+	return fixed_quad(lambda q: (q**i)*(I(q)**j),a,b,n=_n)[0]
+
 def _A(I,x1,x2):
 	"""
 	Optimal [A]ction given that x1 < q < x2

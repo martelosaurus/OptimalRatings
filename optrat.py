@@ -1,7 +1,6 @@
 """
 Package for optimal ratings.
 
-
 Organization
 ------------
 We either assume that the optimal message function is smooth (in which case we 
@@ -24,28 +23,6 @@ import matplotlib.pyplot as plt
 from scipy import integrate, optimize
 from scipy.integrate import fixed_quad, dblquad
 import csv
-
-def _Q(I,i,j,a,b,_n=11):
-	"""
-	[Q]uadrature: returns \int_{a}^{b}{q^{i}I(q)^{j}dq)
-	
-	Parameters
-	----------
-	I : callable
-		Importance function I:[0,1]->[0,1]
-	_n : int
-		Number of quadrature points
-
-	"""
-	return fixed_quad(lambda q: (q**i)*(I(q)**j),a,b,n=_n)[0]
-
-class Message:
-
-	def __init__(self,func):
-		"""
-		func : callable
-			PDF of error. identity_cost assumes func has support [-e_bar,e_bar]
-		"""
 
 # -----------------------------------------------------------------------------
 # functions that operate on lists of messages
@@ -74,7 +51,7 @@ def cost_comp(a,b):
 
 class Message():
 
-	def __init__(self,N,I,nplot=1000):
+	def __init__(self,func,N,I,nplot=1000):
 		"""
 		Parameters 
 		----------
@@ -86,20 +63,13 @@ class Message():
 			Importance function
 		nplot : int
 			Number of knots at which to plot the message
+		func : callable
+			PDF of error. identity_cost assumes func has support [-e_bar,e_bar]
 		"""
 		self.N = N
 		self.I = I
 		self.M = D(I,self.N) 
 		self.nplot = nplot
-
-	def error(self):
-		"""Returns the L^{2} error"""
-		E = 0.
-		I0 = integrate.quad(lambda x: _cts_msg_fun(self.I,x)**2,0.,1.)[0]
-		for n in range(0,self.N):
-			f = lambda x: (n/(1.*self.N)-_cts_msg_fun(self.I,x))**2
-			E = E + integrate.quad(f,self.M[n],self.M[n+1])[0]
-		return np.sqrt(E/I0)
 
 def comp_plot(m1,m2,a_max=2,b_max=2,n_plot=40):
 	"""
