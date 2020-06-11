@@ -14,9 +14,9 @@ Model
 The sender and receiver agree on a message function m:[0,1]->[0,1]. The sender
 privately observes q, which is uniformly distributed on [0,1]. She sends the 
 receiver the message m(q). The receiver receives the message m_tilde = m(q)+e, 
-where e is distributed on [-e_bar,e_bar] according to the PDF f. She then takes
-an action A(m_tilde). The sender and receiver incur the cost (q-A(m_tilde))I(q)
-where I:[0,1]->[0,1] is the importance function. 
+where e is distributed on [-e_bar,e_bar] according to the Beta distribution. 
+She then takes an action A(m_tilde). The sender and receiver incur the cost 
+(q-A(m_tilde))I(q) where I:[0,1]->[0,1] is the importance function. 
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -29,27 +29,12 @@ import csv
 @np.vectorize
 def cost_comp(a,b):
 
-    @np.vectorize
-    def _beta(e):
-        p = .5*(1.+e/e_bar)
-        f = p**(a-1.)*(1.-p)**(b-1.)
-        return f
-
-    w = fixed_quad(_beta,-e_bar,e_bar)[0]
-
-    @np.vectorize
-    def beta(e):
-        if e < -e_bar or e > e_bar:
-            raise Exception('Trying to evaluate error PDF out of its support')
-        return _beta(e)/w
-
     dc = discrete_cost(N)
     ic = identity_cost(beta,e_bar)
 
-    #print('{:.5f}, {:.5f}'.format(dc,ic))
     return dc-ic
 
-class Message():
+class Message:
 
 	def __init__(self,func,N,I,nplot=1000):
 		"""

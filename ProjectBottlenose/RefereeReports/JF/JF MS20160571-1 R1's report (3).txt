@@ -1,0 +1,67 @@
+This paper considers a sender receiver game with costless, unverifiable communication (cheap talk) when player interests are perfectly aligned. Due to exogenous factors, messages are sent with some noise. The question is how the mapping of information to messages is chosen so as to minimize the loss from such noise.
+
+The compelling insight of the model is that the mapping from the state q on (0,1) to a message m should be steepest in ranges where the costs of misestimating q (including those implied by the distribution of q) are highest.  Greater steepness ensures that when the actual message sent is m+epsilon the impact of epsilon on the estimate of q is smaller. As epsilon goes to zero the loss from miscommunication goes to zero but the shape of communication maintains this steepness pattern rather going to “straight talk”. This makes sense ex post but I do not think most people would anticipate it and I think this result is a potentially significant contribution to our understanding of communication.
+
+My main suggestion is to make the paper more manageable by restructuring it as follows.
+
+1) Choose one of the applications that is finance-related and that most closely fits the main model in Section 2.1 Present this application first and develop the main model. As outlined below the main model needs to be more formally developed so focusing on it more will help the paper.  Incorporate Section 3.1 and develop these ideas with reference to the main model and its application. 
+2) Choose two of the other applications that respectively best fit the models in 2.2 and 2.3.  Create a new Section 3 Applications and Extensions which present each application along with the model for that application. Have a clear proposition for each and relegate much of the proof to the appendix. Generally only include a separate analysis of an application (other than a quick reference) if there is something interesting about it that can be included in the theory and stated as a result.
+
+Model:
+
+1) The boundedness of the message space is a key assumption but it is only mentioned in footnote 9. Is an increase in the bounds the same as a decrease in epsilon? Does the assumption make sense for natural language environments where something can be very, very,..., very good? Some discussion of when the assumption is appropriate would help.
+2) The basic problem is that at epsilon=0 any invertible m(q) is as good as any other. So the paper needs epsilon>0 for the main result.  But the model is only tractable in the limit as epsilon goes to zero. So the paper needs to clearly indicate that as epsilon goes to zero the optimal m(q) converges to the proposed m(q), and there should be a formal statement of this. I had trouble following the argument in this regard, both in the discussion and formally. I think the discussion would be clearer if it was acknowledged that the gains from curved talk relative to straight talk go to zero as epsilon goes to zero, but always are positive for any arbitrarily small epsilon>0. (From one perspective then the noise is not essential to the model but is a refinement that picks out one m(q).)
+3) What is the exact meaning of “approximately” in Lemma 1? I could see that terminology in a proposition, but it is hard to use a lemma unless it is stated exactly. In the proof “as epsilon goes to zero” is added seemingly as an afterthought in the third line after the period. Shouldn’t it also be at the end of the last sentence?
+4) In the para after Lemma 1 we are told the symmetry claim should also be in the limit.
+5) It seems that after Lemma 1 we are now equating the optimal action exactly with the approximate action in Lemma 1, e.g., in the discussion of Figure 7.
+6) I had trouble interpreting the exact meaning of the approximately squiggles in Lemma 2 and Prop 1. 
+7) Perhaps it is best to start with epsilon=0, show that the candidate curved talk is weakly optimal, then show as epsilon goes to zero the optimal message function converges to it?  For instance for any delta>0 the optimal message function differs at every point by less than delta for epsilon>0 small enough. Then the qualitative features such as in corollary 1 can be described for what is really optimal.
+8) In Lemma 3 we are back to explicitly considering the limiting case. (This is done again in Lemma 4, which is the equivalent of Lemma 1, where this is not done.)
+9) Shouldn’t Lemma 3 then be used for a proposition? Instead we jump back to the quadratic loss function example.
+10) Why doesn’t epsilon drop out of m’(q) on page 18? (Please number the equations.)
+11) I was surprised that the message function at the bottom of page 25 was not the same as the uniform-quadratic message function given the connections that can be made between quadratic loss with a continuous action and expected loss with a binary action with an uncertain cutoff. Please explain the difference. And again please add equation numbers for reference, especially in the reviewing process.
+
+Presentation:
+
+The main issue is the paper needs to be tightened up considerably. In addition I have the following suggestions.
+1) The first para claim that “None of these examples features straightforward communication” needs a little more explanation like …”where the expert reveals the exact quality”.
+2) Paragraph 3 highlights the limited range of the message space – which in the model section is only alluded to in a footnote.
+3) In footnote 3 one could cite Mayzlin, Dover and Chevalier (2013) for empirical evidence. 
+4) The discussion of Figure 6 implicitly assumes that the distribution of q is uniform in each case. (And the discussion of Figure 5 implicitly assumes the importance function is flat.) 
+5) Generally since I(q) and g(q) play the same role, there should be some example where variation of one allows identification of its impact. For instance if the WFA example is included there should also be data on another conference where it is generally recognized the papers are worse but, because the standards were even lower, the distribution of ratings was more favorable.
+6) The discussion in the last para of page 16 should be far earlier in the paper.
+7) The introduction of the discrete message case on page 18 should immediately connect coarseness of the message space with the earlier idea of epsilon.
+8) It is nonstandard to start a sentence with a variable as done on page 19 and repeatedly in the appendix.
+9) It seems the third full para on page 21 is a continuation of the previous para. Same with the second para on page 22 starting with “where”.
+10) Several of the figures can be dropped. Personally 7,8, 9 and 12 were not very useful. Fig 3 is a part of Fig 6. Figs 10 and 11 could be combined – helpful to see all together.
+
+Related literature:
+
+1) The model’s main reference point is the strategic information transmission (cheap talk) literature starting with Crawford and Sobel in which noisiness of communication is the endogenous result of strategic concerns based on misaligned preferences.  I think that there are a number of other literatures that the paper is related to, and that the paper would benefit from connecting itself to them, both in terms of deepening understanding for the reader and increasing the paper’s impact on related literatures. 
+2) There is a game theory literature on cheap talk with fully aligned preferences (Blume et al., 1998, etc.) This literature is concerned with how players converge on the equilibrium meaning of arbitrary messages. This paper assumes that the players jointly decide on the message function as the first step of the game. However, I think that in practice this is not actually done, so some quick reference to this question is appropriate.
+3) It seems that some reference to the linguistic literature is appropriate since it historically has focused on aligned preferences, e.g., Grice’s “cooperative principle”.  I have heard that the CS framework is now being used in linguistics as a way to operationalize cooperative communication, but I am not familiar with the literature.  A Google Scholar search under “grice cooperative principle crawford sobel” suggests some work on this. It seems highly unlikely this literature has developed the same result as this paper, but I think people working in this area would be very interested in this paper and they will only learn of it if this paper connects itself to that literature.
+4) In terms of related results, I would expect the computer science literature to be most promising since how to design communication with noisy messages is a long-standing concern dating back to Shannon. Again some Google Scholar searching suggests that looking into this would be useful.
+5) I also suspect that biology and psychology models of nervous system communication might have similar features as this model. Once the game is taken away by assuming no conflict of interest, it seems worth looking more broadly than economic models for related research.
+
+Applications:
+
+1) In general I found the applications to be persuasive but more discussion of how the predictions differ from other models is appropriate. In some cases the predictions will be different and it some similar – just say which. As noted, for the discrete action case the predictions of the model are most closely related to those of Bayesian persuasion models (notably Ostrovsky and Schwarz) and comparative cheap talk models (e.g., Chakraborty and Harbaugh, 2007). 
+2) Some of the applications are done with extensive referencing to other literature and others are not. I think the answer is to focus on a couple in separate sections with real results and then at most quickly reference others. Section 1.3 seemed out of place and generally indicative of the current confusing structure of the paper.
+3) Noise can be generated exogenously by the technology, but it can also be induced by a fraction of biased types who always exaggerate.  Do any of the models with a mixture of biased and unbiased types (e.g., Morgan and Stocken) generate similar predictions?  Is the lack of 10s in the WFA example particularly supportive of this model’s interpretation? Are the predictions less distinguishable from those of a biased sender model for analyst ratings? 
+4) The WFA example was very interesting, but it is just one conference in one year. To include something like this of interest only to academics, the example should be more complete. How has the distribution changed over time as acceptance rates have fallen? At WFA meetings in unappealing places (ever happened?) is the distribution different?  Even just a comparison of two different conferences or the WFA back in the day and now would increase the value of this application considerably.
+5) In general, rather than a scatter shot of different applications, it would be nice if each application had a particular point that added to our understanding. My suggestion for restructuring the paper is with this in mind. 
+
+Typos:
+
+Initially m^tilde=m+epsilon is used but then m+e is used. The former would explain why epsilon^bar is also used.
+Is the message space [0,1] as in footnote 9 or (0,1) as in the text on page 15?
+Reference 28: andlyst
+p. 43 (see ….) -> (See … .)
+Fig. 10 derivitive
+
+Additional References:
+
+Blume, Andreas, Douglas V. DeJong, Yong-Gwan Kim, and Geoffrey B. Sprinkle. 1998. Experimental evidence on the evolution of meaning of messages in sender-receiver games. American Economic Review 88(5): 1323--1340.
+P. H. Grice, Studies in the Way of Words, Harvard University Press, Cambridge, Massachusetts, 1989. (Compilation)
+Mayzlin, Dina, Yaniv Dover, and Judith A. Chevalier. 2013. Promotional reviews: an empirical investigation of online review manipulation. American Economic Review.
+

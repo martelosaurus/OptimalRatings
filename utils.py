@@ -1,3 +1,21 @@
+# -----------------------------------------------------------------------------
+# Beta distribution
+@np.vectorize
+def _beta(e):
+	p = .5*(1.+e/e_bar)
+	f = p**(a-1.)*(1.-p)**(b-1.)
+	return f
+
+w = fixed_quad(_beta,-e_bar,e_bar)[0]
+
+@np.vectorize
+def beta(e):
+	if e < -e_bar or e > e_bar:
+		raise Exception('Trying to evaluate error PDF out of its support')
+	return _beta(e)/w
+
+# -----------------------------------------------------------------------------
+# quadrature
 def _fixed_quad(*args,**kwargs):
     """Wrapper for fixed_quad that returns the integral (without the error)"""
     return fixed_quad(*args,**kwargs)[0]
@@ -13,6 +31,9 @@ def fixed_dblquad_tri(func,a,b,gfun,hfun):
     f = lambda x: _fixed_quad(lambda y: func(y,x),gfun(x),hfun(x))
     return _fixed_quad(np.vectorize(f),a,b)
 
+# -----------------------------------------------------------------------------
+# optimal discrete messages
+# NOTE that optimal discrete messaging doesn't depend on e_bar
 def _Q(I,i,j,a,b,_n=11):
 	"""
 	[Q]uadrature: returns \int_{a}^{b}{q^{i}I(q)^{j}dq)

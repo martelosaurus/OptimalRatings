@@ -1,0 +1,16 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb,amsfonts,fullpage,setspace,lscape}
+\begin{document}
+\begin{landscape}
+\onehalfspacing
+Put
+\begin{equation}
+g(t)=\left[\int_{\alpha(t)}^{\beta(t)}{f(s)ds}\right]^{-1}\left[\int_{\alpha(t)}^{\beta(t)}{sf(s)ds}\right].
+\end{equation}
+Observe that
+\begin{align}
+g'(t)&=-\left(\beta'(t)f(\beta(t))-\alpha'(t)f(\alpha(t))\right)\left[\int_{\alpha(t)}^{\beta(t)}{f(s)ds}\right]^{-2}\left[\int_{\alpha(t)}^{\beta(t)}{sf(s)ds}\right]+\left(\beta'(t)\beta(t)f(\beta(t))-\alpha'(t)\alpha(t)f(\alpha(t))\right)\left[\int_{\alpha(t)}^{\beta(t)}{f(s)ds}\right]^{-1}\\
+&=\left[\int_{\alpha(t)}^{\beta(t)}{f(s)ds}\right]^{-2}\left\{-\left(\beta'(t)f(\beta(t))-\alpha'(t)f(\alpha(t))\right)\int_{\alpha(t)}^{\beta(t)}{sf(s)ds}+\left(\beta'(t)\beta(t)f(\beta(t))-\alpha'(t)\alpha(t)f(\alpha(t))\right)\int_{\alpha(t)}^{\beta(t)}{f(s)ds}\right\}\\
+\end{align}
+\end{landscape}
+\end{document}

@@ -1,0 +1,71 @@
+\documentclass[12pt]{article}
+\usepackage[margin=.5in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{epstopdf}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\newtheorem{assumption}{Assumption}
+\newtheorem{lemma}{Lemma}
+
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+
+\begin{document}
+% discrete messages
+\section{discrete actions}
+Let $m:[0,1]\rightarrow[0,1]$ be the sender's message function. Let the receiver's \textbf{discrete} action $A:[0,1]\rightarrow\{0,1\}$ be given by
+\begin{equation*}
+A(\tilde{m})=\left\{\begin{array}{ccc}
+1 &\text{if}& m^{-1}(\tilde{m})>V\\
+0 &\text{otherwise}&
+\end{array}\right.
+\end{equation*}
+where $V$ is distributed according to $G$. The expected utility---with respect to $V$---for $e>0$ is
+\begin{align*}
+U_{+}(q,m(q),e)&=\underbrace{G(q)}_{A=0\text{ and }V<q}+\underbrace{(1-G(m^{-1}(m(q)+e)))}_{A=1\text{ and }V\geq q}\\ \\
+&\approx G(q)+(1-G(q+m^{-1'}(m(q))e))\\
+&=G(q)+(1-G(q+e/m'(q)))\\
+&\approx G(q)+(1-G(q)-g(q)(e/m'(q)))\\
+&=1-g(q)(e/m'(q))
+\end{align*}
+while the expected utility---again, with respect to $V$---for $e\leq0$ is 
+\begin{align*}
+U_{-}(q,m(q),e)&=\underbrace{G(m^{-1}(m(q)+e))}_{A=0\text{ and }V<q}+\underbrace{(1-G(q))}_{A=1\text{ and }V\geq q}\\ \\
+&\approx G(q+m^{-1'}(m(q))e)+(1-G(q))\\
+&=G(q+e/m'(q))+(1-G(q))\\
+&\approx G(q)+g(q)(e/m'(q))+(1-G(q))\\
+&=1+g(q)(e/m'(q)).
+\end{align*}
+The sender chooses $m$ to maximize total expected utility:
+\begin{align*}
+\min_{m}\:=&\int\limits_{0}^{1}{\left\{\:\int\limits_{-\bar{\epsilon}}^{0}{U_{-}(q,m(q),e)\left(\frac{de}{2\bar{\epsilon}}\right)}+\int\limits_{0}^{\bar{\epsilon}}{U_{+}(q,m(q),e)\left(\frac{de}{2\bar{\epsilon}}\right)}\right\}I(q)dq}\\
+\approx&\int\limits_{0}^{1}{\left\{\:\int\limits_{-\bar{\epsilon}}^{0}{(1+g(q)(e/m'(q)))\left(\frac{de}{2\bar{\epsilon}}\right)}+\int\limits_{0}^{\bar{\epsilon}}{(1-g(q)(e/m'(q)))\left(\frac{de}{2\bar{\epsilon}}\right)}\right\}I(q)dq}\\
+=&\int\limits_{0}^{1}{\left\{1+\int\limits_{-\bar{\epsilon}}^{0}{g(q)(e/m'(q))\left(\frac{de}{2\bar{\epsilon}}\right)}-\int\limits_{0}^{\bar{\epsilon}}{g(q)(e/m'(q))\left(\frac{de}{2\bar{\epsilon}}\right)}\right\}I(q)dq}\\
+=&\int\limits_{0}^{1}{\left\{1-\frac{\bar{\epsilon}g(q)}{2m'(q)}\right\}I(q)dq}.
+\end{align*}
+The Euler-Lagrange equation reads
+\begin{equation*}
+\left\{1+\frac{\bar{\epsilon}g(q)}{2m'(q)^2}\right\}I(q)=K
+\end{equation*}
+for some constant $K$. Equivalently,
+\begin{equation*}
+\left\{2m'(q)^2+\bar{\epsilon}g(q)\right\}I(q)=2Km'(q)^2
+\end{equation*}
+or
+\begin{equation*}
+\bar{\epsilon}g(q)I(q)=2(K-I(q))m'(q)^2
+\end{equation*}
+or
+\begin{equation*}
+\frac{\bar{\epsilon}g(q)I(q)}{2(K-I(q))}=m'(q)^2
+\end{equation*}
+\end{document}

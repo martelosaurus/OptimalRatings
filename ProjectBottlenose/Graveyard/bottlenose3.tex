@@ -1,0 +1,82 @@
+\documentclass[12pt]{article}
+\usepackage[margin=.5in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{epstopdf}
+\usepackage{showframe}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\newtheorem{assumption}{Assumption}
+\newtheorem{lemma}{Lemma}
+
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+
+\begin{document}
+% discrete messages
+\section{discrete actions}
+
+%% continuous
+%\subsection{$[Accept,Reject]$?}
+%Let $m:[0,1]\rightarrow[0,1]$ be the sender's message function. Let the receiver's \textbf{continuous} action $A:[0,1]\rightarrow\mathbb{R}$ be given by $A(\tilde{m})=m^{-1}(\tilde{m})$. The sender chooses $m$ to minimize total loss:
+%\begin{align*}
+%\min_{m}\:=&\int\limits_{0}^{1}{\int\limits_{-\bar{\epsilon}}^{\bar{\epsilon}}{L(m^{-1}(m(q)+e)-q)\left(\frac{de}{2\bar{\epsilon}}\right)I(q)dq}}\\
+%\approx&\int\limits_{0}^{1}{\int\limits_{-\bar{\epsilon}}^{\bar{\epsilon}}{L(m^{-1'}(q)e)\left(\frac{de}{2\bar{\epsilon}}\right)I(q)dq}}\\
+%=&\int\limits_{0}^{1}{\int\limits_{-\bar{\epsilon}}^{\bar{\epsilon}}{L(e/m'(q))\left(\frac{de}{2\bar{\epsilon}}\right)I(q)dq}}\\
+%=&\int\limits_{0}^{1}{\int\limits_{-\bar{\epsilon}/m'(q)}^{\bar{\epsilon}/m'(q)}{L(e)\left(\frac{de}{2\bar{\epsilon}/m'(q)}\right)I(q)dq}}\\
+%=&\int\limits_{0}^{1}{\int\limits_{0}^{\bar{\epsilon}/m'(q)}{L(e)\left(\frac{de}{\bar{\epsilon}/m'(q)}\right)I(q)dq}}\\
+%=&\int\limits_{0}^{1}{\left\{\frac{m'(q)}{\bar{\epsilon}}\int\limits_{0}^{\bar{\epsilon}/m'(q)}{L(e)}\right\}I(q)dq}\\
+%\end{align*}
+%The Euler-Lagrange formula reads
+%\begin{equation*}
+%-\left\{\frac{1}{\bar{\epsilon}}\int\limits_{0}^{\bar{\epsilon}/m'(q)}{L(e)de}-\frac{1}{m'(q)}L(\bar{\epsilon}/m'(q))\right\}I(q)=K
+%\end{equation*}
+%for some constant $K$.
+%% discrete
+%\subsection{$\{Accept,Reject\}$!}
+Let $m:[0,1]\rightarrow[0,1]$ be the sender's message function. Let the receiver's \textbf{discrete} action $A:[0,1]\rightarrow\{0,1\}$ be given by
+\begin{equation*}
+A(\tilde{m})=\left\{\begin{array}{ccc}
+1 &\text{if}& m^{-1}(\tilde{m})>V\\
+0 &\text{otherwise}&
+\end{array}\right.
+\end{equation*}
+where $V$ is distributed according to $G$. The expected utility---with respect to $V$---for $e>0$ is
+\begin{align*}
+U_{+}(q,m(q),e)&=\underbrace{G(q)}_{A=0\text{ and }V<q}+\underbrace{(1-G(m^{-1}(m(q)+e)))}_{A=1\text{ and }V\geq q}\\ \\
+&\approx G(q)+(1-G(q+m^{-1'}(m(q))e))\\
+&=G(q)+(1-G(q+e/m'(q)))
+\end{align*}
+while the expected utility---again, with respect to $V$---for $e\leq0$ is 
+\begin{align*}
+U_{-}(q,m(q),e)&=\underbrace{G(m^{-1}(m(q)+e))}_{A=0\text{ and }V<q}+\underbrace{(1-G(q))}_{A=1\text{ and }V\geq q}\\ \\
+&\approx G(q+m^{-1'}(m(q))e)+(1-G(q))\\
+&=G(q+e/m'(q))+(1-G(q)).
+\end{align*}
+The sender chooses $m$ to maximize total expected utility:
+\begin{align*}
+\min_{m}\:=&\:\int\limits_{0}^{1}{\left\{\:\int\limits_{-\bar{\epsilon}}^{0}{U_{+}(q,m(q),e)\left(\frac{de}{2\bar{\epsilon}}\right)}+\int\limits_{0}^{\bar{\epsilon}}{U_{-}(q,m(q),e)\left(\frac{de}{2\bar{\epsilon}}\right)}\right\}I(q)dq}\\
+\approx&\:\int\limits_{0}^{1}{\left\{\:\int\limits_{-\bar{\epsilon}}^{0}{(G(q)+(1-G(q+e/m'(q))))\left(\frac{de}{2\bar{\epsilon}}\right)}+\int\limits_{0}^{\bar{\epsilon}}{(G(q+e/m'(q))+(1-G(q)))\left(\frac{de}{2\bar{\epsilon}}\right)}\right\}I(q)dq}\\
+=&\:\int\limits_{0}^{1}{\left\{1-\int\limits_{-\bar{\epsilon}}^{0}{G(q+e/m'(q))\left(\frac{de}{2\bar{\epsilon}}\right)}+\int\limits_{0}^{\bar{\epsilon}}{G(q+e/m'(q))\left(\frac{de}{2\bar{\epsilon}}\right)}\right\}I(q)dq}.
+\end{align*}
+The Euler-Lagrange formula reads:
+\begin{equation*}
+-\left\{-\int\limits_{-\bar{\epsilon}}^{0}{g(q+e/m'(q))\left(-\frac{e}{m'(q)^2}\right)\left(\frac{de}{2\bar{\epsilon}}\right)}+\int\limits_{0}^{\bar{\epsilon}}{g(q+e/m'(q))\left(-\frac{e}{m'(q)^2}\right)\left(\frac{de}{2\bar{\epsilon}}\right)}\right\}I(q)=K
+\end{equation*}
+for some constant $K$. Equivalently,
+\begin{equation*}
+-\int\limits_{\bar{\epsilon}}^{0}{e\cdot g(q+e/m'(q))de}+\int\limits_{0}^{\bar{\epsilon}}{e\cdot g(q+e/m'(q))de}=\frac{2\bar{\epsilon}Km'(q)^2}{I(q)}.
+\end{equation*}
+Next step, compute 
+\begin{equation*}
+\frac{dm'}{dI}=\frac{m''(q)}{I'(q)}...
+\end{equation*}
+\end{document}

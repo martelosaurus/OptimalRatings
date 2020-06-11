@@ -1,0 +1,2 @@
+pdflatex hourglass
+hourglass.pdf

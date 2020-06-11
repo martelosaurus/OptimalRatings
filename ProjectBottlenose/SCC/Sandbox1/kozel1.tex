@@ -1,0 +1,29 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb,amsfonts,fullpage,setspace}
+\begin{document}
+\onehalfspacing
+\noindent Observe that
+\begin{align}
+C[m]&=\frac{1}{2\epsilon}\int_{-\bar{\epsilon}}^{1+\bar{\epsilon}}{\int_{q_{-}(\tilde{m})}^{q_{+}(\tilde{m})}{(q-A(\tilde{m}))^{2}dG(q)}d\tilde{m}}\\
+&=\frac{1+2\bar{\epsilon}}{2\epsilon}\int_{-\bar{\epsilon}}^{1+\bar{\epsilon}}{\left[\int_{q_{-}(\tilde{m})}^{q_{+}(\tilde{m})}{(q-a)^{2}dG(q)}\right]\frac{d\tilde{m}}{1+2\bar{\epsilon}}}
+\end{align}
+The optimal discrete message has $N+1$ messages given by knots
+\begin{equation}
+0=x_{0}<x_{1}<\cdots<x_{N}<x_{N+1}=1. 
+\end{equation}
+For $k=0,\ldots,N$, put $y_{k}\equiv G^{-1}(k/N)$. The $x_{k}$ satisfy
+\begin{equation}
+x_{k}=\frac{a_{k}+a_{k+1}}{2}
+\end{equation}
+and for $k=0,\ldots,N$, the $a_{k}$ are given by
+\begin{equation}
+a_{k}=A(x_{k},x_{k+1})\equiv\frac{\int_{x_{k}}^{x_{k+1}}{qdG(q)}}{\int_{x_{k}}^{x_{k+1}}{dG(q)}}=\frac{(x_{k+1}G(x_{k+1})-x_{k}G(x_{k}))-(G(x_{k+1})-G(x_{k}))}{G(x_{k+1})-G(x_{k})}
+\end{equation}
+From the sender's first-order condition
+\begin{equation}
+x_{k}=\frac{A(x_{k-1},x_{k})+A(x_{k},x_{k+1})}{2}
+\end{equation}
+\textbf{Main result}: $x_{2}-x_{1}$ is decreasing in $(g(x_{2})-g(x_{1}))/(x_{2}-x_{1})$. 
+
+
+\end{document}

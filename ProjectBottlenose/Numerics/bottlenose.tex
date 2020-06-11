@@ -1,0 +1,27 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb,amsfonts,fullpage,setspace}
+\begin{document}
+\onehalfspacing
+\noindent The noise, $\epsilon$, has support $[-\bar{\epsilon},\bar{\epsilon}]$ and is distributed according to the PDF
+\begin{equation}
+g(e;\alpha,\beta)=g(\alpha,\beta)^{-1}(e+\bar{\epsilon})^{\alpha-1}(e-\bar{\epsilon})^{\beta-1}
+\end{equation}
+where
+\begin{equation}
+G(\alpha,\beta)=\int_{-\bar{\epsilon}}^{\bar{\epsilon}}{(\bar{\epsilon}+e)^{\alpha-1}(\bar{\epsilon}-e)^{\beta-1}de}.
+\end{equation}
+$g$ is just the PDF of the Beta distribution with support $[-\bar{\epsilon},\bar{\epsilon}]$. Put $x=(\bar{\epsilon}+e)/2\bar{\epsilon}$ and observe that
+\begin{align}
+G(\alpha,\beta)&=\int_{0}^{1}{(2\bar{\epsilon}x)^{\alpha-1}(\bar{\epsilon}-(2\bar{\epsilon}x-\bar{\epsilon}))^{\beta-1}2\bar{\epsilon}dx}\\
+&=(2\bar{\epsilon})^{\alpha+\beta-1}\int_{0}^{1}{x^{\alpha-1}(1-x)^{\beta-1}dx}\\
+&=(2\bar{\epsilon})^{\alpha+\beta-1}B(\alpha,\beta)
+\end{align}
+where $B$ is the beta function. We require that $\epsilon$ has mean zero:
+\begin{equation}
+0=E[\epsilon]=\int_{-\bar{\epsilon}}^{\bar{\epsilon}}{e(e+\bar{\epsilon})^{\alpha}(e-\bar{\epsilon})^{\beta}de}=\frac{\alpha}{\alpha+\beta}. 
+\end{equation}
+Hence, $\epsilon$ has variance 
+\begin{equation}
+0=E[\epsilon^{2}]=\int_{-\bar{\epsilon}}^{\bar{\epsilon}}{e^{2}(e+\bar{\epsilon})^{\alpha}(e-\bar{\epsilon})^{\beta}de}
+\end{equation}
+\end{document}

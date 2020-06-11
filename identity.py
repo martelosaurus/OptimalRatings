@@ -7,7 +7,7 @@ class Identity(Message):
 		Cost of identity message function with constant importance function
 
 		'identity_cost' stands alone because it needs to run faster than 
-		Smooth.cost. 
+		Smooth.cost for many applications.  
 		
 		Parameters
 		----------

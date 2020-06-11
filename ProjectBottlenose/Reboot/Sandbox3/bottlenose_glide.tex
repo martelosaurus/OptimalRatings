@@ -1,0 +1,121 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb,amsfonts,amsthm,fullpage,setspace,float,graphicx,pdflscape}
+\usepackage[round]{natbib}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\begin{document}
+% \noindent\textit{I've done the math enough to know the dangers of our second guessing.\\ Doomed to crumble unless we % grow, and strengthen our communication.}\\ \\$\sim$ From ``Schism,'' by Tool. \\ \\
+\noindent\textit{Uniform Noise, Quadratic Loss.} Set $L(x)=\frac{1}{2}x^2$. Fix $\bar{\epsilon}>0$, and $I\in C^{\infty}(\mathbb{R})$. Let $q\in\mathbb{R}$ be the state of the world. As they will appear frequently, define $\mathcal{I}^{0}(s,t):=\int_{s}^{t}{I(r)dr}$, and $\mathcal{I}^{1}(s,t):=\int_{s}^{t}{rI(r)dr}$. Action rules are maps from \textit{received messages} to actions: $\tilde{m}\mapsto a(\tilde{m})$. Message rules are maps from states to \textit{sent messages}: $q\mapsto m(q)$. Sent and received messages are related by the identity $\tilde{m}=m(q)+e$, where $e\sim U[-\bar{\epsilon},\bar{\epsilon}]$. Let $f$ denote the density of $e$. $q$ is known to the sender, but not the receiver; $e$ is known to neither the sender, nor the receiver. Action and message rules are said to be \textit{admissable} if they are diffeomorphisms (differentiable bijection). An immediate consequence is that action and messages rules are strictly monotone. Without loss of generality, we take them to be strictly increasing. Throughtout, will will find it more convenient to work with the inverse message rule. Put $\ell=m^{-1}$. Note that $\ell$ is a diffeomorphism iff $m$ is a diffeomorphism.\\
+
+\noindent\textit{Notation:} As shorthand, let the subscripts ``$+$'' and ``$-$'' denote right and left translation by $\bar{\epsilon}$ respectively: for each $f:\mathbb{R}\rightarrow[0,1]$, let $f_{+\bar{\epsilon}},f_{-\bar{\epsilon}}:\mathbb{R}\rightarrow[0,1]$ be given by $f_{+\bar{\epsilon}}(x)=f(x+\bar{\epsilon})$ and $f_{-\bar{\epsilon}}(x)=f(x-\bar{\epsilon})$. \\
+
+%%%%%%%%%%%%%%%
+%%% BELIEFS %%%
+%%%%%%%%%%%%%%%
+\noindent\textit{Beliefs.} Let $g(q|\tilde{m})$ denote the receiver's posterior having received the message $\tilde{m}$. $\ell_{+\bar{\epsilon}}(\tilde{m}$ is the \textit{largest} possible state that could have resulted in $\tilde{m}$, while $\ell_{-\bar{\epsilon}}(\tilde{m})$ is the \textit{smallest} possible state that could have resulted in $\tilde{m}$. According to Baye's Law,
+\begin{equation}
+g(q|\tilde{m})=\frac{\mathbf{1}_{\ell_{-\bar{\epsilon}}(\tilde{m})\leq q\leq\ell_{+\bar{\epsilon}}(\tilde{m})}}{\ell_{+\bar{\epsilon}}(\tilde{m})-\ell_{-\bar{\epsilon}}(\tilde{m})}.
+\end{equation}
+
+%%%%%%%%%%%%%%%
+%%% PAYOFFS %%%
+%%%%%%%%%%%%%%%
+\noindent\textit{Payoffs.} The sender's and receiver's payoffs are 
+\begin{align}
+S(a,m;q)&=\int_{-\bar{\epsilon}}^{\bar{\epsilon}}{I(q)L(a(m(q)+e)-q)f(e)de}\\
+R(a,m;\tilde{m})&=\int_{-\infty}^{\infty}{I(q)L(a(\tilde{m})-q)g(q|\tilde{m})dq}
+\end{align}
+respectively.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% THE SENDER'S PROBLEM %%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{lemma}\label{lemma:message}
+For each action rule $a$, the sender's best-response message rule is given by
+\begin{equation}
+[\mathcal{S}(a)](\tilde{m})=\frac{a(\bar{m}+\bar{\epsilon})+a(\bar{m}-\bar{\epsilon})}{2}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+The sender's problem is to
+\begin{equation}
+\min_{m(q)\in\mathbb{R}}\int_{-\bar{\epsilon}}^{\bar{\epsilon}}{I(q)L(a(m(q)+e)-q)f(e)de}
+\end{equation}
+the first-order condition of which is
+\begin{align}
+0=\mathcal{S}_{m}(a,m;q)&=\int_{-\bar{\epsilon}}^{\bar{\epsilon}}{L'(a(m(q)+e)-q)a'(m(q)+e)de}\\
+&=L(a(m(q)+\bar{\epsilon})-q)-L(a(m(q)-\bar{\epsilon})-q).
+\end{align}
+There are two solutions: $a(m(q)+\bar{\epsilon})=a(m(q)-\bar{\epsilon})$ or $a(m(q)+\bar{\epsilon})-q=-(a(m(q)-\bar{\epsilon})-q)$. Consider the first solution. By the mean value theorem, there is $e_{0}\in(-\bar{\epsilon},\bar{\epsilon})$ such that $a'(m(q)+e_{0})=0$. Consider the second solution. Suppose that $\mathcal{S}_{m}(a,m;q)=0$. Since $L'$ is odd, 
+\begin{align}
+\mathcal{S}_{mm}(a,m;q)&=L'(a(m(q)+\bar{\epsilon})-q)a'(m(q)+\bar{\epsilon})-L'(a(m(q)-\bar{\epsilon})-q)a'(m(q)-\bar{\epsilon})\\
+&=L'(a(m(q)+\bar{\epsilon})-q)(a'(m(q)+\bar{\epsilon})+a'(m(q)-\bar{\epsilon}))>0
+\end{align}
+and hence $\mathcal{S}$ is strictly quasiconvex in $m$. We conclude that 
+\begin{equation}
+q=\frac{a(m(q)+\bar{\epsilon})+a(m(q)-\bar{\epsilon})}{2}.
+\end{equation}
+Change coordinates from $q$ to $\bar{m}$: $\bar{m}=m(q)$:
+\begin{equation}
+\ell(\bar{m})=\frac{a(\bar{m}+\bar{\epsilon})+a(\bar{m}-\bar{\epsilon})}{2}\:\Rightarrow\:\ell'(\bar{m})=\frac{a'(\bar{m}+\bar{\epsilon})+a'(\bar{m}-\bar{\epsilon})}{2}>0.
+\end{equation}
+Since $\ell$ is a diffeomorphism, so too is $m$. 
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% THE RECEIVER'S PROBLEM %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{lemma}
+For each message rule $\ell$, the receiver's best-response action rule is given by
+\begin{equation}
+[\mathcal{R}(\ell)](\tilde{m})=\frac{\mathcal{I}^{1}(\ell_{+\bar{\epsilon}}(\tilde{m}),\ell_{-\bar{\epsilon}}(\tilde{m}))}{\mathcal{I}^{0}(\ell_{+\bar{\epsilon}}(\tilde{m}),\ell_{-\bar{\epsilon}}(\tilde{m}))}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+The receiver's problem is to choose an action rule $a$ such that for each $\tilde{m}$, $a(\tilde{m})$ minimizes $R(a(\tilde{m}),\ell;\tilde{m})$. Note that $R$ is strictly convex in its first arguement: since $\ell$ is strictly increasing, $\ell_{+\bar{\epsilon}}(\tilde{m})>\ell_{-\bar{\epsilon}}(\tilde{m})$ and hence
+\begin{equation}
+R_{aa}(a,m,\tilde{m})=\int_{\ell_{-\bar{\epsilon}}(\tilde{m})}^{\ell_{+\bar{\epsilon}}(\tilde{m})}{I(q)L''(a-q)dq}=\int_{\ell_{-\bar{\epsilon}}(\tilde{m})}^{\ell_{+\bar{\epsilon}}(\tilde{m})}{I(q)dq}>0.
+\end{equation}
+Let $\tilde{m}\in\mathbb{R}$. The solution of the first-order condition is the unique minimizer:
+\begin{equation}
+0=R_{a}(\tilde{m},a,m)=\frac{1}{\ell_{+\bar{\epsilon}}(\tilde{m})-\ell_{-\bar{\epsilon}}(\tilde{m})}\int_{\ell_{-\bar{\epsilon}}(\tilde{m})}^{\ell_{+\bar{\epsilon}}(\tilde{m})}{I(q)L'(a-q)dq}\:\Rightarrow\:a(\tilde{m})=\frac{\mathcal{I}^{1}(\ell_{-\bar{\epsilon}}(\tilde{m}),\ell_{+\bar{\epsilon}}(\tilde{m}))}{\mathcal{I}^{0}(\ell_{-\bar{\epsilon}}(\tilde{m}),\ell_{+\bar{\epsilon}}(\tilde{m}))}.
+\end{equation}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% DEFINITION: DISCRETE EQUILIBRIUM %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{definition}
+An equilibrium $(\hat{a},\hat{m})$ is said to be discrete if there is a countable set of knots $P=\{\ldots,x_{-1},x_{0},x_{1},\ldots\}\subset\mathbb{R}$ with $x_{k-1}<x_{k}<x_{k+1}$ for any $k\in\mathbb{N}$, a countable set of actions $A=\{\ldots,a_{-1},a_{0},a_{1},\ldots\}\subset\mathbb{R}$, and a countable set of messages $M=\{\ldots,m_{-1},m_{0},m_{1},\ldots\}$, such that $\hat{a}$ bijects $M$ onto $A$, and for each $q\in\mathbb{R}$,
+\begin{equation*}
+\hat{m}(q)=\sum_{t=-\infty}^{\infty}m_{t}\chi_{[x_{t-1},x_{t})}(q)
+\end{equation*}
+where $\chi$ is the indicator function.
+\end{definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% THE EQUILIBRIUM IS DISCRETE %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proposition}
+There is a two-parameter family of discrete equilibria.
+\end{proposition}
+\begin{proof}
+Consider $x_{k-1}<x_{k}<x_{k+1}$. Let $(x_{k-1},x_{k},x_{k+1})\mapsto F(x_{k-1},x_{k},x_{k+1})$, where
+\begin{equation}
+F(x_{k-1},x_{k},x_{k+1})=-x_{k}+\frac{1}{2}\left(\frac{\int_{x_{k}}^{x_{k+1}}{rI(r)dr}}{\int_{x_{k}}^{x_{k+1}}{I(r)dr}}+\frac{\int_{x_{k-1}}^{x_{k}}{rI(r)dr}}{\int_{x_{k-1}}^{x_{k}}{I(r)dr}}\right).
+\end{equation}
+$F$ is strictly increasing in its first and third arguments:
+\begin{align}
+F_{1}(x_{k-1},x_{k},x_{k+1})&=\frac{I(x_{k-1})\int_{x_{k-1}}^{x_{k}}{(r-x_{k-1})I(r)dr}}{\left(\int_{x_{k-1}}^{x_{k}}{rI(r)dr}\right)^{2}}>0;\\
+F_{3}(x_{k-1},x_{k},x_{k+1})&=\frac{I(x_{k+1})\int_{x_{k}}^{x_{k+1}}{(x_{k+1}-r)I(r)dr}}{\left(\int_{x_{k}}^{x_{k+1}}{rI(r)dr}\right)^{2}}>0.
+\end{align}
+Two applications of l'H\^{o}pital's rule yield
+\begin{equation}
+\lim_{x_{k-1}\uparrow x_{k}}\frac{\int_{x_{k-1}}^{x_{k}}{rI(r)dr}}{\int_{x_{k-1}}^{x_{k}}{I(r)dr}}=x_{k}=\lim_{x_{k+1}\downarrow x_{k}}\frac{\int_{x_{k}}^{x_{k+1}}{rI(r)dr}}{\int_{x_{k}}^{x_{k+1}}{I(r)dr}}
+\end{equation}
+By the intermediate value theorem, there is a unique $x_{k+1}(x_{k-1},x_{k})\in(x_{k},\infty)$ such that $F(x_{k-1},x_{k},x_{k+1}(x_{k-1},x_{k}))=0$. By the implicit function theorem, there is a continuously differentiable map $T:\mathbb{R}^{2}\rightarrow\mathbb{R}$ such that $F(x_{k-1},x_{k},T(x_{k-1},x_{k}))=0$. Now $\ell$ is an equilibrium iff, for each $m\in\mathbb{R}$, $\ell(m)=[\mathcal{S}(\mathcal{R}(\ell))](m)$. Choose $m\in\mathbb{R}$ and put $k=\lfloor 1/2\bar{\epsilon}\rfloor$. $m\in[2k\bar{\epsilon},2(k+1)\bar{\epsilon})$.
+\end{proof}
+\end{document}
