@@ -1,2 +1,0 @@
-% parameters
-m = 20;
