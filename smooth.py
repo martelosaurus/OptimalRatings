@@ -12,6 +12,7 @@ class Smooth(Message):
 			Importance function I:[0,1]->[0,1]
 
 		"""
+		# this is a guess
 		return _Q(I,0.,(1./3),0.,q)/_Q(I,0.,(1./3),0.,1.)
 
 	def cost(self):
@@ -23,4 +24,3 @@ class Smooth(Message):
 			E = E + integrate.quad(f,self.M[n],self.M[n+1])[0]
 		return np.sqrt(E/I0)
 
-		

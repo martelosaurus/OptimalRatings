@@ -2,31 +2,44 @@
 \usepackage{amsmath,amsfonts}
 \begin{document}
 % -----------------------------------------------------------------------------
-% THE MODEL
-\section{The Model}
+% PROGRAM
+\section{Program}
+\noindent the agent's action is
+\begin{equation}
+	A(\widetilde{m})=\int_{q_{-}(\widetilde{m})}^{q_{-}(\widetilde{m})}{qf(\widetilde{m}-m(q))g(q)dq}
+\end{equation}
+The cost is
+\begin{equation}
+	C[m]=\int_{-\bar{e}}^{1+\bar{e}}{\int_{q_{-}(\widetilde{m})}^{q_{-}(\widetilde{m})}{(q-A(\widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)dq}d\widetilde{m}}
+\end{equation}
+The sender and receiver's problem is to choose an $m$ that minimizes $C$.
+\section{The model\label{section - the model}}
 
-There are two players, a sender and a receiver, and a state of nature $q\in [ 0,1]$ that is known to the sender but not the receiver. Let $g$ denote the density of $q$. The sender sends an \textit{intended} message $m(q)\in [ 0,1]$. The receiver receives a noisy version of the intended message, which we call the \textit{received} message, $\widetilde{m} =m+\epsilon $. $\epsilon $ is distributed according to a continuous density $ f$ with support $[-\overline{\epsilon },\overline{\epsilon }]$, where $\overline{\epsilon }=\frac{1}{2N}>0$. The receiver then takes an action $A( \widetilde{m})\in [ 0,1]$.
+There are two players, a sender and a receiver, and a state of nature $q\in [ 0,1]$ that is known to the sender but not the receiver. Let $g$ denote the density of $q$. The sender sends an \textit{intended} message $m(q)\in [ 0,1]$. There is nothing special about $[0,1]$ except that it is bounded. The key assumption driving the model is that messages are received with noise. An unbounded message function would functionally reduce the noise to zero and reduce the model to the standard CS model. In reality, messages are clearly bounded: there are a finite number of 6,000 word reviews that can be written. The receiver receives a noisy version of the intended message, which we call the \textit{received} message, $\widetilde{m} =m+\epsilon $. $\epsilon $ is distributed according to a continuous density $ f_{\epsilon }$ with support $[-\overline{\epsilon },\overline{\epsilon }]$, where $\overline{\epsilon }=\frac{1}{2N}>0$. The receiver then takes an action $A( \widetilde{m})\in [ 0,1]$.
 
 Both sender and receiver have utility over the state, $q$, and the receiver's action, $A$, of 
 \begin{equation}
 	U(q,A)=-\frac{1}{2}(q-A)^{2}I(q)
 \end{equation}
+where $L,L^{\prime },L^{\prime \prime }\geq 0$ and $I>0$. $L$ is a loss function:\ the farther is the action from the state of nature, the lower the utility of the sender and the receiver. Both individuals want the action to match the state. The loss function is symmetric, and marginal cost of error in the action is increasing in the size of the error. The loss is preceded by the function $I(q)$, which allows the cost of an error to depend on the state. It may be more important to `` get the action right''\ in some states and less important in others. This
+is reflected by variation in $I(q)$.
 
-Prior to the start of the game, the sender can specify an intended message function $m(q)$ that she will use. The receiver chooses an action based upon the function $m(q)$ and the received message $\widetilde{m}$, and we denote this function $A(\widetilde{m})$. We work backward and start with the optimal action, given $m(q)$ and $\widetilde{m}$.
+Prior to the start of the game, the sender can specify an intended message function $m(q)$ that she will use. The receiver chooses an action based upon the function $m(q)$ and the received message $\widetilde{m}$, and we denote this function $A(\widetilde{m})$. As we will see, commitment will not be an issue in this game: once a message function and action function are specified, neither party has any incentive to deviate. As we have stated above, communication is perfectly cooperative. To derive the optimal intended message function, we work backward and start with the optimal
+action, given $m(q)$ and $\widetilde{m}$.
 
 Fix a message function $m$. Let $Q(\widetilde{m})$ denote the set of all states $q\in [ 0,1]$ such that for some noise $e\in [ -\bar{\epsilon},\bar{\epsilon}]$, $\widetilde{m}=m(q)+e$. Put differently, 
 \begin{equation}
 	Q(\widetilde{m})=\{q\in [ 0,1]|m(q)-\bar{\epsilon}\leq \widetilde{m}\leq m(q)+\bar{\epsilon}\}.
 \end{equation}
-Finally, let $q_{+}(\widetilde{m})\equiv \sup Q(\widetilde{m})$, $q_{-}(\widetilde{m})\equiv \inf Q(\widetilde{m})$, and $w(\widetilde{m})\equiv q_{+}(\widetilde{m})-q_{-}(\widetilde{m})$. $q_{+}(\widetilde{m})$ and $ q_{-}(\widetilde{m})$ are the highest and lowest states that could possibly be associated with the received message $\widetilde{m}$. $w(\widetilde{m})\equiv q_{+}(\widetilde{m})-q_{-}( \widetilde{m})$ is the distance between these two bounds. Except near the boundaries of the message space, $w(\widetilde{m})$ is equal to $2\bar{\epsilon}$.
+Finally, let $q_{+}(\widetilde{m})\equiv \sup Q(\widetilde{m})$, $q_{-}(\widetilde{m})\equiv \inf Q(\widetilde{m})$, and $w(\widetilde{m})\equiv q_{+}(\widetilde{m})-q_{-}(\widetilde{m})$. $q_{+}(\widetilde{m})$ and $ q_{-}(\widetilde{m})$ are the highest and lowest states that could possibly be associated with the received message $\widetilde{m}$. $w(\widetilde{m})\equiv q_{+}(\widetilde{m})-q_{-}( \widetilde{m})$ is the distance between these two bounds. In our example, $w( \widetilde{m})\equiv 0.5-0.1=0.4$. Except near the boundaries of the message space, $w(\widetilde{m})$ is equal to $2\bar{\epsilon}$.
 
 Suppose that the receiver receives the message $\widetilde{m}\in [ - \bar{\epsilon},1+\bar{\epsilon}]$. $q|\widetilde{m}$ has support $[q_{-}( \widetilde{m}),q_{+}(\widetilde{m})]$, and 
 \begin{equation} 
-	g(q|\widetilde{m})=\frac{f(\widetilde{m}-m(q))g(q)}{\int_{0}^{1}{ f(\widetilde{m}-m(t))g(t)dt}}  \label{eq:posterior} 
+	g(q|\widetilde{m})=\frac{f_{\epsilon }(\widetilde{m}-m(q))g(q)}{\int_{0}^{1}{ f_{\epsilon }(\widetilde{m}-m(t))g(t)dt}}=\frac{f_{\epsilon }(\widetilde{m} -m(q))}{\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{f_{\epsilon }( \widetilde{m}-m(t))dt}}.  \label{eq:posterior} 
 \end{equation} 
 The receiver's problem is to choose an action that maximizes her expected utility: 
 \begin{equation} 
-	\max_{a(\widetilde{m})}\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{U(q,a)g(q| \widetilde{m})}dq.  
+	\max_{a}\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{U(q,a)g(q| \widetilde{m})}dq.  
 \end{equation} 
 Because of Assumptions A1 to A3, the receiver's optimal action is simply the expected value of the state, $q$, given the received message $\widetilde{m}$ : 
 \begin{equation} 
@@ -34,7 +47,7 @@ Because of Assumptions A1 to A3, the receiver's optimal action is simply the exp
 \end{equation}
 It will be helpful to refer to the \textit{cost }of a message function. Let the cost functional $C$ be given by 
 \begin{equation}
-	C[m]\equiv \int_{0}^{1}{\int_{-\bar{\epsilon}}^{\bar{\epsilon}}{(q-A(m(q)+e))^{2}f(e)de}dq},  
+	C[m]\equiv \int_{0}^{1}{\int_{-\bar{\epsilon}}^{\bar{\epsilon}}{(q-A(m(q)+e))^{2}f_{\epsilon }(e)de}dq},  
 \end{equation}
 where $A$ is the receiver's optimal action from Equation (\ref{eq:optact}). $C[m]$ is the expected loss for a given message function $m$. The integrand is the loss for a given state $q$ and action $A(\widetilde{m})$. The interior integral integrates over the possible exogenous errors, to generate the expected loss given the state. The exterior integral integrates over possible states. Therefore, the \textit{sender's problem} is to choose a message function $m$ that minimizes $C[m]$: 
 \begin{equation}
@@ -42,13 +55,17 @@ where $A$ is the receiver's optimal action from Equation (\ref{eq:optact}). $C[m
 \end{equation}
 where $M$ is the space of weakly increasing piece-wise continuous functions on $[0,1]$. The change of variables $\widetilde{m}=m(q)+e$ and an application of Fubini's Theorem yield 
 \begin{align}
-	C[m]& =\int_{0}^{1}{\int_{m(q)-\bar{\epsilon}}^{m(q)+\bar{\epsilon}}{(q-A( \widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)d\widetilde{m}}dq} \\
-	& =\int_{-\bar{\epsilon}}^{1+\bar{\epsilon}}{\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-A(\widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)dq}d\widetilde{m}}.
+	C[m]& =\int_{0}^{1}{\int_{m(q)-\bar{\epsilon}}^{m(q)+\bar{\epsilon}}{(q-A( \widetilde{m}))^{2}f_{\epsilon }(\widetilde{m}-m(q))d\widetilde{m}}dq} \\
+	& =\int_{-\bar{\epsilon}}^{1+\bar{\epsilon}}{\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-A(\widetilde{m}))^{2}f_{\epsilon }(\widetilde{m}-m(q))dq}d\widetilde{m}}.
 \end{align}
 
 % -----------------------------------------------------------------------------
 % IDENTITY MESSAGE
 \section{Identity Message}
+\noindent Let $x:[-\overline{e},\overline{e}]\rightarrow[0,1]$ be given by
+\begin{equation}
+	x(e)=\frac{1}{2}\left[1+\frac{e}{\overline{e}}\right]
+\end{equation}
 Define
 \begin{align}
 	I_{(\alpha,\beta,\gamma)}(\widetilde{m})\equiv\int_{\alpha}^{\beta}{q^{\gamma}f(\tilde{m}-q)dq}
@@ -85,10 +102,6 @@ Define
 	z&=\int_{\bar{e}}^{1-\bar{e}}{\int_{\widetilde{m}-\bar{e}}^{\widetilde{m}+\bar{e}}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}\\
 	\underline{z}&=\int_{-\bar{e}}^{\bar{e}}{\int_{0}^{\widetilde{m}+\bar{e}}{(q-\underline{a}(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}
 \end{align}
-\noindent Let $x:[-\overline{e},\overline{e}]\rightarrow[0,1]$ be given by
-\begin{equation}
-	x(e)=\frac{1}{2}\left[1+\frac{e}{\overline{e}}\right]
-\end{equation}
 Consider, as an example, the Beta PDF:
 \begin{equation}
 	f(e)=x(e)^{a-1}(1-x(e))^{b-1}
