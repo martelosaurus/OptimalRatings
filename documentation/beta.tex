@@ -16,7 +16,7 @@ Prior to the start of the game, the sender can specify an intended message funct
 
 Fix a message function $m$. Let $Q(\widetilde{m})$ denote the set of all states $q\in [ 0,1]$ such that for some noise $e\in [ -\bar{\epsilon},\bar{\epsilon}]$, $\widetilde{m}=m(q)+e$. Put differently, 
 \begin{equation}
-	Q(\widetilde{m})=\{q\in [ 0,1]|m(q)-\bar{\epsilon}\leq \widetilde{m}\leq m(q)+\bar{\epsilon}\}.
+	Q(\widetilde{m})=\{q\in[0,1]|m(q)-\bar{\epsilon}\leq \widetilde{m}\leq m(q)+\bar{\epsilon}\}.
 \end{equation}
 Finally, let $q_{+}(\widetilde{m})\equiv \sup Q(\widetilde{m})$, $q_{-}(\widetilde{m})\equiv \inf Q(\widetilde{m})$, and $w(\widetilde{m})\equiv q_{+}(\widetilde{m})-q_{-}(\widetilde{m})$. $q_{+}(\widetilde{m})$ and $ q_{-}(\widetilde{m})$ are the highest and lowest states that could possibly be associated with the received message $\widetilde{m}$. $w(\widetilde{m})\equiv q_{+}(\widetilde{m})-q_{-}( \widetilde{m})$ is the distance between these two bounds. Except near the boundaries of the message space, $w(\widetilde{m})$ is equal to $2\bar{\epsilon}$.
 
@@ -26,7 +26,7 @@ Suppose that the receiver receives the message $\widetilde{m}\in [ - \bar{\epsil
 \end{equation} 
 The receiver's problem is to choose an action that maximizes her expected utility: 
 \begin{equation} 
-	\max_{a(\widetilde{m})}\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{U(q,a)g(q| \widetilde{m})}dq.  
+	\max_{a(\widetilde{m})}\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{U(q,a)g(q|\widetilde{m})}dq.  
 \end{equation} 
 Because of Assumptions A1 to A3, the receiver's optimal action is simply the expected value of the state, $q$, given the received message $\widetilde{m}$ : 
 \begin{equation} 
@@ -123,9 +123,5 @@ The cost of the discrete message function is given by
 % -----------------------------------------------------------------------------
 % SMOOTH MESSAGE 
 \section{Smooth Message}
-Suppose that for some $n\geq2$, $\bar{e}=1/(2n)$. A continuous message function solves. We approximate $m$ with the step function 
-\begin{equation}
-	m_{d}(q)=\sum_{n=0}^{N}\frac{n}{N}\mathbf{1}_{\frac{n}{N+1}\leq q\frac{n+1}{N+1}}.
-\end{equation}
-Unlike the case in which the receiver can perfectly infer the message sent.
+	The smooth message function is a discrete message function in which one message corresponds to many 
 \end{document}
