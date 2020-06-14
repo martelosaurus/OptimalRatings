@@ -5,22 +5,33 @@
 % THE MODEL
 \section{The Model}
 
-There are two players, a sender and a receiver, and a state of nature $q\in [ 0,1]$ that is known to the sender but not the receiver. Let $g$ denote the density of $q$. The sender sends an \textit{intended} message $m(q)\in [ 0,1]$. The receiver receives a noisy version of the intended message, which we call the \textit{received} message, $\widetilde{m} =m+\epsilon $. $\epsilon $ is distributed according to a continuous density $ f$ with support $[-\overline{\epsilon },\overline{\epsilon }]$, where $\overline{\epsilon }=\frac{1}{2N}>0$. The receiver then takes an action $A( \widetilde{m})\in [ 0,1]$.
+There are two players, a sender and a receiver, and a state of nature $q\in [ 0,1]$ that is known to the sender but not the receiver. Let $g$ denote the density of $q$. The sender sends an \textit{intended} message $m(q)\in [ 0,1]$. The receiver receives a noisy version of the intended message, which we call the \textit{received} message, $\widetilde{m} =m+\epsilon $. $\epsilon $ is distributed according to a continuous density $ f$ with support $[-\overline{\epsilon },\overline{\epsilon }]$, where for some integer $N\geq2$, $\overline{e}=\frac{1}{2N}$. 
 
-Both sender and receiver have utility over the state, $q$, and the receiver's action, $A$, of 
+We specify $f$ as follows. Let $x:[-\overline{e},\overline{e}]\rightarrow[0,1]$ be given by
+\begin{equation}
+	x(e)=\frac{1}{2}\left[1+\frac{e}{\overline{e}}\right]
+\end{equation}
+Consider, as an example, the Beta PDF:
+\begin{equation}
+	f(e)=x(e)^{a-1}(1-x(e))^{b-1}
+\end{equation}
+for constants $a>0$ and $b>0$. The receiver then takes an action $A(\widetilde{m})\in[0,1]$. Both sender and receiver have utility over the state, $q$, and the receiver's action, $A$, of 
 \begin{equation}
 	U(q,A)=-\frac{1}{2}(q-A)^{2}I(q)
 \end{equation}
-
 Prior to the start of the game, the sender can specify an intended message function $m(q)$ that she will use. The receiver chooses an action based upon the function $m(q)$ and the received message $\widetilde{m}$, and we denote this function $A(\widetilde{m})$. We work backward and start with the optimal action, given $m(q)$ and $\widetilde{m}$.
 
-Fix a message function $m$. Let $Q(\widetilde{m})$ denote the set of all states $q\in [ 0,1]$ such that for some noise $e\in [ -\bar{\epsilon},\bar{\epsilon}]$, $\widetilde{m}=m(q)+e$. Put differently, 
+Fix a message function $m$. Let $Q(\widetilde{m})$ denote the set of all states $q\in [ 0,1]$ such that for some noise $e\in [ -\bar{e},\bar{e}]$, $\widetilde{m}=m(q)+e$. Put differently, 
 \begin{equation}
-	Q(\widetilde{m})=\{q\in[0,1]|m(q)-\bar{\epsilon}\leq \widetilde{m}\leq m(q)+\bar{\epsilon}\}.
+	Q(\widetilde{m})=\{q\in[0,1]|m(q)-\bar{e}\leq \widetilde{m}\leq m(q)+\bar{e}\}.
 \end{equation}
-Finally, let $q_{+}(\widetilde{m})\equiv \sup Q(\widetilde{m})$, $q_{-}(\widetilde{m})\equiv \inf Q(\widetilde{m})$, and $w(\widetilde{m})\equiv q_{+}(\widetilde{m})-q_{-}(\widetilde{m})$. $q_{+}(\widetilde{m})$ and $ q_{-}(\widetilde{m})$ are the highest and lowest states that could possibly be associated with the received message $\widetilde{m}$. $w(\widetilde{m})\equiv q_{+}(\widetilde{m})-q_{-}( \widetilde{m})$ is the distance between these two bounds. Except near the boundaries of the message space, $w(\widetilde{m})$ is equal to $2\bar{\epsilon}$.
-
-Suppose that the receiver receives the message $\widetilde{m}\in [ - \bar{\epsilon},1+\bar{\epsilon}]$. $q|\widetilde{m}$ has support $[q_{-}( \widetilde{m}),q_{+}(\widetilde{m})]$, and 
+Finally, let $q_{+}(\widetilde{m})\equiv \sup Q(\widetilde{m})$, $q_{-}(\widetilde{m})\equiv \inf Q(\widetilde{m})$, and $w(\widetilde{m})\equiv q_{+}(\widetilde{m})-q_{-}(\widetilde{m})$. $q_{+}(\widetilde{m})$ and $ q_{-}(\widetilde{m})$ are the highest and lowest states that could possibly be associated with the received message $\widetilde{m}$. $w(\widetilde{m})\equiv q_{+}(\widetilde{m})-q_{-}( \widetilde{m})$ is the distance between these two bounds. Except near the boundaries of the message space, $w(\widetilde{m})$ is equal to $2\bar{e}$.
+We have
+\begin{align}
+	I_{\gamma}(k)&=\int_{q_{k}}^{q_{k+1}}{q^\gamma f(\widetilde{m}-m(q))g(q)dq}\\
+	I_{(\alpha,\beta,\gamma)}(\widetilde{m})&\equiv\int_{\alpha}^{\beta}{q^{\gamma}f(\tilde{m}-q)dq}
+\end{align}
+Suppose that the receiver receives the message $\widetilde{m}\in [ - \bar{e},1+\bar{e}]$. $q|\widetilde{m}$ has support $[q_{-}( \widetilde{m}),q_{+}(\widetilde{m})]$, and 
 \begin{equation} 
 	g(q|\widetilde{m})=\frac{f(\widetilde{m}-m(q))g(q)}{\int_{0}^{1}{ f(\widetilde{m}-m(t))g(t)dt}}  \label{eq:posterior} 
 \end{equation} 
@@ -34,7 +45,7 @@ Because of Assumptions A1 to A3, the receiver's optimal action is simply the exp
 \end{equation}
 It will be helpful to refer to the \textit{cost }of a message function. Let the cost functional $C$ be given by 
 \begin{equation}
-	C[m]\equiv \int_{0}^{1}{\int_{-\bar{\epsilon}}^{\bar{\epsilon}}{(q-A(m(q)+e))^{2}f(e)de}dq},  
+	C[m]\equiv \int_{0}^{1}{\int_{-\bar{e}}^{\bar{e}}{(q-A(m(q)+e))^{2}f(e)de}dq},  
 \end{equation}
 where $A$ is the receiver's optimal action from Equation (\ref{eq:optact}). $C[m]$ is the expected loss for a given message function $m$. The integrand is the loss for a given state $q$ and action $A(\widetilde{m})$. The interior integral integrates over the possible exogenous errors, to generate the expected loss given the state. The exterior integral integrates over possible states. Therefore, the \textit{sender's problem} is to choose a message function $m$ that minimizes $C[m]$: 
 \begin{equation}
@@ -42,18 +53,15 @@ where $A$ is the receiver's optimal action from Equation (\ref{eq:optact}). $C[m
 \end{equation}
 where $M$ is the space of weakly increasing piece-wise continuous functions on $[0,1]$. The change of variables $\widetilde{m}=m(q)+e$ and an application of Fubini's Theorem yield 
 \begin{align}
-	C[m]& =\int_{0}^{1}{\int_{m(q)-\bar{\epsilon}}^{m(q)+\bar{\epsilon}}{(q-A( \widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)d\widetilde{m}}dq} \\
-	& =\int_{-\bar{\epsilon}}^{1+\bar{\epsilon}}{\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-A(\widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)dq}d\widetilde{m}}.
+	C[m]& =\int_{0}^{1}{\int_{m(q)-\bar{e}}^{m(q)+\bar{e}}{(q-A( \widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)d\widetilde{m}}dq} \\
+	& =\int_{-\bar{e}}^{1+\bar{e}}{\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-A(\widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)dq}d\widetilde{m}}.
 \end{align}
+We consider the costs of identity and discrete message functions.
 
 % -----------------------------------------------------------------------------
 % IDENTITY MESSAGE
 \section{Identity Message}
-Define
-\begin{align}
-	I_{(\alpha,\beta,\gamma)}(\widetilde{m})\equiv\int_{\alpha}^{\beta}{q^{\gamma}f(\tilde{m}-q)dq}
-\end{align}
-and
+We consider the identity message function, $m(q)=q$, only for the case in which $q$ is uniformly distributed. 
 \begin{equation}
 	A(\widetilde{m})=
 	\begin{cases}
@@ -68,60 +76,36 @@ where
 	a(\widetilde{m})&=\frac{I_{(\widetilde{m}-\bar{e},\widetilde{m}+\bar{e},1)}(\widetilde{m})}{I_{(\widetilde{m}-\bar{e},\widetilde{m}+\bar{e},0)}(\widetilde{m})}\\
 	\underline{a}(\widetilde{m})&=\frac{I_{(0,\widetilde{m}+\bar{e},1)}(\widetilde{m})}{I_{(0,\widetilde{m}+\bar{e},0)}(\widetilde{m})}
 \end{align}
-Note that the normalizing constant cancels out when computing the conditional expectation. We need three sets of weights and knots. 
-
-The cost of the identity message function is given by
+Note that the normalizing constant cancels out when computing the conditional expectation. The cost of the identity message function is given by
 \begin{align}
-	C[m_{i}]&=\int_{-\bar{e}}^{1+\bar{e}}{\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-A(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}.
+	C[m_{\mathcal{I}}]&=\int_{-\bar{e}}^{1+\bar{e}}{\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-A(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}.
 \end{align}
-where
-\begin{align}
-	q_{+}(\widetilde{m})&=\min\{\widetilde{m}+\bar{e},1\}\\
-	q_{-}(\widetilde{m})&=\max\{\widetilde{m}-\bar{e},0\}
-\end{align}
-Define
+where $q_{+}(\widetilde{m})=\min\{\widetilde{m}+\bar{e},1\}$ and $q_{-}(\widetilde{m})=\max\{\widetilde{m}-\bar{e},0\}$. Define
 \begin{align}
 	\overline{z}&=\int_{1-\bar{e}}^{1+\bar{e}}{\int_{\widetilde{m}-\bar{e}}^{1}{(q-\overline{a}(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}\\
 	z&=\int_{\bar{e}}^{1-\bar{e}}{\int_{\widetilde{m}-\bar{e}}^{\widetilde{m}+\bar{e}}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}\\
 	\underline{z}&=\int_{-\bar{e}}^{\bar{e}}{\int_{0}^{\widetilde{m}+\bar{e}}{(q-\underline{a}(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}
 \end{align}
-\noindent Let $x:[-\overline{e},\overline{e}]\rightarrow[0,1]$ be given by
-\begin{equation}
-	x(e)=\frac{1}{2}\left[1+\frac{e}{\overline{e}}\right]
-\end{equation}
-Consider, as an example, the Beta PDF:
-\begin{equation}
-	f(e)=x(e)^{a-1}(1-x(e))^{b-1}
-\end{equation}
-for constants $a>0$ and $b>0$. 
-
+so that $C[m_{\mathcal{I}}]=\overline{z}+z+\underline{z}$.
 % -----------------------------------------------------------------------------
 % DISCRETE MESSAGE 
 \section{Discrete Message}
-A discrete message with $N+1$ message is given by
+Fix an integer $M\geq1$ and define $K=M\times N$. Consider the partition
 \begin{equation}
-	m_{d}(q)=\sum_{n=0}^{N}\frac{n}{N}\mathbf{1}_{\frac{n}{N+1}\leq q\frac{n+1}{N+1}}.
+	0=x_{0}<x_{1}<\cdots<x_{K}<x_{K+1}=1
 \end{equation}
-where $\bar{e}=1/(2N)$. 
-\begin{align}
-	q_{+}(\widetilde{m})&=\min\{\widetilde{m}+\bar{e},1\}\\
-	q_{-}(\widetilde{m})&=\max\{\widetilde{m}-\bar{e},0\}
-\end{align}
-We have
+of $[0,1]$. For each $i\in\{0,\ldots,K\}$, define $X_{i}=[x_{i},x_{i+1})$. A discrete message with $K+1$ messages is given by
 \begin{equation}
-	I_{\gamma}(k)=\int_{q_{k}}^{q_{k+1}}{q^\gamma f(\widetilde{m}-m(q))dq}
+	m_{\mathcal{D}}(q)=\frac{1}{K}\sum_{i=0}^{K}{\chi_{X_{i}}(q)}.
 \end{equation}
-The receiver knows which message was sent. The action function is
+Note that $q_{+}(\widetilde{m}),q_{-}(\widetilde{m})\in\{x_{0},x_{1},\cdots,x_{K-1},x_{K}\}$ for each $\widetilde{m}\in[-\bar{e},1+\bar{e}]$. The action function is
 \begin{equation}
 	A(\widetilde{m})=
 \end{equation}
-The cost of the discrete message function is given by
+The cost is given by 
 \begin{align}
-	C[m_{d}]=\frac{1}{3}\left(\frac{\bar{e}}{1+2\bar{e}}\right)^{2}
+	C[m_{\mathcal{D}}]&=\int_{-\bar{e}}^{1+\bar{e}}{\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-A(\widetilde{m}))^{2}f(\widetilde{m}-m_{\mathcal{D}}(q))g(q)dq}d\widetilde{m}}.\\
+	&=\int_{-\bar{e}}^{1+\bar{e}}{\int_{x_{j(\widetilde{m})}}^{x_{j(\widetilde{m})+N}}{(q-A(\widetilde{m}))^{2}f(\widetilde{m}-j/K)g(q)dq}d\widetilde{m}}.\\
 \end{align}
-
-% -----------------------------------------------------------------------------
-% SMOOTH MESSAGE 
-\section{Smooth Message}
-	The smooth message function is a discrete message function in which one message corresponds to many 
+Each $\widetilde{m}\in[-\bar{e},1+\bar{e}]$ maps to $M$ potential bins.
 \end{document}
