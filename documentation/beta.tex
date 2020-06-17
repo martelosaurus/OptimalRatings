@@ -1,11 +1,17 @@
 \documentclass{article}
 \usepackage{amsmath,amsfonts}
 \begin{document}
+
+\noindent\textit{I've done the math enough to know the dangers of our second guessing}\\
+\textit{Doom to crumble unless we grow and strengthen our communication.}\\
+
+\hspace{.8\textwidth}$\sim$ Tool
+
 % -----------------------------------------------------------------------------
 % THE MODEL
 \section{The Model}
 
-There are two players, a sender and a receiver, and a state of nature $q\in [ 0,1]$ that is known to the sender but not the receiver. Let $g$ denote the density of $q$. The sender sends an \textit{intended} message $m(q)\in [ 0,1]$. The receiver receives a noisy version of the intended message, which we call the \textit{received} message, $\widetilde{m} =m+\epsilon $. $\epsilon $ is distributed according to a continuous density $ f$ with support $[-\overline{\epsilon },\overline{\epsilon }]$, where for some integer $N\geq2$, $\overline{e}=\frac{1}{2N}$. 
+There are two players, a sender and a receiver, and a state of nature $q\in [ 0,1]$ that is known to the sender but not the receiver. Let $g$ denote the density of $q$. The sender sends an \textit{intended} message $m(q)\in [ 0,1]$. The receiver receives a noisy version of the intended message, which we call the \textit{received} message, $\widetilde{m} =m(q)+e$. $e$ is distributed according to a continuous density $ f$ with support $[-\overline{e },\overline{e }]$, where for some integer $N\geq2$, $\overline{e}=\frac{1}{2N}$. 
 
 We specify $f$ as follows. Let $x:[-\overline{e},\overline{e}]\rightarrow[0,1]$ be given by
 \begin{equation}
@@ -15,46 +21,49 @@ Consider, as an example, the Beta PDF:
 \begin{equation}
 	f(e)=x(e)^{a-1}(1-x(e))^{b-1}
 \end{equation}
-for constants $a>0$ and $b>0$. The receiver then takes an action $A(\widetilde{m})\in[0,1]$. Both sender and receiver have utility over the state, $q$, and the receiver's action, $A$, of 
+for constants $a>0$ and $b>0$. The receiver then takes an action $a(\widetilde{m})\in[0,1]$. Both sender and receiver have utility over the state, $q$, and the receiver's action, $a$, of 
 \begin{equation}
-	U(q,A)=-\frac{1}{2}(q-A)^{2}I(q)
+	U(q,a)=-\frac{1}{2}(q-a)^{2}
 \end{equation}
-Prior to the start of the game, the sender can specify an intended message function $m(q)$ that she will use. The receiver chooses an action based upon the function $m(q)$ and the received message $\widetilde{m}$, and we denote this function $A(\widetilde{m})$. We work backward and start with the optimal action, given $m(q)$ and $\widetilde{m}$.
+Prior to the start of the game, the sender can specify an intended message function $m(q)$ that she will use. The receiver chooses an action based upon the function $m(q)$ and the received message $\widetilde{m}$, and we denote this function $a(\widetilde{m})$. We work backward and start with the optimal action, given $m(q)$ and $\widetilde{m}$.
 
-Fix a message function $m$. Let $Q(\widetilde{m})$ denote the set of all states $q\in [ 0,1]$ such that for some noise $e\in [ -\bar{e},\bar{e}]$, $\widetilde{m}=m(q)+e$. Put differently, 
+Fix a message function $m$. Let $Q(\widetilde{m})$ denote the set of all states $q\in [ 0,1]$ such that for some noise $e\in [ -\bar{e},\bar{e}]$, $\widetilde{m}=m(q)+e$. In set builder notation,
 \begin{equation}
-	Q(\widetilde{m})=\{q\in[0,1]|m(q)-\bar{e}\leq \widetilde{m}\leq m(q)+\bar{e}\}.
+	Q(\widetilde{m})=\{q\in[0,1]\:|\:m(q)-\bar{e}\leq \widetilde{m}\leq m(q)+\bar{e}\}.
 \end{equation}
-Finally, let $q_{+}(\widetilde{m})\equiv \sup Q(\widetilde{m})$, $q_{-}(\widetilde{m})\equiv \inf Q(\widetilde{m})$, and $w(\widetilde{m})\equiv q_{+}(\widetilde{m})-q_{-}(\widetilde{m})$. $q_{+}(\widetilde{m})$ and $ q_{-}(\widetilde{m})$ are the highest and lowest states that could possibly be associated with the received message $\widetilde{m}$. $w(\widetilde{m})\equiv q_{+}(\widetilde{m})-q_{-}( \widetilde{m})$ is the distance between these two bounds. Except near the boundaries of the message space, $w(\widetilde{m})$ is equal to $2\bar{e}$.
-We have
+Finally, define
 \begin{align}
-	I_{\gamma}(k)&=\int_{q_{k}}^{q_{k+1}}{q^\gamma f(\widetilde{m}-m(q))g(q)dq}\\
-	I_{(\alpha,\beta,\gamma)}(\widetilde{m})&\equiv\int_{\alpha}^{\beta}{q^{\gamma}f(\tilde{m}-q)dq}
+	q_{+}(\widetilde{m})&\equiv \sup Q(\widetilde{m})\\
+	q_{-}(\widetilde{m})&\equiv \inf Q(\widetilde{m})
 \end{align}
-Suppose that the receiver receives the message $\widetilde{m}\in [ - \bar{e},1+\bar{e}]$. $q|\widetilde{m}$ has support $[q_{-}( \widetilde{m}),q_{+}(\widetilde{m})]$, and 
-\begin{equation} 
-	g(q|\widetilde{m})=\frac{f(\widetilde{m}-m(q))g(q)}{\int_{0}^{1}{ f(\widetilde{m}-m(t))g(t)dt}}  \label{eq:posterior} 
+$q_{+}(\widetilde{m})$ and $ q_{-}(\widetilde{m})$ are the highest and lowest states that could possibly be associated with the received message $\widetilde{m}$. Define
+\begin{equation}
+	I_{(\alpha,\beta,\gamma)}(\widetilde{m})\equiv\int_{\alpha}^{\beta}{q^{\gamma}f(\tilde{m}-m(q))dq}
+\end{equation}
+Suppose that the receiver receives the message $\widetilde{m}\in [ - \bar{e},1+\bar{e}]$. $q|\widetilde{m}$ has support $[q_{-}( \widetilde{m}),q_{+}(\widetilde{m})]$ and density
+\begin{equation}\label{eq:posterior} 
+	g(q|\widetilde{m})=\frac{f(\widetilde{m}-m(q))g(q)}{\int_{0}^{1}{ f(\widetilde{m}-m(t))g(t)dt}}  
 \end{equation} 
-The receiver's problem is to choose an action that maximizes her expected utility: 
+The receiver's problem is to 
 \begin{equation} 
 	\max_{a(\widetilde{m})}\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{U(q,a)g(q|\widetilde{m})}dq.  
 \end{equation} 
-Because of Assumptions A1 to A3, the receiver's optimal action is simply the expected value of the state, $q$, given the received message $\widetilde{m}$ : 
+The receiver's optimal action is simply the expected value of the state, $q$, given the received message $\widetilde{m}$ : 
 \begin{equation} 
-	A(\widetilde{m})=\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{qg(q| \widetilde{m})}dq.  \label{eq:optact} 
+	a(\widetilde{m})=\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{qg(q| \widetilde{m})}dq.  \label{eq:optact} 
 \end{equation}
 It will be helpful to refer to the \textit{cost }of a message function. Let the cost functional $C$ be given by 
 \begin{equation}
-	C[m]\equiv \int_{0}^{1}{\int_{-\bar{e}}^{\bar{e}}{(q-A(m(q)+e))^{2}f(e)de}dq},  
+	C[m]\equiv \int_{0}^{1}{\int_{-\bar{e}}^{\bar{e}}{(q-a(m(q)+e))^{2}f(e)de}dq},  
 \end{equation}
-where $A$ is the receiver's optimal action from Equation (\ref{eq:optact}). $C[m]$ is the expected loss for a given message function $m$. The integrand is the loss for a given state $q$ and action $A(\widetilde{m})$. The interior integral integrates over the possible exogenous errors, to generate the expected loss given the state. The exterior integral integrates over possible states. Therefore, the \textit{sender's problem} is to choose a message function $m$ that minimizes $C[m]$: 
+where $a$ is the receiver's optimal action from Equation (\ref{eq:optact}). $C[m]$ is the expected loss for a given message function $m$. The integrand is the loss for a given state $q$ and action $a(\widetilde{m})$. The interior integral integrates over the possible exogenous errors, to generate the expected loss given the state. The exterior integral integrates over possible states. Therefore, the \textit{sender's problem} is to choose a message function $m$ that minimizes $C[m]$: 
 \begin{equation}
 	\min_{m\in M}C[m]
 \end{equation}
 where $M$ is the space of weakly increasing piece-wise continuous functions on $[0,1]$. The change of variables $\widetilde{m}=m(q)+e$ and an application of Fubini's Theorem yield 
 \begin{align}
-	C[m]& =\int_{0}^{1}{\int_{m(q)-\bar{e}}^{m(q)+\bar{e}}{(q-A( \widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)d\widetilde{m}}dq} \\
-	& =\int_{-\bar{e}}^{1+\bar{e}}{\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-A(\widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)dq}d\widetilde{m}}.
+	C[m]& =\int_{0}^{1}{\int_{m(q)-\bar{e}}^{m(q)+\bar{e}}{(q-a( \widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)d\widetilde{m}}dq} \\
+	& =\int_{-\bar{e}}^{1+\bar{e}}{\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)dq}d\widetilde{m}}.
 \end{align}
 We consider the costs of identity and discrete message functions.
 
@@ -63,7 +72,7 @@ We consider the costs of identity and discrete message functions.
 \section{Identity Message}
 We consider the identity message function, $m(q)=q$, only for the case in which $q$ is uniformly distributed. 
 \begin{equation}
-	A(\widetilde{m})=
+	a(\widetilde{m})=
 	\begin{cases}
 		\overline{a}(\widetilde{m}) & \text{ if } 1-\overline{e}<\widetilde{m}\leq 1+\overline{e}\\
 		a(\widetilde{m}) & \text{ if } \overline{e}<\widetilde{m}\leq 1-\overline{e}\\
@@ -78,7 +87,7 @@ where
 \end{align}
 Note that the normalizing constant cancels out when computing the conditional expectation. The cost of the identity message function is given by
 \begin{align}
-	C[m_{\mathcal{I}}]&=\int_{-\bar{e}}^{1+\bar{e}}{\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-A(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}.
+	C[m_{\mathcal{I}}]&=\int_{-\bar{e}}^{1+\bar{e}}{\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}.
 \end{align}
 where $q_{+}(\widetilde{m})=\min\{\widetilde{m}+\bar{e},1\}$ and $q_{-}(\widetilde{m})=\max\{\widetilde{m}-\bar{e},0\}$. Define
 \begin{align}
@@ -91,21 +100,34 @@ so that $C[m_{\mathcal{I}}]=\overline{z}+z+\underline{z}$.
 % DISCRETE MESSAGE 
 \section{Discrete Message}
 Fix an integer $M\geq1$ and define $K=M\times N$. Consider the partition
-\begin{equation}
+\begin{equation}\label{eq:partition}
 	0=x_{0}<x_{1}<\cdots<x_{K}<x_{K+1}=1
 \end{equation}
 of $[0,1]$. For each $i\in\{0,\ldots,K\}$, define $X_{i}=[x_{i},x_{i+1})$. A discrete message with $K+1$ messages is given by
 \begin{equation}
 	m_{\mathcal{D}}(q)=\frac{1}{K}\sum_{i=0}^{K}{\chi_{X_{i}}(q)}.
 \end{equation}
-Note that $q_{+}(\widetilde{m}),q_{-}(\widetilde{m})\in\{x_{0},x_{1},\cdots,x_{K-1},x_{K}\}$ for each $\widetilde{m}\in[-\bar{e},1+\bar{e}]$. The action function is
+Each $\widetilde{m}\in[-\bar{e},1+\bar{e}]$ maps to $M$ potential bins. The action function is
 \begin{equation}
-	A(\widetilde{m})=
+	a(\widetilde{m})=
 \end{equation}
+Let $j_{+},j_{-}:[-\bar{e},1+\bar{e}]\rightarrow\{0,\ldots,K\}$ be given by
+\begin{align}
+	j_{+}(\widetilde{m})&=\min\{\lfloor \widetilde{m}K\rfloor+M,K\}\\
+	j_{-}(\widetilde{m})&=\max\{0,\lfloor \widetilde{m}K\rfloor-M\}
+\end{align}
+Note that 
+\begin{align}
+	q_{+}(\widetilde{m})&=x_{j_{+}(\widetilde{m})}\\
+	q_{-}(\widetilde{m})&=x_{j_{-}(\widetilde{m})}
+\end{align}
 The cost is given by 
 \begin{align}
-	C[m_{\mathcal{D}}]&=\int_{-\bar{e}}^{1+\bar{e}}{\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-A(\widetilde{m}))^{2}f(\widetilde{m}-m_{\mathcal{D}}(q))g(q)dq}d\widetilde{m}}.\\
-	&=\int_{-\bar{e}}^{1+\bar{e}}{\int_{x_{j(\widetilde{m})}}^{x_{j(\widetilde{m})+N}}{(q-A(\widetilde{m}))^{2}f(\widetilde{m}-j/K)g(q)dq}d\widetilde{m}}.\\
+	C[m_{\mathcal{D}}]&=\int_{-\bar{e}}^{1+\bar{e}}{\int_{x_{j_{-}(\widetilde{m})}}^{x_{j_{+}(\widetilde{m})}}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-m_{\mathcal{D}}(q))g(q)dq}d\widetilde{m}}.\\
+	&=\sum_{j=0}^{j=K}{\int_{x_{j}}^{x_{j}}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-m_{\mathcal{D}}(q))g(q)dq}d\widetilde{m}}.\\
 \end{align}
-Each $\widetilde{m}\in[-\bar{e},1+\bar{e}]$ maps to $M$ potential bins.
+It is sufficient to choose the partition in Equation \ref{eq:partition}. The first-order conditions are
+\begin{equation}
+	x
+\end{equation}
 \end{document}
