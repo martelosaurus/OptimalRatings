@@ -38,25 +38,25 @@ Finally, define
 \end{align}
 $q_{+}(\widetilde{m})$ and $ q_{-}(\widetilde{m})$ are the highest and lowest states that could possibly be associated with the received message $\widetilde{m}$. Define
 \begin{equation}
-	I(\widetilde{m};\alpha,\beta,\gamma)\equiv\int_{\alpha}^{\beta}{q^{\gamma}f(\tilde{m}-m(q))dq}
+	I(\widetilde{m};\alpha,\beta,\gamma)\equiv\int\displaylimits_{\alpha}^{\beta}{q^{\gamma}f(\tilde{m}-m(q))dq}
 \end{equation}
 Suppose that the receiver receives the message $\widetilde{m}\in [ - \bar{e},1+\bar{e}]$. $q|\widetilde{m}$ has support $[q_{-}( \widetilde{m}),q_{+}(\widetilde{m})]$ and density
 \begin{equation}\label{eq:posterior} 
-	g(q|\widetilde{m})=\frac{f(\widetilde{m}-m(q))g(q)}{\int_{0}^{1}{ f(\widetilde{m}-m(t))g(t)dt}}  
+	g(q|\widetilde{m})=\frac{f(\widetilde{m}-m(q))g(q)}{\int\displaylimits_{0}^{1}{ f(\widetilde{m}-m(t))g(t)dt}}  
 \end{equation} 
 The receiver's problem is to 
 \begin{equation} 
-	\max_{a(\widetilde{m})}\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{U(q,a)g(q|\widetilde{m})}dq.  
+	\max_{a(\widetilde{m})}\int\displaylimits_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{U(q,a)g(q|\widetilde{m})}dq.  
 \end{equation} 
 The receiver's optimal action is simply the expected value of the state, $q$, given the received message $\widetilde{m}$ : 
 \begin{equation}
-	a(\widetilde{m})=\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{qg(q| \widetilde{m})dq}=\frac{I(\widetilde{m};q_{-}(\widetilde{m}),q_{+}(\widetilde{m}),1)}{I(\widetilde{m};q_{-}(\widetilde{m}),q_{+}(\widetilde{m}),0)}\label{eq:optact} 
+	a(\widetilde{m})=\int\displaylimits_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{qg(q| \widetilde{m})dq}=\frac{I(\widetilde{m};q_{-}(\widetilde{m}),q_{+}(\widetilde{m}),1)}{I(\widetilde{m};q_{-}(\widetilde{m}),q_{+}(\widetilde{m}),0)}\label{eq:optact} 
 \end{equation}
 
 
 It will be helpful to refer to the \textit{cost }of a message function. Let the cost functional $C$ be given by 
 \begin{equation}
-	C[m]\equiv \int_{0}^{1}{\int_{-\bar{e}}^{\bar{e}}{(q-a(m(q)+e))^{2}f(e)de}dq},  
+	C[m]\equiv \int\displaylimits_{0}^{1}{\int\displaylimits_{-\bar{e}}^{\bar{e}}{(q-a(m(q)+e))^{2}f(e)de}dq},  
 \end{equation}
 where $a$ is the receiver's optimal action from Equation (\ref{eq:optact}). $C[m]$ is the expected loss for a given message function $m$. The integrand is the loss for a given state $q$ and action $a(\widetilde{m})$. The interior integral integrates over the possible exogenous errors, to generate the expected loss given the state. The exterior integral integrates over possible states. Therefore, the \textit{sender's problem} is to choose a message function $m$ that minimizes $C[m]$: 
 \begin{equation}
@@ -64,8 +64,8 @@ where $a$ is the receiver's optimal action from Equation (\ref{eq:optact}). $C[m
 \end{equation}
 where $M$ is the space of weakly increasing piece-wise continuous functions on $[0,1]$. The change of variables $\widetilde{m}=m(q)+e$ and an application of Fubini's Theorem yield 
 \begin{align}
-	C[m]& =\int_{0}^{1}{\int_{m(q)-\bar{e}}^{m(q)+\bar{e}}{(q-a( \widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)d\widetilde{m}}dq} \\
-	& =\int_{-\bar{e}}^{1+\bar{e}}{\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)dq}d\widetilde{m}}.
+	C[m]& =\int\displaylimits_{0}^{1}{\int\displaylimits_{m(q)-\bar{e}}^{m(q)+\bar{e}}{(q-a( \widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)d\widetilde{m}}dq} \\
+	& =\int\displaylimits_{-\bar{e}}^{1+\bar{e}}{\int\displaylimits_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)dq}d\widetilde{m}}.
 \end{align}
 We consider the costs of identity (``$\mathcal{I}$'') and discrete (``$\mathcal{D}$'') message functions.
 
@@ -89,19 +89,19 @@ where
 \end{align}
 Note that the normalizing constant cancels out when computing the conditional expectation. The cost of the identity message function is given by
 \begin{align}
-	C[m_{\mathcal{I}}]&=\int_{-\bar{e}}^{1+\bar{e}}{\int_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}.
+	C[m_{\mathcal{I}}]&=\int\displaylimits_{-\bar{e}}^{1+\bar{e}}{\int\displaylimits_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}.
 \end{align}
 where $q_{+}(\widetilde{m})=\min\{\widetilde{m}+\bar{e},1\}$ and $q_{-}(\widetilde{m})=\max\{\widetilde{m}-\bar{e},0\}$. Define
 \begin{align}
-	\overline{z}&=\int_{1-\bar{e}}^{1+\bar{e}}{\int_{\widetilde{m}-\bar{e}}^{1}{(q-\overline{a}(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}\\
-	z&=\int_{\bar{e}}^{1-\bar{e}}{\int_{\widetilde{m}-\bar{e}}^{\widetilde{m}+\bar{e}}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}\\
-	\underline{z}&=\int_{-\bar{e}}^{\bar{e}}{\int_{0}^{\widetilde{m}+\bar{e}}{(q-\underline{a}(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}
+	\overline{z}&=\int\displaylimits_{1-\bar{e}}^{1+\bar{e}}{\int\displaylimits_{\widetilde{m}-\bar{e}}^{1}{(q-\overline{a}(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}\\
+	z&=\int\displaylimits_{\bar{e}}^{1-\bar{e}}{\int\displaylimits_{\widetilde{m}-\bar{e}}^{\widetilde{m}+\bar{e}}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}\\
+	\underline{z}&=\int\displaylimits_{-\bar{e}}^{\bar{e}}{\int\displaylimits_{0}^{\widetilde{m}+\bar{e}}{(q-\underline{a}(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}
 \end{align}
 so that $C[m_{\mathcal{I}}]=\overline{z}+z+\underline{z}$.
 % -----------------------------------------------------------------------------
 % DISCRETE MESSAGE 
 \section{Discrete Message}
-Fix an integer $M\geq1$ and define $K=M\times N$. Consider the partition
+Fix an integer $M\geq1$ and define $K=M\times N$. Define $d=\frac{1}{2K}$. Consider the partition
 \begin{equation}\label{eq:partition}
 	0=x_{0}<x_{1}<\cdots<x_{K}<x_{K+1}=1
 \end{equation}
@@ -109,27 +109,25 @@ of $[0,1]$. For each $i\in\{0,\ldots,K\}$, define $X_{i}=[x_{i},x_{i+1})$. A dis
 \begin{equation}
 	m_{\mathcal{D}}(q)=\frac{1}{K}\sum_{i=0}^{K}{\chi_{X_{i}}(q)}.
 \end{equation}
-Let $j_{+},j_{-}:[-\bar{e},1+\bar{e}]\rightarrow\{0,\ldots,K\}$ be given by
+Let $k_{+},k_{-}:[-\bar{e},1+\bar{e}]\rightarrow\{0,\ldots,K\}$ be given by
 \begin{align}
-	j_{+}(\widetilde{m})&=\min\{\lfloor \widetilde{m}K\rfloor+M,K\}\\
-	j_{-}(\widetilde{m})&=\max\{0,\lfloor \widetilde{m}K\rfloor-M\}
+	k_{+}(\widetilde{m})&=\min\{\lfloor \widetilde{m}K\rfloor+M,K\}\\
+	k_{-}(\widetilde{m})&=\max\{0,\lfloor \widetilde{m}K\rfloor-M\}
 \end{align}
 Note that 
 \begin{align}
-	q_{+}(\widetilde{m})&=x_{j_{+}(\widetilde{m})}\\
-	q_{-}(\widetilde{m})&=x_{j_{-}(\widetilde{m})}
+	q_{+}(\widetilde{m})&=x_{k_{+}(\widetilde{m})}\\
+	q_{-}(\widetilde{m})&=x_{k_{-}(\widetilde{m})}
 \end{align}
-The action 
+The receiver takes the action 
 \begin{equation}
 	a(\widetilde{m})=\frac{I(\widetilde{m};x_{j},x_{j+1},1)}{I(\widetilde{m};x_{j},x_{j+1},0)}
 \end{equation}
 The cost is given by 
 \begin{align}
-	C[m_{\mathcal{D}}]&=\int_{-\bar{e}}^{1+\bar{e}}{\int_{x_{j_{-}(\widetilde{m})}}^{x_{j_{+}(\widetilde{m})}}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-m_{\mathcal{D}}(q))g(q)dq}d\widetilde{m}}.\\
-	&=\sum_{j=0}^{K}{\int_{x_{j}}^{x_{j}}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-j/K)g(q)dq}}.\\
+	C[m_{\mathcal{D}}]&=\int\displaylimits_{-\bar{e}}^{1+\bar{e}}{\left[\int\displaylimits_{x_{k_{-}(\widetilde{m})}}^{x_{k_{+}(\widetilde{m})}}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-m_{\mathcal{D}}(q))g(q)dq}d\widetilde{m}\right]}.\\
+	&=\int\displaylimits_{-\bar{e}}^{1+\bar{e}}{\left[\sum_{j=k_{-}(\widetilde{m})}^{k_{+}(\widetilde{m})-1}{\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a(\widetilde{m}))^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}\right]\widetilde{m}}\\
+	&=\sum_{i=-M}^{M+K-1}{\int\displaylimits_{\bar{d}i}^{\bar{d}(1+i)}{\left[\sum_{j=k_{-}(\widetilde{m})}^{k_{+}(\widetilde{m})-1}{\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a(\widetilde{m}))^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}\widetilde{m}}\right]}}\\
 \end{align}
 It is sufficient to choose the partition $x_{0},\ldots,x_{K+1}$ in Equation \ref{eq:partition}. The first-order for $x_{j}$ is 
-\begin{equation}
-	0=\sum_{j=0}^{M}{\frac{I(\widetilde{m};x_{j},x_{j+1},1)}{I(\widetilde{m};x_{j},x_{j+1},0)}}
-\end{equation}
 \end{document}
