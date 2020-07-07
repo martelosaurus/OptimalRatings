@@ -1,12 +1,12 @@
-\documentclass{article}
-\usepackage{amsmath,amsfonts}
+\documentclass[12pt]{article}
+\usepackage{amsmath,amsfonts,fullpage,setspace}
 \begin{document}
+\onehalfspacing
 
-\noindent\textit{I've done the math enough to know the dangers of our second guessing}\\
-\textit{Doomed to crumble unless we grow and strengthen our communication}\\
+%\noindent\textit{I've done the math enough to know the dangers of our second guessing}\\
+%\textit{Doomed to crumble unless we grow and strengthen our communication}\\
 
-\hspace{.8\textwidth}$\sim$ Tool
-
+%\hspace{.8\textwidth}$\sim$ Tool
 % -----------------------------------------------------------------------------
 % THE MODEL
 \section{The Model}
@@ -38,7 +38,7 @@ Finally, define
 \end{align}
 $q_{+}(\widetilde{m})$ and $ q_{-}(\widetilde{m})$ are the highest and lowest states that could possibly be associated with the received message $\widetilde{m}$. Define
 \begin{equation}
-	I(\widetilde{m};\alpha,\beta,\gamma)\equiv\int\displaylimits_{\alpha}^{\beta}{q^{\gamma}f(\tilde{m}-m(q))dq}
+	I(\widetilde{m};\alpha,\beta,\gamma)\equiv\int\displaylimits_{\alpha}^{\beta}{q^{\gamma}f(\tilde{m}-m(q))g(q)dq}
 \end{equation}
 Suppose that the receiver receives the message $\widetilde{m}\in [ - \bar{e},1+\bar{e}]$. $q|\widetilde{m}$ has support $[q_{-}( \widetilde{m}),q_{+}(\widetilde{m})]$ and density
 \begin{equation}\label{eq:posterior} 
@@ -121,13 +121,27 @@ Note that
 \end{align}
 The receiver takes the action 
 \begin{equation}
-	a(\widetilde{m})=\frac{I(\widetilde{m};x_{j},x_{j+1},1)}{I(\widetilde{m};x_{j},x_{j+1},0)}
+	a(\widetilde{m};a,b)=\frac{I(\widetilde{m};a,b,1)}{I(\widetilde{m};a,b,0)}
 \end{equation}
 The cost is given by 
 \begin{align}
-	C[m_{\mathcal{D}}]&=\int\displaylimits_{-\bar{e}}^{1+\bar{e}}{\left[\int\displaylimits_{x_{k_{-}(\widetilde{m})}}^{x_{k_{+}(\widetilde{m})}}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-m_{\mathcal{D}}(q))g(q)dq}d\widetilde{m}\right]}.\\
-	&=\int\displaylimits_{-\bar{e}}^{1+\bar{e}}{\left[\sum_{j=k_{-}(\widetilde{m})}^{k_{+}(\widetilde{m})-1}{\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a(\widetilde{m}))^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}\right]\widetilde{m}}\\
-	&=\sum_{i=-M}^{M+K-1}{\int\displaylimits_{\bar{d}i}^{\bar{d}(1+i)}{\left[\sum_{j=k_{-}(\widetilde{m})}^{k_{+}(\widetilde{m})-1}{\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a(\widetilde{m}))^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}\widetilde{m}}\right]}}\\
+	C[m_{\mathcal{D}}]&=\int\displaylimits_{-\bar{e}}^{1+\bar{e}}{\left[\int\displaylimits_{x_{k_{-}(\widetilde{m})}}^{x_{k_{+}(\widetilde{m})}}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-m_{\mathcal{D}}(q))g(q)dq}\right]d\widetilde{m}}.\\
+	&=\int\displaylimits_{-\bar{e}}^{1+\bar{e}}{\left[\sum_{j=k_{-}(\widetilde{m})}^{k_{+}(\widetilde{m})-1}{\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a(\widetilde{m}))^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}\right]d\widetilde{m}}\\
+	&=\sum_{i=-M}^{K-1}{\int\displaylimits_{2\bar{d}i}^{2\bar{d}(1+i)}{\left[\sum_{j=k_{-}(2\bar{d}i)}^{k_{+}(2\bar{d}i)-1}{\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a_{i})^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}\right]d\widetilde{m}}}\\
+	&=\sum_{i=-M}^{K-1}{\int\displaylimits_{2\bar{d}i}^{2\bar{d}(1+i)}{\left[\sum_{j=\max\{0,i-M\}}^{\min\{i+M,K\}-1}{\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a_{i})^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}\right]d\widetilde{m}}}\\
+	&=\sum_{i=-M}^{K-1}{\sum_{j=\max\{0,i-M\}}^{\min\{i+M,K\}-1}{\left[\int\displaylimits_{2\bar{d}i}^{2\bar{d}(1+i)}{\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a_{i})^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}\right]d\widetilde{m}}}
 \end{align}
-It is sufficient to choose the partition $x_{0},\ldots,x_{K+1}$ in Equation \ref{eq:partition}. The first-order for $x_{j}$ is 
+There are 
+\begin{equation}
+	\frac{1+2\bar{e}}{2\bar{d}}=M+K
+\end{equation}
+unique actions (corresponding to $M+K$ subintervals of $[-\bar{e},1+\bar{e}]$). Note that 
+\begin{align}
+	k_{+}(2\bar{d}i)&=\min\{i+M,K\}\\
+	k_{-}(2\bar{d}i)&=\max\{0,i-M\}
+\end{align}
+Note that
+\begin{equation}
+	a_{i}=
+\end{equation}
 \end{document}
