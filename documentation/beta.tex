@@ -107,9 +107,9 @@ Fix an integer $M\geq1$ and define $K=M\times N$. Define $\bar{d}=\frac{1}{2K}$.
 \end{equation}
 of $[0,1]$. For each $i\in\{0,\ldots,K\}$, define $X_{i}=[x_{i},x_{i+1})$. A discrete message with $K+1$ messages is given by
 \begin{equation}
-	m_{\mathcal{D}}(q)=\frac{1}{K}\sum_{i=0}^{K}{\chi_{X_{i}}(q)}.
+	m_{\mathcal{D}}(q)=\sum_{i=0}^{K}{\tfrac{i}{K}\chi_{X_{i}}(q)}
 \end{equation}
-Let $k_{+},k_{-}:[-\bar{e},1+\bar{e}]\rightarrow\{0,\ldots,K\}$ be given by
+(where $\chi$ is the characteristic function). Let $k_{+},k_{-}:[-\bar{e},1+\bar{e}]\rightarrow\{0,\ldots,K\}$ be given by
 \begin{align}
 	k_{+}(\widetilde{m})&=\min\{\lfloor \widetilde{m}K\rfloor+M,K\}\\
 	k_{-}(\widetilde{m})&=\max\{0,\lfloor \widetilde{m}K\rfloor-M\}
@@ -119,10 +119,6 @@ Note that
 	q_{+}(\widetilde{m})&=x_{k_{+}(\widetilde{m})}\\
 	q_{-}(\widetilde{m})&=x_{k_{-}(\widetilde{m})}
 \end{align}
-The receiver takes the action 
-\begin{equation}
-	a(\widetilde{m};a,b)=\frac{I(\widetilde{m};a,b,1)}{I(\widetilde{m};a,b,0)}
-\end{equation}
 There are 
 \begin{equation}
 	\frac{1+2\bar{e}}{2\bar{d}}=M+K
@@ -134,38 +130,42 @@ unique actions (corresponding to $M+K$ equispaced subintervals of $[-\bar{e},1+\
 \end{align}
 so that for each $y\in Y_{i}$, 
 \begin{align}
-	k_{+}(y)&=\min\{i+M,K+1\}\\
-	k_{-}(y)&=\max\{0,i\}
+	k_{+}(y)&=k_{+}(y_{i})=\min\{i+M,K+1\}\\
+	k_{-}(y)&=k_{-}(y_{i})=\max\{0,i+1\}
 \end{align}
+and
+\begin{equation}
+	\alpha_{i,j}=\int_{y_{i}}^{y_{i+1}}{f\left(\widetilde{m}-\tfrac{j}{K}\right)d\widetilde{m}}
+\end{equation}
 The cost is given by 
 \begin{align}
 	C[m_{\mathcal{D}}]&=\int\displaylimits_{-\bar{e}}^{1+\bar{e}}{\left[\int\displaylimits_{x_{k_{-}(\widetilde{m})}}^{x_{k_{+}(\widetilde{m})}}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-m_{\mathcal{D}}(q))g(q)dq}\right]d\widetilde{m}}.\\
 	&=\int\displaylimits_{-\bar{e}}^{1+\bar{e}}{\left[\sum_{j=k_{-}(\widetilde{m})}^{k_{+}(\widetilde{m})-1}{\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a(\widetilde{m}))^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}\right]d\widetilde{m}}\\
 	&=\sum_{i=-M}^{K-1}{\int\displaylimits_{y_{i}}^{y_{i+1}}{\left[\sum_{j=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a_{i})^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}\right]d\widetilde{m}}}\\
-	&=\sum_{i=-M}^{K-1}{\int\displaylimits_{y_{i}}^{y_{i+1}}{\left[\sum_{j=\max\{0,i+1\}}^{\min\{i+M,K-1\}}{\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a_{i})^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}\right]d\widetilde{m}}}\\
-	&=\sum_{i=-M}^{K-1}{\sum_{j=\max\{0,i+1\}}^{\min\{i+M,K-1\}}{\left[\int\displaylimits_{y_{i}}^{y_{i+1}}{\:\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a_{i})^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}d\widetilde{m}\right]}}
+	&=\sum_{i=-M}^{K-1}{\int\displaylimits_{y_{i}}^{y_{i+1}}{\left[\sum_{j=k_{-}(y_{-})}^{k_{+}(y_{i})-1}{\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a_{i})^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}\right]d\widetilde{m}}}\\
+	&=\sum_{i=-M}^{K-1}{\sum_{j=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\left[\int\displaylimits_{y_{i}}^{y_{i+1}}{\:\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a_{i})^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}d\widetilde{m}\right]}}\\
+	&=\sum_{i=-M}^{K-1}{\sum_{j=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\left[\alpha_{i,j}\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a_{i})^{2}g(q)dq}\right]}}
 \end{align}
-from which it follows (via a first-order condition) that
+Note that $C[m_{\mathcal{D}}]$ is the sum of $M(K+1)$ terms. The first-order condition for $a_{i}$ is 
+\begin{align}\label{foc_a}
+	0&=\frac{\partial}{\partial a_{i}}C[m_{\mathcal{D}}]=-2\sum_{k=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\alpha_{i,k}\int\limits_{x_{k}}^{x_{k+1}}{(q-a_{i}(x))g(q)dq}}
+\end{align}
+and $x=(x_{0},\ldots,x_{K+1})$. Now one may alternatively write $C[m_{\mathcal{D}}]$ as
+\begin{align}
+	C[m_{\mathcal{D}}]&=\sum_{k=0}^{K}{\sum_{i=k-M}^{k-1}{\left[\alpha_{i,k}\int\displaylimits_{x_{k}}^{x_{k+1}}{(q-a_{i}(x))^{2}g(q)dq}\right]}}
+\end{align}
+so that the first-order condition for $x_{j}$ is
+\begin{align}
+	0=\frac{\partial}{\partial x_{j}}C[m_{\mathcal{D}}]&=\sum_{i=j-1-M}^{j-2}{\alpha_{i,j-1}(x_{j}-a_{i}(x))^{2}g(x_{j})}-\sum_{i=j-M}^{j-1}{\alpha_{i,j}(x_{j}-a_{i}(x))^{2}g(x_{j})}\notag\\
+	&\hspace{.5in}-2\sum_{i=-M}^{K-1}{\sum_{k=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\left[\alpha_{i,k}\int\displaylimits_{x_{k}}^{x_{k+1}}{(q-a_{i}(x))g(q)dq}\right]\frac{\partial a_{i}}{\partial x_{j}}}}
+\end{align}
+and hence
+\begin{align}
+	0&=\sum_{i=j-1-M}^{j-2}{\alpha_{i,j-1}(x_{j}-a_{i}(x))^{2}}-\sum_{i=j-M}^{j-1}{\alpha_{i,j}(x_{j}-a_{i}(x))^{2}}\\
+	&=\sum_{i=j-1-M}^{j-2}{\left[\alpha_{i,j-1}(x_{j}-a_{i}(x))^{2}-\alpha_{i+1,j}(x_{j}-a_{i+1}(x))^{2}\right]}
+\end{align}
+Note that when $M=1$, we have $x_{j}=(a_{j-1}(x)+a_{j-2}(x))/2$. If $g(q)=1$, then the optimal action is given by
 \begin{equation}
-	a_{i}(x)=\frac{\mathcal{I}_{i,1}(x)}{\mathcal{I}_{i,0}(x)}
+	a_{i}(x)=\frac{\sum_{k=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\int_{x_{k}}^{x_{k+1}}{qdq}}}{\sum_{k=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\int_{x_{k}}^{x_{k+1}}{dq}}}=\frac{\sum_{k=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{(x_{k+1}-x_{k})^{2}}}{2(x_{k_{+}(y_{i})}-x_{k_{+}(y_{i})})}
 \end{equation}
-where
-\begin{equation}
-	\mathcal{I}_{i,k}(x)=\sum_{j=\max\{0,i+1\}}^{\min\{i+M,K-1\}}{\left[\int\displaylimits_{y_{i}}^{y_{i+1}}{\:\int\displaylimits_{x_{j}}^{x_{j+1}}{q^{k}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}d\widetilde{m}\right]}
-\end{equation}
-and $x=(x_{0},\ldots,x_{K+1})$. Now one may alternative write $C[m_{\mathcal{D}}]$ as
-\begin{align}
-	C[m_{\mathcal{D}}]&=\sum_{j=0}^{K-1}{\sum_{i=j-M}^{j-1}{\left[\int\displaylimits_{y_{i}}^{y_{i+1}}{\:\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a_{i}(x))^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}d\widetilde{m}\right]}}
-\end{align}
-so that for $j\in\{1,\ldots,K\}$,
-\begin{align}
-	\frac{\partial }{\partial x_{j}}C[m_{\mathcal{D}}]&=-\sum_{i=j-M}^{j-1}{\left[\int\displaylimits_{y_{i}}^{y_{i+1}}(x_{j}-a_{i}(x))^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(x_{j})d\widetilde{m}\right]}\notag\\
-	&\hspace{.5in}-2\sum_{i=j-M}^{j-1}{\left[\int\displaylimits_{y_{i}}^{y_{i+1}}{\:\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a_{i}(x))f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}d\widetilde{m}\right]}\frac{\partial a_{i}}{\partial x_{j}}
-\end{align}
-In the special case that 
-\begin{align}
-	f(e)&=(2\bar{e})^{-1}\chi_{[-\bar{e},\bar{e}]}(x)\\
-	g(x)&=\chi_{[0,1]}(x)
-\end{align}
-we obtain
 \end{document}
