@@ -144,7 +144,7 @@ so that for each $y\in Y_{i}$,
 \subsection{Message Cost}
 Note that $y_{i+1}=y_{i}+2\bar{d}$. For $i\in\{-M,\ldots,K-1\}$ and $j\in\{0,\ldots,K+1\}$, let
 \begin{align}
-	\alpha_{i,j}&\equiv\int_{y_{i}}^{y_{i+1}}{f(\widetilde{m}-2\bar{d}j)d\widetilde{m}}\\
+	\alpha_{i,j}&\equiv\int_{y_{i}}^{y_{i+1}}{f(\widetilde{m}-2\bar{d}j)d\widetilde{m}}\label{eq:alpha}\\
 	&=\int_{y_{i-1}+2\bar{d}}^{y_{i}+2\bar{d}}{f((\widetilde{m}+2\bar{d})-2\bar{d}(j+1))d\widetilde{m}}\\
 	&=\int_{y_{i-1}}^{y_{i}}{f(\widetilde{m}-2\bar{d}(j+1))d\widetilde{m}}=\alpha_{i-1,j+1}
 \end{align}
@@ -225,4 +225,15 @@ so that
 	0=\mathcal{G}(x,a(x)):=C(x\circ x)+2a(x)\circ (Cx)
 \end{equation}
 where $\mathcal{G}:\mathbb{R}^{K+2}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{M+K}$. $\mathcal{F}(x,a(x))=0$ is a system of $K$ equations and $\mathcal{G}(x,a(x))=0$ a system of $K+M$ equations. $x$ contains $K$ unknowns ($x_{0}=0$ and $x_{K+1}=1$) and $a(x)$ $K+M$ unknowns. In total, there are $M+2K$ equations and $M+2K$ unknowns. 
+% ---------------------------------------------------------------------------- %
+% uniformly distributed error
+\subsection{Uniformly Distributed Error}
+In what follows, suppose that $f(q)=N\mathbf{\chi}_{[-\bar{e},\bar{e}]}(e)$. Equation \ref{eq:alpha} becomes
+\begin{align}
+	\alpha_{i,j}&=\int_{y_{i}}^{y_{i+1}}{f(\widetilde{m}-2\bar{d}j)d\widetilde{m}}\\
+	&=\int_{y_{i}}^{y_{i+1}}{N\mathbf{1}_{-\bar{e}\leq\widetilde{m}-2\bar{d}j\leq\bar{e}}d\widetilde{m}}\\
+	&=\int_{y_{i}}^{y_{i+1}}{N\mathbf{1}_{2\bar{d}j-\bar{e}\leq\widetilde{m}\leq 2\bar{d}j+\bar{e}}d\widetilde{m}}\\
+	&=\int_{y_{i}}^{y_{i+1}}{N\mathbf{1}_{y_{j-M}\leq\widetilde{m}\leq y_{j}}d\widetilde{m}}\\
+	&=\frac{1}{M}\mathbf{1}_{i=j-M}
+\end{align}
 \end{document}
