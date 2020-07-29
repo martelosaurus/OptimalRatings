@@ -1,22 +1,49 @@
 #include <stdio.h>
-#include <stdlib.h>
+#define M 5
+#define N 5
 
 int k_up(int i) {
-	return i+M;
+	return 0;
 };
 
 int k_dn(int i) {
-	return ;
+	return 0;
+};
+
+int print_matrix(float **A,int m,int n) {
+	for (int i = 0; i < m; i++)
+		for (int j = 0; j < n; j++)
+			printf("%f ",A[i,j]);
+		printf("\n");
+		return 0;
 };
 
 int main(void) {
 
 	// request M and N
-	M = 5;
-	N = 5;
+	//int M, N;
+	//printf("M:");
+	//scanf("%d",&M);
+	//printf("N:");
+	//scanf("%d",&N);
+	
+	float A[M][N];
+	for (int i = 0; i < M; i++)
+		for (int j = 0; j < N; j++)
+			A[i,j] = rand(); 
 
-	Z = 
+	// number of interior breakpoints
+	int K = M*N;
+	printf("%d",K);
 
+	print_matrix(A,M,N);
+
+	// allocate space for matrices
+	//float **A = malloc((M+K)*sizeof(**char));
+	//float **B = malloc(sizeof(**char));
+	//float **C = malloc(sizeof(**char));
+
+	/*
 	// method 1
 	float z = 0.;
 	for (int i=-M; i<K; i++) {
@@ -26,7 +53,10 @@ int main(void) {
 		}
 	}
 	
+	*/
 	// method 2
+	
+	// print matrices
 
 	return 0;
 };

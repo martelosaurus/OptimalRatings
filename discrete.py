@@ -1,26 +1,28 @@
+import utils 
+
 class Discrete(Message):
 
-	def __init__(self):
+    def __init__(self,N,M):
 
-		#self.knots = _knots(x)
+        # number of knots
+        self.M = M
+        self.N = N
 
-	def cost(self,N):
-		"""
-		Cost of discrete message function 
-		
-		Parameters
-		----------
-		N : int
-			There are N+1 messages
+        # knot spacing
+        self.e_bar = .5/N
+        self.d_bar = .5/K
 
-		Notes
-		-----
-		It's important to note that the discrete message function has the same
-		cost regardless of the error distribution. Morever, if the importance 
-		function is constant, then the cost is given by
+        # knots
+        self.y
 
-			cost[discrete] = (1./3.)*(e_bar**2.)/(1.+2.*e_bar)**2.
+    def cost(self,N):
+        """
+        Cost of discrete message function 
+        
+        Parameters
+        ----------
+        N : int
+            There are N+1 messages
 
-		where e_bar = 1./(2.*N). 
-		"""
-		return 1. 
+        """
+        return 1. 
