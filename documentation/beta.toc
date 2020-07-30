@@ -5,5 +5,5 @@
 \contentsline {subsection}{\numberline {3.2}Message Cost}{6}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}First-Order Conditions}{7}{subsection.3.3}
 \contentsline {subsection}{\numberline {3.4}Uniformly Distributed State}{9}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Uniformly Distributed Error}{9}{subsection.3.5}
+\contentsline {subsection}{\numberline {3.5}Uniformly Distributed Error}{10}{subsection.3.5}
 \contentsline {subsubsection}{\numberline {3.5.1}Tiny Example}{10}{subsubsection.3.5.1}

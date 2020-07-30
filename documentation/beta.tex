@@ -196,9 +196,9 @@ Let the $(i,j)$-the element of the matrix $B\in\mathbb{R}^{(M+K)\times K}$ be gi
 \end{equation}
 so that
 \begin{equation}\label{eq:F_map}
-	0=\mathcal{F}(x,a):=(x\circ x)\circ(B'u)-(2x)\circ(B'a)+u\circ(B'(a\circ a))
+	0=\mathcal{F}(\widetilde{x},a):=(\widetilde{x}\circ \widetilde{x})\circ(B'u)-(2\widetilde{x})\circ(B'a)+u\circ(B'(a\circ a))
 \end{equation}
-where $\circ$ denotes the Hadamard product, $u=(1,\ldots,1)'\in\mathbb{R}^{K}$, and $\mathcal{F}:\mathbb{R}^{K}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{K}$.
+where $\circ$ denotes the Hadamard product, $u=(1,\ldots,1)'\in\mathbb{R}^{K}$, $\widetilde{x}=(x_{1},\ldots,x_{K})'\in\mathbb{R}^{K}$, and $\mathcal{F}:\mathbb{R}^{K}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{K}$.
 % ---------------------------------------------------------------------------- %
 % uniformly distributed state
 \subsection{Uniformly Distributed State}
@@ -216,7 +216,7 @@ Let the $(i,j)$-the element of the matrix $C\in\mathbb{R}^{(M+K)\times(K+2)}$ be
 		0 & \text{ otherwise }
 	\end{cases}
 \end{equation}
-so that
+It transpires that for $i=-M,\ldots,K-1$ and $j=1,\ldots,K$, $[B]_{i,j}=[C]_{i,j}$ ($C$ is padded on both sides by an extra column). We have 
 \begin{equation}\label{eq:G_map}
 	0=\mathcal{G}(x,a):=C(x\circ x)-2a\circ (Cx)
 \end{equation}
@@ -233,24 +233,5 @@ In what follows, suppose that $f(e)=N\mathbf{1}_{-\bar{e}\leq e\leq \bar{e}}$. E
 	&=\int_{y_{i}}^{y_{i+1}}{N\mathbf{1}_{2\bar{d}j-\bar{e}\leq\widetilde{m}\leq 2\bar{d}j+\bar{e}}d\widetilde{m}}\\
 	&=\int_{y_{i}}^{y_{i+1}}{N\mathbf{1}_{y_{j-M}\leq\widetilde{m}\leq y_{j}}d\widetilde{m}}\\
 	&=\frac{1}{M}\mathbf{1}_{j-M\leq i<j}
-\end{align}
-
-% ---------------------------------------------------------------------------- %
-% uniformly distributed error
-\subsubsection{Tiny Example}
-Suppose that $M=N=1$. There is one breakpoint, $x_{1}$, two actions, $a_{-1}$ and $a_{0}$. 
-\begin{align}
-	A&=\left[\begin{array}{ccc}1&0&0\\0&1&0\end{array}\right]\\
-	B&=\left[\begin{array}{c}1\\0\end{array}\right]\\
-	C&=\left[\begin{array}{ccc}-1&0&0\\0&-1&0\end{array}\right]
-\end{align}
-According to Equation \ref{eq:G_map},
-\begin{equation}
-	a_{0}=\frac{x_{1}}{2}
-\end{equation}
-Should be 
-\begin{align}	
-	a_{-1}&=\frac{x_{1}}{2}\\
-	a_{0}&=\frac{1+x_{1}}{2}
 \end{align}
 \end{document}
