@@ -1,8 +1,8 @@
+import numpy as np
 from functools import lru_cache
 
 # -----------------------------------------------------------------------------
 # Beta distribution
-@np.vectorize
 def _beta(e,a,b,e_bar):
     p = .5*(1.+e/e_bar)
     f = p**(a-1.)*(1.-p)**(b-1.)
@@ -13,8 +13,7 @@ def _beta_wgts(a,b,e_bar):
     # NOTES: speed *should* be okay with caching, but could be a bottleneck
     return fixed_quad(lambda e : _beta(e,a,b,e_bar),-e_bar,e_bar)[0]
 
-@np.vectorize
-def beta(e,a,b):
+def beta(e,a,b,e_bar):
     """beta distribution on [-e_bar,+e_bar]"""
     if e < -e_bar or e > e_bar:
         raise Exception('Trying to evaluate error PDF out of its support')

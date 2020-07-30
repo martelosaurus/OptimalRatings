@@ -1,13 +1,13 @@
 # --------------------------------------------------------------------------- #
 import numpy as np
 from scipy import linalg as la
+from utils import beta
 
-M = 1
-N = 1
+M = 2
+N = 2
 K = M*N
-
-def ran(a,b):
-    return range(a,b+1)
+e_bar = .5/N
+d_bar = .5/K
 
 def k_up(i):
     return min(i+M,K)+1
@@ -40,41 +40,45 @@ if False:
             print(i + j)
 
 # --------------------------------------------------------------------------- #
-
 # A
 #A = np.random.randint(1,10,(M+K,K+2));
 #c = np.random.randint(1,10,M+K);
 #r = np.random.randint(1,10,K+2);
-c = np.ones((1,M+K))
-r = np.ones((1,K+2))
-_A = la.hankel(c,r)
+if False:
+    c = np.ones((1,M+K))
+    r = np.ones((1,K+2))
+    _A = la.hankel(c,r)
+_A = np.zeros((M+K,K+2))
+for i in range(-M,K):
+    for j in range(0,K+2):
+        if j-M<=i<j:
+            _A[i+M,j] = 1./M
 def A(i,j):
     return _A[i+M,j]
 
 # C 
-C = np.zeros((M+K,K+2))
-C = C.astype(int)
-for j in ran(0,K+1):
-    for i in ran(-M,K-1):
-        if k_dn(i) == j:
-            C[i+M,j] = -A(i,k_dn(i))
-        elif k_dn(i)<j<k_up(i)-1:
-            C[i+M,j] = A(i,j-1)-A(i,j)
-        elif j == k_up(i)-1:
-            C[i+M,j] = A(i,k_up(i)-1)
-        else:
-            pass
+if True:
+    C = np.zeros((M+K,K+2))
+    for j in range(0,K+2):
+        for i in range(-M,K):
+            if k_dn(i) == j:
+                C[i+M,j] = -A(i,k_dn(i))
+            elif k_dn(i)<j<k_up(i):
+                C[i+M,j] = A(i,j-1)-A(i,j)
+            elif j == k_up(i):
+                C[i+M,j] = A(i,k_up(i)-1)
+            else:
+                pass
 
 # B
 B = np.zeros((M+K,K))
-B = B.astype(int)
-for i in ran(-M,K-1):
-    for j in ran(1,K):
+for i in range(-M,K):
+    for j in range(1,K+1):
         if j-1-M == i:
             B[i+M,j-1] = A(j-1-M,j-1)
-        elif j-1-M<i<j-2:
+        elif j-1-M<i<j-1:
             B[i+M,j-1] = A(i,j-1)-A(i,j)
-        elif i == j-2:
+        elif i == j-1:
             B[i+M,j-1] = -A(j-1,j)
         else:
             pass

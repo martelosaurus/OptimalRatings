@@ -173,30 +173,30 @@ Define
 \end{equation}
 For $i=-M,\ldots,K-1$ and $j=1,\ldots,K$, the first-order conditions for $a_{i}$ and $x_{j}$ are 
 \begin{align}
-	0=\frac{\partial}{\partial a_{i}}\mathcal{C}[m_{\mathcal{D}}]&=-2\sum_{k=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\alpha_{i,k}\int\limits_{x_{k}}^{x_{k+1}}{(q-a_{i}(x))g(q)dq}}\label{foc_a}\\
-	0=\frac{\partial}{\partial x_{j}}\mathcal{C}[m_{\mathcal{D}}]&=\sum_{i=j-1-M}^{j-2}{\alpha_{i,j-1}(x_{j}-a_{i}(x))^{2}g(x_{j})}-\sum_{i=j-M}^{j-1}{\alpha_{i,j}(x_{j}-a_{i}(x))^{2}g(x_{j})}
+	0=\frac{\partial}{\partial a_{i}}\mathcal{C}[m_{\mathcal{D}}]&=-2\sum_{k=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\alpha_{i,k}\int\limits_{x_{k}}^{x_{k+1}}{(q-a_{i})g(q)dq}}\label{foc_a}\\
+	0=\frac{\partial}{\partial x_{j}}\mathcal{C}[m_{\mathcal{D}}]&=\sum_{i=j-1-M}^{j-2}{\alpha_{i,j-1}(x_{j}-a_{i})^{2}g(x_{j})}-\sum_{i=j-M}^{j-1}{\alpha_{i,j}(x_{j}-a_{i})^{2}g(x_{j})}
 \end{align}
 respectively. If $g(x_{i})>0$, then for $j=1,\ldots,K$, we have
 \begin{align}
-	0&=\sum_{i=j-1-M}^{j-2}{(x_{j}-a_{i}(x))^{2}}\alpha_{i,j-1}-\sum_{i=j-M}^{j-1}{(x_{j}-a_{i}(x))^{2}\alpha_{i,j}}\\
-	&=\sum_{i=j-1-M}^{j-2}{\left((x_{j}-a_{i}(x))^{2}\alpha_{i,j-1}-(x_{j}-a_{i+1}(x))^{2}\alpha_{i+1,j}\right)}\\
-	&=\sum_{i=j-1-M}^{j-2}{\left(\left(x_{j}^{2}-2a_{i}(x)x_{j}-a_{i}(x)^{2}\right)\alpha_{i,j-1}-\left(x_{j}^{2}-2a_{i+1}(x)x_{j}-a_{i+1}(x)^{2}\right)\alpha_{i+1,j}\right)}\\
-	&=x_{j}^{2}\left[\sum_{i=j-1-M}^{j-2}{(\alpha_{i,j-1}-\alpha_{i+1,j})}\right]-2x_{j}\left[\sum_{i=j-1-M}^{j-2}{\left(a_{i}(x)\alpha_{i,j-1}-a_{i+1}(x)\alpha_{i+1,j}\right)}\right]\notag\\
-	&\hspace{.5in}+\left[\sum_{i=j-1-M}^{j-2}{\left(a_{i}(x)^{2}\alpha_{i,j-1}-a_{i+1}(x)^{2}\alpha_{i+1,j}\right)}\right]
+	0&=\sum_{i=j-1-M}^{j-2}{(x_{j}-a_{i})^{2}}\alpha_{i,j-1}-\sum_{i=j-M}^{j-1}{(x_{j}-a_{i})^{2}\alpha_{i,j}}\\
+	&=\sum_{i=j-1-M}^{j-2}{\left((x_{j}-a_{i})^{2}\alpha_{i,j-1}-(x_{j}-a_{i+1})^{2}\alpha_{i+1,j}\right)}\\
+	&=\sum_{i=j-1-M}^{j-2}{\left(\left(x_{j}^{2}-2a_{i}x_{j}-a_{i}^{2}\right)\alpha_{i,j-1}-\left(x_{j}^{2}-2a_{i+1}x_{j}-a_{i+1}^{2}\right)\alpha_{i+1,j}\right)}\\
+	&=x_{j}^{2}\left[\sum_{i=j-1-M}^{j-2}{(\alpha_{i,j-1}-\alpha_{i+1,j})}\right]-2x_{j}\left[\sum_{i=j-1-M}^{j-2}{\left(a_{i}\alpha_{i,j-1}-a_{i+1}\alpha_{i+1,j}\right)}\right]\notag\\
+	&\hspace{.5in}+\left[\sum_{i=j-1-M}^{j-2}{\left(a_{i}^{2}\alpha_{i,j-1}-a_{i+1}^{2}\alpha_{i+1,j}\right)}\right]
 \end{align}
 Let the $(i,j)$-the element of the matrix $B\in\mathbb{R}^{(M+K)\times K}$ be given by
 \begin{equation}
 	[B]_{i,j}=
 	\begin{cases}
 		\alpha_{j-1-M,j-1} & \text{ if } j-1-M=i \\
-		\alpha_{i,j-1}-\alpha_{i,j} & \text{ if } j-1-M<i<j-2 \\
-		-\alpha_{j-1,j} & \text{ if } i=j-2 \\
+		\alpha_{i,j-1}-\alpha_{i,j} & \text{ if } j-1-M<i<j-1 \\
+		-\alpha_{j-1,j} & \text{ if } i=j-1 \\
 		0 & \text{ otherwise }
 	\end{cases}
 \end{equation}
 so that
 \begin{equation}\label{eq:F_map}
-	0=\mathcal{F}(x,a(x)):=(x\circ x)\circ(B'u)-(2x)\circ(B'a(x))+u\circ(B'(a(x)\circ a(x)))
+	0=\mathcal{F}(x,a):=(x\circ x)\circ(B'u)-(2x)\circ(B'a)+u\circ(B'(a\circ a))
 \end{equation}
 where $\circ$ denotes the Hadamard product, $u=(1,\ldots,1)'\in\mathbb{R}^{K}$, and $\mathcal{F}:\mathbb{R}^{K}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{K}$.
 % ---------------------------------------------------------------------------- %
@@ -204,23 +204,25 @@ where $\circ$ denotes the Hadamard product, $u=(1,\ldots,1)'\in\mathbb{R}^{K}$, 
 \subsection{Uniformly Distributed State}
 In what follows, suppose that $g(q)=\mathbf{\chi}_{[0,1]}(q)$. Equation \ref{foc_a} becomes
 \begin{align}
-	0&=\left[\sum_{k=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\alpha_{i,k}\left(x_{k+1}^{2}-x_{k}^{2}\right)}\right]-2a_{i}(x)\left[\sum_{k=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\alpha_{i,k}(x_{k+1}-x_{k})}\right]
+	0&=\left[\sum_{k=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\alpha_{i,k}\left(x_{k+1}^{2}-x_{k}^{2}\right)}\right]-2a_{i}\left[\sum_{k=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\alpha_{i,k}(x_{k+1}-x_{k})}\right]
 \end{align}
 Let the $(i,j)$-the element of the matrix $C\in\mathbb{R}^{(M+K)\times(K+2)}$ be given by
 \begin{equation}
 	[C]_{i,j}=
 	\begin{cases}
 		-\alpha_{i,k_{-}(y_{i})} & \text{ if } k_{-}(y_{i})=j \\
-		\alpha_{i,j-1}-\alpha_{i,j} & \text{ if } k_{-}(y_{i})<j<k_{+}(y_{i})-1\\
-		\alpha_{i,k_{+}(y_{i})-1} & \text{ if } j=k_{+}(y_{i})-1\\
+		\alpha_{i,j-1}-\alpha_{i,j} & \text{ if } k_{-}(y_{i})<j<k_{+}(y_{i})\\
+		\alpha_{i,k_{+}(y_{i})-1} & \text{ if } j=k_{+}(y_{i})\\
 		0 & \text{ otherwise }
 	\end{cases}
 \end{equation}
 so that
 \begin{equation}\label{eq:G_map}
-	0=\mathcal{G}(x,a(x)):=C(x\circ x)-2a(x)\circ (Cx)
+	0=\mathcal{G}(x,a):=C(x\circ x)-2a\circ (Cx)
 \end{equation}
-where $\mathcal{G}:\mathbb{R}^{K+2}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{M+K}$. $\mathcal{F}(x,a(x))=0$ is a system of $K$ equations and $\mathcal{G}(x,a(x))=0$ a system of $K+M$ equations. $x$ contains $K$ unknowns ($x_{0}=0$ and $x_{K+1}=1$) and $a(x)$ $K+M$ unknowns. In total, there are $M+2K$ equations and $M+2K$ unknowns. 
+where $\mathcal{G}:\mathbb{R}^{K+2}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{M+K}$. 
+
+To summarize, $\mathcal{F}(x,a)=0$ is a system of $K$ equations and $\mathcal{G}(x,a)=0$ a system of $K+M$ equations. $x$ contains $K$ unknowns (since $x_{0}=0$ and $x_{K+1}=1$) and $a$ contains $K+M$ unknowns. In total, there are $M+2K$ equations and $M+2K$ unknowns. 
 % ---------------------------------------------------------------------------- %
 % uniformly distributed error
 \subsection{Uniformly Distributed Error}
