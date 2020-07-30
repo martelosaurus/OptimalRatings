@@ -58,15 +58,15 @@ The receiver's optimal action is simply the expected value of the state, $q$, gi
 
 It will be helpful to refer to the \textit{cost }of a message function. Let the cost functional $C$ be given by 
 \begin{equation}
-	C[m]\equiv \int\displaylimits_{0}^{1}{\int\displaylimits_{-\bar{e}}^{\bar{e}}{(q-a(m(q)+e))^{2}f(e)de}dq},  
+	\mathcal{C}[m]\equiv \int\displaylimits_{0}^{1}{\int\displaylimits_{-\bar{e}}^{\bar{e}}{(q-a(m(q)+e))^{2}f(e)de}dq},  
 \end{equation}
-where $a$ is the receiver's optimal action from Equation (\ref{eq:optact}). $C[m]$ is the expected loss for a given message function $m$. The integrand is the loss for a given state $q$ and action $a(\widetilde{m})$. The interior integral integrates over the possible exogenous errors, to generate the expected loss given the state. The exterior integral integrates over possible states. Therefore, the \textit{sender's problem} is to choose a message function $m$ that minimizes $C[m]$: 
+where $a$ is the receiver's optimal action from Equation (\ref{eq:optact}). $\mathcal{C}[m]$ is the expected loss for a given message function $m$. The integrand is the loss for a given state $q$ and action $a(\widetilde{m})$. The interior integral integrates over the possible exogenous errors, to generate the expected loss given the state. The exterior integral integrates over possible states. Therefore, the \textit{sender's problem} is to choose a message function $m$ that minimizes $\mathcal{C}[m]$: 
 \begin{equation}
-	\min_{m\in M}C[m]
+	\min_{m\in M}\mathcal{C}[m]
 \end{equation}
 where $M$ is the space of weakly increasing piece-wise continuous functions on $[0,1]$. The change of variables $\widetilde{m}=m(q)+e$ and an application of Fubini's Theorem yield 
 \begin{align}
-	C[m]& =\int\displaylimits_{0}^{1}{\int\displaylimits_{m(q)-\bar{e}}^{m(q)+\bar{e}}{(q-a( \widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)d\widetilde{m}}dq} \\
+	\mathcal{C}[m]& =\int\displaylimits_{0}^{1}{\int\displaylimits_{m(q)-\bar{e}}^{m(q)+\bar{e}}{(q-a( \widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)d\widetilde{m}}dq} \\
 	& =\int\displaylimits_{-\bar{e}}^{1+\bar{e}}{\int\displaylimits_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-m(q))g(q)dq}d\widetilde{m}}.
 \end{align}
 We consider the costs of identity (``$\mathcal{I}$'') and discrete (``$\mathcal{D}$'') message functions.
@@ -91,7 +91,7 @@ where
 \end{align}
 Note that the normalizing constant cancels out when computing the conditional expectation. The cost of the identity message function is given by
 \begin{align}
-	C[m_{\mathcal{I}}]&=\int\displaylimits_{-\bar{e}}^{1+\bar{e}}{\int\displaylimits_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}.
+	\mathcal{C}[m_{\mathcal{I}}]&=\int\displaylimits_{-\bar{e}}^{1+\bar{e}}{\int\displaylimits_{q_{-}(\widetilde{m})}^{q_{+}(\widetilde{m})}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}.
 \end{align}
 where $q_{+}(\widetilde{m})=\min\{\widetilde{m}+\bar{e},1\}$ and $q_{-}(\widetilde{m})=\max\{\widetilde{m}-\bar{e},0\}$. Define
 \begin{align}
@@ -99,7 +99,7 @@ where $q_{+}(\widetilde{m})=\min\{\widetilde{m}+\bar{e},1\}$ and $q_{-}(\widetil
 	z&=\int\displaylimits_{\bar{e}}^{1-\bar{e}}{\int\displaylimits_{\widetilde{m}-\bar{e}}^{\widetilde{m}+\bar{e}}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}\\
 	\underline{z}&=\int\displaylimits_{-\bar{e}}^{\bar{e}}{\int\displaylimits_{0}^{\widetilde{m}+\bar{e}}{(q-\underline{a}(\widetilde{m}))^{2}f(\widetilde{m}-q)dq}d\widetilde{m}}
 \end{align}
-so that $C[m_{\mathcal{I}}]=\overline{z}+z+\underline{z}$.
+so that $\mathcal{C}[m_{\mathcal{I}}]=\overline{z}+z+\underline{z}$.
 % -----------------------------------------------------------------------------
 % DISCRETE MESSAGE 
 \section{Discrete Message}
@@ -154,7 +154,7 @@ $A$ is a Hankel matrix and therefore symmetric. To summarize,
 \end{equation}
 Note that when the error is uniformly distributed, The cost is given by 
 \begin{align}
-	C[m_{\mathcal{D}}]&=\int\displaylimits_{-\bar{e}}^{1+\bar{e}}{\left[\int\displaylimits_{x_{k_{-}(\widetilde{m})}}^{x_{k_{+}(\widetilde{m})}}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-m_{\mathcal{D}}(q))g(q)dq}\right]d\widetilde{m}}.\\
+	\mathcal{C}[m_{\mathcal{D}}]&=\int\displaylimits_{-\bar{e}}^{1+\bar{e}}{\left[\int\displaylimits_{x_{k_{-}(\widetilde{m})}}^{x_{k_{+}(\widetilde{m})}}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-m_{\mathcal{D}}(q))g(q)dq}\right]d\widetilde{m}}.\\
 	&=\int\displaylimits_{-\bar{e}}^{1+\bar{e}}{\left[\sum_{j=k_{-}(\widetilde{m})}^{k_{+}(\widetilde{m})-1}{\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a(\widetilde{m}))^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}\right]d\widetilde{m}}\\
 	&=\sum_{i=-M}^{K-1}{\int\displaylimits_{y_{i}}^{y_{i+1}}{\left[\sum_{j=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a_{i})^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}\right]d\widetilde{m}}}\\
 	&=\sum_{i=-M}^{K-1}{\int\displaylimits_{y_{i}}^{y_{i+1}}{\left[\sum_{j=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a_{i})^{2}f\left(\widetilde{m}-\tfrac{j}{K}\right)g(q)dq}}\right]d\widetilde{m}}}\\
@@ -162,7 +162,7 @@ Note that when the error is uniformly distributed, The cost is given by
 	&=\sum_{i=-M}^{K-1}{\sum_{j=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\left[\alpha_{i,j}\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a_{i})^{2}g(q)dq}\right]}}\label{eq:cost_v1}\\
 	&=\sum_{j=0}^{K}{\sum_{i=j-M}^{j-1}{\left[\alpha_{i,j}\int\displaylimits_{x_{j}}^{x_{j+1}}{(q-a_{i})^{2}g(q)dq}\right]}}\label{eq:cost_v2}
 \end{align}
-Equations \ref{eq:cost_v1} and \ref{eq:cost_v2} provide two different characterizations of $C[m_{\mathcal{D}}]$.
+Equations \ref{eq:cost_v1} and \ref{eq:cost_v2} provide two different characterizations of $\mathcal{C}[m_{\mathcal{D}}]$.
 
 % ---------------------------------------------------------------------------- %
 % first-order conditions
@@ -171,16 +171,12 @@ Define
 \begin{equation}
 	\beta_{\gamma}(x_{i},x_{i+1})=\int_{x_{i}}^{x_{i+1}}{q^{\gamma}g(q)dq}.
 \end{equation}
-For $i=-M,\ldots,K-1$, the first-order condition for $a_{i}(x)$ is 
+For $i=-M,\ldots,K-1$ and $j=1,\ldots,K$, the first-order conditions for $a_{i}$ and $x_{j}$ are 
 \begin{align}
-	0=\frac{\partial}{\partial a_{i}}C[m_{\mathcal{D}}]&=-2\sum_{k=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\alpha_{i,k}\int\limits_{x_{k}}^{x_{k+1}}{(q-a_{i}(x))g(q)dq}}\label{foc_a}
+	0=\frac{\partial}{\partial a_{i}}\mathcal{C}[m_{\mathcal{D}}]&=-2\sum_{k=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\alpha_{i,k}\int\limits_{x_{k}}^{x_{k+1}}{(q-a_{i}(x))g(q)dq}}\label{foc_a}\\
+	0=\frac{\partial}{\partial x_{j}}\mathcal{C}[m_{\mathcal{D}}]&=\sum_{i=j-1-M}^{j-2}{\alpha_{i,j-1}(x_{j}-a_{i}(x))^{2}g(x_{j})}-\sum_{i=j-M}^{j-1}{\alpha_{i,j}(x_{j}-a_{i}(x))^{2}g(x_{j})}
 \end{align}
-For $j=1,\ldots,K$, the first-order condition for $x_{j}$ is
-\begin{align}
-	0=\frac{\partial}{\partial x_{j}}C[m_{\mathcal{D}}]&=\sum_{i=j-1-M}^{j-2}{\alpha_{i,j-1}(x_{j}-a_{i}(x))^{2}g(x_{j})}-\sum_{i=j-M}^{j-1}{\alpha_{i,j}(x_{j}-a_{i}(x))^{2}g(x_{j})}\notag\\
-	&\hspace{.5in}-2\sum_{k=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\left[\alpha_{i,k}\int\displaylimits_{x_{k}}^{x_{k+1}}{(q-a_{i}(x))g(q)dq}\right]\frac{\partial a_{i}}{\partial x_{j}}}\label{foc_x}
-\end{align}
-According to Equation \ref{foc_a}, the last term in Equation \ref{foc_x} vanishes. If $g(x_{i})>0$, then for $j=1,\ldots,K$, we have
+respectively. If $g(x_{i})>0$, then for $j=1,\ldots,K$, we have
 \begin{align}
 	0&=\sum_{i=j-1-M}^{j-2}{(x_{j}-a_{i}(x))^{2}}\alpha_{i,j-1}-\sum_{i=j-M}^{j-1}{(x_{j}-a_{i}(x))^{2}\alpha_{i,j}}\\
 	&=\sum_{i=j-1-M}^{j-2}{\left((x_{j}-a_{i}(x))^{2}\alpha_{i,j-1}-(x_{j}-a_{i+1}(x))^{2}\alpha_{i+1,j}\right)}\\
@@ -199,7 +195,7 @@ Let the $(i,j)$-the element of the matrix $B\in\mathbb{R}^{(M+K)\times K}$ be gi
 	\end{cases}
 \end{equation}
 so that
-\begin{equation}
+\begin{equation}\label{eq:F_map}
 	0=\mathcal{F}(x,a(x)):=(x\circ x)\circ(B'u)-(2x)\circ(B'a(x))+u\circ(B'(a(x)\circ a(x)))
 \end{equation}
 where $\circ$ denotes the Hadamard product, $u=(1,\ldots,1)'\in\mathbb{R}^{K}$, and $\mathcal{F}:\mathbb{R}^{K}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{K}$.
@@ -221,19 +217,38 @@ Let the $(i,j)$-the element of the matrix $C\in\mathbb{R}^{(M+K)\times(K+2)}$ be
 	\end{cases}
 \end{equation}
 so that
-\begin{equation}
-	0=\mathcal{G}(x,a(x)):=C(x\circ x)+2a(x)\circ (Cx)
+\begin{equation}\label{eq:G_map}
+	0=\mathcal{G}(x,a(x)):=C(x\circ x)-2a(x)\circ (Cx)
 \end{equation}
 where $\mathcal{G}:\mathbb{R}^{K+2}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{M+K}$. $\mathcal{F}(x,a(x))=0$ is a system of $K$ equations and $\mathcal{G}(x,a(x))=0$ a system of $K+M$ equations. $x$ contains $K$ unknowns ($x_{0}=0$ and $x_{K+1}=1$) and $a(x)$ $K+M$ unknowns. In total, there are $M+2K$ equations and $M+2K$ unknowns. 
 % ---------------------------------------------------------------------------- %
 % uniformly distributed error
 \subsection{Uniformly Distributed Error}
-In what follows, suppose that $f(q)=N\mathbf{\chi}_{[-\bar{e},\bar{e}]}(e)$. Equation \ref{eq:alpha} becomes
+In what follows, suppose that $f(e)=N\mathbf{1}_{-\bar{e}\leq e\leq \bar{e}}$. Equation \ref{eq:alpha} becomes
 \begin{align}
 	\alpha_{i,j}&=\int_{y_{i}}^{y_{i+1}}{f(\widetilde{m}-2\bar{d}j)d\widetilde{m}}\\
 	&=\int_{y_{i}}^{y_{i+1}}{N\mathbf{1}_{-\bar{e}\leq\widetilde{m}-2\bar{d}j\leq\bar{e}}d\widetilde{m}}\\
 	&=\int_{y_{i}}^{y_{i+1}}{N\mathbf{1}_{2\bar{d}j-\bar{e}\leq\widetilde{m}\leq 2\bar{d}j+\bar{e}}d\widetilde{m}}\\
 	&=\int_{y_{i}}^{y_{i+1}}{N\mathbf{1}_{y_{j-M}\leq\widetilde{m}\leq y_{j}}d\widetilde{m}}\\
-	&=\frac{1}{M}\mathbf{1}_{i=j-M}
+	&=\frac{1}{M}\mathbf{1}_{j-M\leq i<j}
+\end{align}
+
+% ---------------------------------------------------------------------------- %
+% uniformly distributed error
+\subsubsection{Tiny Example}
+Suppose that $M=N=1$. There is one breakpoint, $x_{1}$, two actions, $a_{-1}$ and $a_{0}$. 
+\begin{align}
+	A&=\left[\begin{array}{ccc}1&0&0\\0&1&0\end{array}\right]\\
+	B&=\left[\begin{array}{c}1\\0\end{array}\right]\\
+	C&=\left[\begin{array}{ccc}-1&0&0\\0&-1&0\end{array}\right]
+\end{align}
+According to Equation \ref{eq:G_map},
+\begin{equation}
+	a_{0}=\frac{x_{1}}{2}
+\end{equation}
+Should be 
+\begin{align}	
+	a_{-1}&=\frac{x_{1}}{2}\\
+	a_{0}&=\frac{1+x_{1}}{2}
 \end{align}
 \end{document}
