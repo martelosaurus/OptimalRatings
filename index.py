@@ -3,8 +3,8 @@ import numpy as np
 from scipy import linalg as la
 from utils import beta
 
-M = 2
-N = 2
+M = 1
+N = 4
 K = M*N
 e_bar = .5/N
 d_bar = .5/K
