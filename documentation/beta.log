@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2020.3.22)  30 JUL 2020 15:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Debian) (preloaded format=pdflatex 2020.3.22)  2 AUG 2020 08:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -351,25 +351,29 @@ n/12 1 + []]$. $\OML/cmm/m/it/12 q\OMS/cmsy/m/n/12 j[]$ \OT1/cmr/m/n/12 has sup
 m/n/12 ([])]$
  []
 
-[2] [3] [4] [5] [6] [7] [8] [9]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 252.
- [10]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 252.
+[2] [3] [4] [5] [6] [7] [8]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 237.
+ [9]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 237.
  (./beta.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 252.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 252.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 237.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 237.
 Package rerunfilecheck Info: File `beta.out' has not changed.
-(rerunfilecheck)             Checksum: 91FE6D6FEE10C84A1C0E9EE0EBADA3DD;555.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 252.
+(rerunfilecheck)             Checksum: EE996A18C0AE029D8A6887EF997BFB92;484.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 237.
  ) 
 Here is how much of TeX's memory you used:
- 5957 strings out of 493013
- 86785 string characters out of 6135682
+ 5949 strings out of 493013
+ 86673 string characters out of 6135682
  183090 words of memory out of 5000000
- 9342 multiletter control sequences out of 15000+600000
+ 9341 multiletter control sequences out of 15000+600000
  10771 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,15n,28p,555b,335s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 34i,15n,28p,555b,337s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/share/
@@ -384,10 +388,10 @@ s/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
 msy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pf
 b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on beta.pdf (10 pages, 173180 bytes).
+Output written on beta.pdf (9 pages, 171729 bytes).
 PDF statistics:
- 250 PDF objects out of 1000 (max. 8388607)
- 220 compressed objects within 3 object streams
- 87 named destinations out of 1000 (max. 500000)
- 73 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 234 PDF objects out of 1000 (max. 8388607)
+ 205 compressed objects within 3 object streams
+ 80 named destinations out of 1000 (max. 500000)
+ 65 words of extra memory for PDF output out of 10000 (max. 10000000)
 
