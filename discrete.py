@@ -19,6 +19,34 @@ class Discrete(Message):
         # knots
         self.y
 
+class Message:
+
+    def __init__(self,func,N,I):
+        """
+        Parameters 
+        ----------
+        N : int
+            Number of messages
+        M : int
+            Number of knots per message
+        I : callable
+            Importance function
+        func : callable
+            PDF of error. identity_cost assumes func has support [-e_bar,e_bar]
+
+        Examples
+        --------
+
+        """
+        self.N = N
+        self.I = I
+        self.M = D(I,self.N) 
+
+        self.K = self.M*self.N
+        self.e_bar = .5/self.N
+        self.d_bar = .5/self.K
+
+
     def cost(self):
         """
         Cost of discrete message function 
