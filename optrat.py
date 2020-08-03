@@ -36,25 +36,30 @@ def cost_comp(a,b):
 
 class Message:
 
-    def __init__(self,func,N,I,nplot=1000):
+    def __init__(self,func,N,I):
         """
         Parameters 
         ----------
         N : int
             Number of messages
-        M : 
-            ?
+        M : int
+            Number of knots per message
         I : callable
             Importance function
-        nplot : int
-            Number of knots at which to plot the message
         func : callable
             PDF of error. identity_cost assumes func has support [-e_bar,e_bar]
+
+        Examples
+        --------
+
         """
         self.N = N
         self.I = I
         self.M = D(I,self.N) 
-        self.nplot = nplot
+
+        self.K = self.M*self.N
+        self.e_bar = .5/self.N
+        self.d_bar = .5/self.K
 
 def comp_plot(m1,m2,a_max=2,b_max=2,n_plot=40):
     """

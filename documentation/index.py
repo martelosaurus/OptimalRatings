@@ -1,7 +1,6 @@
 # --------------------------------------------------------------------------- #
 import numpy as np
 from scipy import linalg as la
-from utils import beta
 
 M = 1
 N = 4
