@@ -3,6 +3,5 @@
 \contentsline {section}{\numberline {3}Discrete Message}{4}{section.3}
 \contentsline {subsection}{\numberline {3.1}Setup}{4}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Message Cost}{5}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}First-Order Conditions}{6}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.3}First-Order Conditions}{7}{subsection.3.3}
 \contentsline {subsection}{\numberline {3.4}Uniformly Distributed State}{8}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Uniformly Distributed Error}{9}{subsection.3.5}

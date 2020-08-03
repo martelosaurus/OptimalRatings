@@ -148,10 +148,14 @@ Note that $y_{i+1}=y_{i}+2\bar{d}$. For $i\in\{-M,\ldots,K-1\}$ and $j\in\{0,\ld
 	&=\int_{y_{i-1}+2\bar{d}}^{y_{i}+2\bar{d}}{f((\widetilde{m}+2\bar{d})-2\bar{d}(j+1))d\widetilde{m}}\\
 	&=\int_{y_{i-1}}^{y_{i}}{f(\widetilde{m}-2\bar{d}(j+1))d\widetilde{m}}=\alpha_{i-1,j+1}
 \end{align}
-$A$ is a Hankel matrix and therefore symmetric. To summarize,
-\begin{equation}
-	\alpha_{i,j}=\alpha_{i-1,j+1}=\alpha_{j,i}
-\end{equation}
+$A$ is a Hankel matrix and therefore symmetric. Moreover, $A$ is sparse:
+\begin{align}
+	\alpha_{i,j}&=\int_{y_{i}}^{y_{i+1}}{f(\widetilde{m}-2\bar{d}j)d\widetilde{m}}\\
+	&=\int_{y_{i}}^{y_{i+1}}{f(\widetilde{m}-2\bar{d}j)\mathbf{1}_{-\bar{e}\leq\widetilde{m}-2\bar{d}j\leq\bar{e}}d\widetilde{m}}\\
+	&=\int_{y_{i}}^{y_{i+1}}{f(\widetilde{m}-2\bar{d}j)\mathbf{1}_{2\bar{d}j-\bar{e}\leq\widetilde{m}\leq 2\bar{d}j+\bar{e}}d\widetilde{m}}\\
+	&=\int_{y_{i}}^{y_{i+1}}{f(\widetilde{m}-2\bar{d}j)\mathbf{1}_{y_{j-M}\leq\widetilde{m}\leq y_{j}}d\widetilde{m}}\\
+	&=\mathbf{1}_{j-M\leq i<j}\int_{y_{i}}^{y_{i+1}}{f(\widetilde{m}-2\bar{d}j)d\widetilde{m}}
+\end{align}
 Note that when the error is uniformly distributed, The cost is given by 
 \begin{align}
 	\mathcal{C}[m_{\mathcal{D}}]&=\int\displaylimits_{-\bar{e}}^{1+\bar{e}}{\left[\int\displaylimits_{x_{k_{-}(\widetilde{m})}}^{x_{k_{+}(\widetilde{m})}}{(q-a(\widetilde{m}))^{2}f(\widetilde{m}-m_{\mathcal{D}}(q))g(q)dq}\right]d\widetilde{m}}.\\
@@ -223,15 +227,4 @@ It transpires that for $i=-M,\ldots,K-1$ and $j=1,\ldots,K$, $[B]_{i,j}=[C]_{i,j
 where $\mathcal{G}:\mathbb{R}^{K+2}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{M+K}$. 
 
 To summarize, $\mathcal{F}(x,a)=0$ is a system of $K$ equations and $\mathcal{G}(x,a)=0$ a system of $K+M$ equations. $x$ contains $K$ unknowns (since $x_{0}=0$ and $x_{K+1}=1$) and $a$ contains $K+M$ unknowns. In total, there are $M+2K$ equations and $M+2K$ unknowns. 
-% ---------------------------------------------------------------------------- %
-% uniformly distributed error
-\subsection{Uniformly Distributed Error}
-In what follows, suppose that $f(e)=N\mathbf{1}_{-\bar{e}\leq e\leq \bar{e}}$. Equation \ref{eq:alpha} becomes
-\begin{align}
-	\alpha_{i,j}&=\int_{y_{i}}^{y_{i+1}}{f(\widetilde{m}-2\bar{d}j)d\widetilde{m}}\\
-	&=\int_{y_{i}}^{y_{i+1}}{N\mathbf{1}_{-\bar{e}\leq\widetilde{m}-2\bar{d}j\leq\bar{e}}d\widetilde{m}}\\
-	&=\int_{y_{i}}^{y_{i+1}}{N\mathbf{1}_{2\bar{d}j-\bar{e}\leq\widetilde{m}\leq 2\bar{d}j+\bar{e}}d\widetilde{m}}\\
-	&=\int_{y_{i}}^{y_{i+1}}{N\mathbf{1}_{y_{j-M}\leq\widetilde{m}\leq y_{j}}d\widetilde{m}}\\
-	&=\frac{1}{M}\mathbf{1}_{j-M\leq i<j}
-\end{align}
 \end{document}

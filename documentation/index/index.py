@@ -1,6 +1,6 @@
 import numpy as np
 
-M = 4
+M = 6
 N = 3
 K = M*N
 e_bar = .5/N

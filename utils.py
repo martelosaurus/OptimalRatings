@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.integrate import fixed_quad
 from functools import lru_cache
 
 # -----------------------------------------------------------------------------
@@ -13,6 +14,7 @@ def _beta_wgts(a,b,e_bar):
     # NOTES: speed *should* be okay with caching, but could be a bottleneck
     return fixed_quad(lambda e : _beta(e,a,b,e_bar),-e_bar,e_bar)[0]
 
+@np.vectorize
 def beta(e,a,b,e_bar):
     """beta distribution on [-e_bar,+e_bar]"""
     if e < -e_bar or e > e_bar:
