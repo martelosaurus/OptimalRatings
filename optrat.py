@@ -144,7 +144,7 @@ def mplot(M,nplot=1000):
 
 def mdrop(M,fname='messages.csv',ndrop=1000):
     """
-    Writes a list of message function to disk
+    Writes a list of message functions to disk
     
     Parameters
     ----------

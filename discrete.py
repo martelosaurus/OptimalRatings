@@ -1,5 +1,9 @@
 import utils 
-# ------------------------------------------------------------------------------
+
+@np.vectorize
+def _alpha(i,j,e_bar):
+    return fixed_quad(lambda e : _beta(e,a,b,e_bar),-e_bar,e_bar)[0]
+
 class Discrete(Message):
 
     def __init__(self,N,M):
@@ -15,7 +19,7 @@ class Discrete(Message):
         # knots
         self.y
 
-    def cost(self,N):
+    def cost(self):
         """
         Cost of discrete message function 
         
