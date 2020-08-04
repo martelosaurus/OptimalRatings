@@ -202,7 +202,7 @@ so that
 \begin{equation}\label{eq:F_map}
 	0=\mathcal{F}(\widetilde{x},a):=(\widetilde{x}\circ \widetilde{x})\circ(B'u)-(2\widetilde{x})\circ(B'a)+u\circ(B'(a\circ a))
 \end{equation}
-where $\circ$ denotes the Hadamard product, $u=(1,\ldots,1)'\in\mathbb{R}^{K}$, $\widetilde{x}=(x_{1},\ldots,x_{K})'\in\mathbb{R}^{K}$, and $\mathcal{F}:\mathbb{R}^{K}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{K}$.
+where $\circ$ denotes Hadamard multiplication, $u=(1,\ldots,1)'\in\mathbb{R}^{K}$, $\widetilde{x}=(x_{1},\ldots,x_{K})'\in\mathbb{R}^{K}$, and $\mathcal{F}:\mathbb{R}^{K}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{K}$.
 % ---------------------------------------------------------------------------- %
 % uniformly distributed state
 \subsection{Uniformly Distributed State}
@@ -220,11 +220,33 @@ Let the $(i,j)$-the element of the matrix $C\in\mathbb{R}^{(M+K)\times(K+2)}$ be
 		0 & \text{ otherwise }
 	\end{cases}
 \end{equation}
-It transpires that for $i=-M,\ldots,K-1$ and $j=1,\ldots,K$, $[B]_{i,j}=[C]_{i,j}$ ($C$ is padded on both sides by an extra column). We have 
+It transpires that for $i=-M,\ldots,K-1$ and $j=1,\ldots,K$, $[B]_{i,j}=[C]_{i,j}$ ($C$ is padded on both sides by an extra column): 
+\begin{equation}
+	C = 
+	\left[
+		\begin{array}{ccc}
+			\underline{c} & B & \overline{c}
+		\end{array}
+	\right]
+\end{equation}
+We have 
 \begin{equation}\label{eq:G_map}
 	0=\mathcal{G}(x,a):=C(x\circ x)-2a\circ (Cx)
 \end{equation}
-where $\mathcal{G}:\mathbb{R}^{K+2}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{M+K}$. 
-
-To summarize, $\mathcal{F}(x,a)=0$ is a system of $K$ equations and $\mathcal{G}(x,a)=0$ a system of $K+M$ equations. $x$ contains $K$ unknowns (since $x_{0}=0$ and $x_{K+1}=1$) and $a$ contains $K+M$ unknowns. In total, there are $M+2K$ equations and $M+2K$ unknowns. 
+where $\mathcal{G}:\mathbb{R}^{K+2}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{M+K}$. Hence,
+\begin{align}
+	a&=\frac{1}{2}(C(x\circ x))\oslash(Cx)\\
+	&=\frac{1}{2}(B(\widetilde{x}\circ \widetilde{x}+\overline{c}))\oslash(B\widetilde{x}+\overline{c})
+\end{align}
+where $\oslash$ denotes Hadamard division. To summarize, $\mathcal{F}(x,a)=0$ is a system of $K$ equations and $\mathcal{G}(x,a)=0$ a system of $K+M$ equations. $x$ contains $K$ unknowns (since $x_{0}=0$ and $x_{K+1}=1$) and $a$ contains $K+M$ unknowns. In total, there are $M+2K$ equations and $M+2K$ unknowns. 
+\pagebreak
+\begin{landscape}
+	\subsection{Example: $A$, $B$, and $C$ when $M=4$ an $N=2$}
+	\tiny
+	\begin{align}
+		A&=\left[\input{index/a_file}\right]\\
+		B&=\left[\input{index/b_file}\right]\\
+		C&=\left[\input{index/c_file}\right]
+	\end{align}
+\end{landscape}
 \end{document}

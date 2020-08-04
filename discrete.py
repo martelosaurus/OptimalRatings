@@ -1,60 +1,67 @@
-import utils 
+import numpy as np
+from scipy.integrate import fixed_quad
+from scipy.linalg import hankel
+from functools import lru_cache
 
+# -----------------------------------------------------------------------------
+# Beta distribution
 @np.vectorize
-def _alpha(i,j,e_bar):
+def _beta(e,a,b,e_bar):
+    p = .5*(1.+e/e_bar)
+    f = p**(a-1.)*(1.-p)**(b-1.)
+    return f
+
+@lru_cache(maxsize=None)
+def _beta_wgts(a,b,e_bar):
+    # NOTES: speed *should* be okay with caching, but could be a bottleneck
     return fixed_quad(lambda e : _beta(e,a,b,e_bar),-e_bar,e_bar)[0]
 
-class Discrete(Message):
+@np.vectorize
+def beta(e,a,b,e_bar):
+    """beta distribution on [-e_bar,+e_bar]"""
+    if e < -e_bar or e > e_bar:
+        raise Exception('Trying to evaluate error PDF out of its support')
+    return _beta(e,a,b,e_bar)/_beta_wgts(a,b,e_bar)
 
-    def __init__(self,N,M):
+@np.vectorize
+def _alpha(i,j,a,b,e_bar):
+    return fixed_quad(lambda e : beta(e,a,b,e_bar),-e_bar,e_bar)[0]
 
-        # number of knots
-        self.M = M
-        self.N = N
-
-        # knot spacing
-        self.e_bar = .5/N
-        self.d_bar = .5/K
-
-        # knots
-        self.y
-
+# -----------------------------------------------------------------------------
+# message
 class Message:
 
-    def __init__(self,func,N,I):
+    def __init__(self,M,N,a,b):
         """
         Parameters 
         ----------
-        N : int
-            Number of messages
         M : int
             Number of knots per message
-        I : callable
-            Importance function
-        func : callable
-            PDF of error. identity_cost assumes func has support [-e_bar,e_bar]
+        N : int
+            Number of messages
+        a, b : float
+            Error parameters
 
         Examples
         --------
 
+        # primitives
         """
+        self.M = M
         self.N = N
-        self.I = I
-        self.M = D(I,self.N) 
 
+        # knot spacing
         self.K = self.M*self.N
         self.e_bar = .5/self.N
         self.d_bar = .5/self.K
 
-
-    def cost(self):
-        """
-        Cost of discrete message function 
+        # index matrices
+        # TODO: remove I, J, A, B, C from attributes
+        self.I = np.tile(np.arange(0,self.K+1),(self.M,1))
+        self.J = hankel(np.arange(-self.M,0),np.arange(-1,self.K))
+        self.A = _alpha(self.I,self.J,self.a,self.b,self.e_bar)
+        self.B = None
+        self.C = None
         
-        Parameters
-        ----------
-        N : int
-            There are N+1 messages
+        # solve
 
-        """
-        return 1. 
