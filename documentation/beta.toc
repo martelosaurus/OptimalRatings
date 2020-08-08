@@ -1,8 +1,8 @@
-\contentsline {section}{\numberline {1}The Model}{1}{section.1}
-\contentsline {section}{\numberline {2}Identity Message}{3}{section.2}
-\contentsline {section}{\numberline {3}Discrete Message}{4}{section.3}
-\contentsline {subsection}{\numberline {3.1}Setup}{4}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Message Cost}{5}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}First-Order Conditions}{7}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Uniformly Distributed State}{8}{subsection.3.4}
-\contentsline {subsection}{\numberline {3.5}Example: $A$, $B$, and $C$ when $M=4$ an $N=2$}{9}{subsection.3.5}
+\contentsline {section}{\numberline {1}The Model}{1}{section.1}% 
+\contentsline {section}{\numberline {2}Identity Message}{3}{section.2}% 
+\contentsline {section}{\numberline {3}Discrete Message}{4}{section.3}% 
+\contentsline {subsection}{\numberline {3.1}Setup}{4}{subsection.3.1}% 
+\contentsline {subsection}{\numberline {3.2}Message Cost}{5}{subsection.3.2}% 
+\contentsline {subsection}{\numberline {3.3}First-Order Conditions}{7}{subsection.3.3}% 
+\contentsline {subsection}{\numberline {3.4}Uniformly Distributed State}{8}{subsection.3.4}% 
+\contentsline {subsection}{\numberline {3.5}Example: $A$, $B$, and $C$ when $M=4$ an $N=2$}{9}{subsection.3.5}% 
