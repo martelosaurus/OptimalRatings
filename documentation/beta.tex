@@ -144,11 +144,11 @@ so that for each $y\in Y_{i}$,
 \subsection{Message Cost}
 Note that $y_{i+1}=y_{i}+2\bar{d}$. For $i\in\{-M,\ldots,K-1\}$ and $j\in\{0,\ldots,K+1\}$, let
 \begin{align}
-	\alpha_{i,j}&\equiv\int_{y_{i}}^{y_{i+1}}{f(\widetilde{m}-2\bar{d}j)d\widetilde{m}}\label{eq:alpha}\\
-	&=\int_{y_{i-1}+2\bar{d}}^{y_{i}+2\bar{d}}{f((\widetilde{m}+2\bar{d})-2\bar{d}(j+1))d\widetilde{m}}\\
-	&=\int_{y_{i-1}}^{y_{i}}{f(\widetilde{m}-2\bar{d}(j+1))d\widetilde{m}}=\alpha_{i-1,j+1}
+	\alpha_{i+1,j+1}&\equiv\int_{y_{i+1}}^{y_{i+2}}{f(\widetilde{m}-2\bar{d}(j+1))d\widetilde{m}}\label{eq:alpha}\\
+	&=\int_{y_{i}+2\bar{d}}^{y_{i+1}+2\bar{d}}{f((\widetilde{m}-2\bar{d})-2\bar{d}j)d\widetilde{m}}\\
+	&=\int_{y_{i}}^{y_{i+1}}{f(\widetilde{m}-2\bar{d}j)d\widetilde{m}}=\alpha_{i,j}
 \end{align}
-$A$ is a Hankel matrix and therefore symmetric. Moreover, $A$ is sparse:
+Moreover, $A$ is sparse:
 \begin{align}
 	\alpha_{i,j}&=\int_{y_{i}}^{y_{i+1}}{f(\widetilde{m}-2\bar{d}j)d\widetilde{m}}\\
 	&=\int_{y_{i}}^{y_{i+1}}{f(\widetilde{m}-2\bar{d}j)\mathbf{1}_{-\bar{e}\leq\widetilde{m}-2\bar{d}j\leq\bar{e}}d\widetilde{m}}\\

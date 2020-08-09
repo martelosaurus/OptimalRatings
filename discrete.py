@@ -67,30 +67,29 @@ class Message:
 		self.e_bar = .5/self.N
 		self.d_bar = .5/self.K
 
-		# index matrices
+		# A matrix
 		# TODO: remove I, J, A, B, C from attributes
-		self.I = np.tile(np.arange(0,self.K+1),(self.M,1))
-		self.J = hankel(np.arange(-self.M,0),np.arange(-1,self.K))
+		self.I = hankel(np.arange(-self.M,0),np.arange(-1,self.K))
+		self.J = np.tile(np.arange(0,self.K+1),(self.M,1))
 		self.A = _alpha(self.I,self.J,M,N,a,b,self.e_bar,self.d_bar)
-		self.B = None
-		self.C = None
 
-		# check
-		ii = np.arange(-M,self.K)
-		jj = np.arange(0,self.K)
-		II, JJ = np.meshgrid(ii,jj)
-		self.II = II
-		self.JJ = JJ
-		self.AA = _alpha(II,JJ,M,N,a,b,self.e_bar,self.d_bar)
-		
-		X = list(zip(self.I.flatten(),self.J.flatten()))
-		@np.vectorize
-		def _alpha_check(i,j):
-			if (i,j) in X:
-				return 1.
-			else:
-				return 0.
-		self.XX = _alpha_check(II,JJ)
-		
-		# solve
+		# B matrix	
+		z = np.zeros(self.K)
+		A_L = np.vstack((self.A[:,:-1],z))
+		A_R = np.vstack((z,self.A[:,1:]))
+		self.B = A_L-A_R
 
+		# C matrix
+		self.C = self.B
+
+		# solve for breakpoints
+
+	def alpha(self,i,j):
+		return _alpha(i,j,self.M,self.N,self.a,self.b,self.e_bar,self.d_bar)
+	
+	def plot(self)
+
+
+
+m2 = Message(4,2,2.,2.)
+m1 = Message(4,2,1.,1.)
