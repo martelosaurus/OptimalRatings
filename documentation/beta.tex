@@ -199,10 +199,15 @@ Let the $(i,j)$-the element of the matrix $B\in\mathbb{R}^{(M+K)\times K}$ be gi
 	\end{cases}
 \end{equation}
 so that
-\begin{equation}\label{eq:F_map}
-	0=\mathcal{F}(\widetilde{x},a):=(\widetilde{x}\circ \widetilde{x})\circ(B'u)-(2\widetilde{x})\circ(B'a)+u\circ(B'(a\circ a))
+\begin{equation}
+	0=\mathcal{F}(\widetilde{x},a):=(B'u)\circ\widetilde{x}^{\circ 2}-2(B'a)\circ\widetilde{x}+B'a^{\circ 2}\label{eq:F_map}
+	%0=\mathcal{F}(\widetilde{x},a):&=(\widetilde{x}\circ \widetilde{x})\circ(B'u)-(2\widetilde{x})\circ(B'a)+u\circ(B'(a\circ a))\label{eq:F_map}\\
 \end{equation}
-where $\circ$ denotes Hadamard multiplication, $u=(1,\ldots,1)'\in\mathbb{R}^{K}$, $\widetilde{x}=(x_{1},\ldots,x_{K})'\in\mathbb{R}^{K}$, and $\mathcal{F}:\mathbb{R}^{K}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{K}$.
+where $\circ$ denotes Hadamard multiplication, $u=(1,\ldots,1)'\in\mathbb{R}^{K+M}$, $\widetilde{x}=(x_{1},\ldots,x_{K})'\in\mathbb{R}^{K}$, and $\mathcal{F}:\mathbb{R}^{K}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{K}$. Hence,
+\begin{equation}
+	x^{\circ}=\left(B'a+\left((B'a)^{\circ 2}-(B'u)\circ(B'a^{\circ 2})\right)^{\circ\frac{1}{2}}\right)\oslash(B'u)
+\end{equation}
+(This is just the positive root of the quadratic in Equation \ref{eq:F_map}).
 % ---------------------------------------------------------------------------- %
 % uniformly distributed state
 \subsection{Uniformly Distributed State}
@@ -238,7 +243,11 @@ where $\mathcal{G}:\mathbb{R}^{K+2}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{
 	a&=\frac{1}{2}(C(x\circ x))\oslash(Cx)\\
 	&=\frac{1}{2}(B(\widetilde{x}\circ \widetilde{x})+\overline{c})\oslash(B\widetilde{x}+\overline{c})
 \end{align}
-where $\oslash$ denotes Hadamard division. To summarize, $\mathcal{F}(x,a)=0$ is a system of $K$ equations and $\mathcal{G}(x,a)=0$ a system of $K+M$ equations. $x$ contains $K$ unknowns (since $x_{0}=0$ and $x_{K+1}=1$) and $a$ contains $K+M$ unknowns. In total, there are $M+2K$ equations and $M+2K$ unknowns. 
+where $\oslash$ denotes Hadamard division. To summarize, $\mathcal{F}(x,a)=0$ is a system of $K$ equations and $\mathcal{G}(x,a)=0$ a system of $K+M$ equations. $x$ contains $K$ unknowns (since $x_{0}=0$ and $x_{K+1}=1$) and $a$ contains $K+M$ unknowns. In total, there are $M+2K$ equations and $M+2K$ unknowns. We setup the contraction as follows:
+\begin{equation}
+	\widetilde{x}_{k}=
+\end{equation}
+where $\widetilde{x}_{k}$ denotes the $k$-th iteration (not the $k$-th element).
 \pagebreak
 \begin{landscape}
 	\subsection{Example: $A$, $B$, and $C$ when $M=4$ an $N=2$}

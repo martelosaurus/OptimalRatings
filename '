@@ -1,13 +1,10 @@
-# general imports
 import numpy as np
-from functools import lru_cache
-from matplotlib import pyplot as plt
-
-# scipy imports
 from scipy.integrate import fixed_quad
 from scipy.linalg import hankel
 from scipy.optimize  import root
 from scipy.sparse import spdiags
+from functools import lru_cache
+from scipy import optimize as opt
 
 # TODO: remove this
 np.set_printoptions(linewidth=160)
@@ -89,32 +86,29 @@ class Message:
 		self.B = B
 
 		# c_bar 
-		#self.c_bar = self.A[:,-1].sum()
-		self.c_bar = self.A[:,-1]
+		self.c_bar = self.A[:,-1].sum()
 
 		# solve for breakpoints
+		_x = np.linspace(0.,1.,self.K+2)
+		x0 = _x[1:-1]
+		
 		def f(x):
+			u_l = np.ones(self.K)
 			u_l = np.ones(self.K+self.M)
-			a = .5*(B.dot(x**2.)+self.c_bar)/(B.dot(x)+self.c_bar)
-			X2 = B.T.dot(u_l)
-			X1 = -2.*B.T.dot(a)
-			X0 = B.T.dot(a**2.)
-			return .5*(-X1+np.sqrt(X1**2.-4.*X2*X0))/X2
+			a = .5*(B@(x**2.+self.c_bar))/(B@x+self.c_bar)
+			X1 = B.T.dot(u_l)*x**2.
+			X2 = -2.*x*B.T.dot(a)
+			X3 = u_s*B.T.dot(a**2.)
+			return X1+X2+X3
 
-		x = np.linspace(0.,1.,self.K+2)
-		x = x[1:-1]
-		while True:
-			print(x)
-			plt.plot(x)
-			plt.show()
-			x = f(x)
+		self.x_sol = root(f,x0)
 
 	def alpha(self,i,j):
 		return _alpha(i,j,self.M,self.N,self.a,self.b,self.e_bar,self.d_bar)
 	
 	def plot(self):
-		plt.plot(self.x_sol.x)
-		plt.show()
+		pass
 
-my = Message(10,4,2.,2.)
-my.plot()
+m2 = Message(4,2,2.,2.)
+my = Message(8,20,2.1,3.5)
+m1 = Message(4,2,1.,1.)
