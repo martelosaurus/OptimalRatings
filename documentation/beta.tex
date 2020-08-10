@@ -171,10 +171,6 @@ Equations \ref{eq:cost_v1} and \ref{eq:cost_v2} provide two different characteri
 % ---------------------------------------------------------------------------- %
 % first-order conditions
 \subsection{First-Order Conditions}
-Define
-\begin{equation}
-	\beta_{\gamma}(x_{i},x_{i+1})=\int_{x_{i}}^{x_{i+1}}{q^{\gamma}g(q)dq}.
-\end{equation}
 For $i=-M,\ldots,K-1$ and $j=1,\ldots,K$, the first-order conditions for $a_{i}$ and $x_{j}$ are 
 \begin{align}
 	0=\frac{\partial}{\partial a_{i}}\mathcal{C}[m_{\mathcal{D}}]&=-2\sum_{k=k_{-}(y_{i})}^{k_{+}(y_{i})-1}{\alpha_{i,k}\int\limits_{x_{k}}^{x_{k+1}}{(q-a_{i})g(q)dq}}\label{foc_a}\\
@@ -241,10 +237,14 @@ where $\mathcal{G}:\mathbb{R}^{K+2}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{
 	&=\frac{1}{2}(B\widetilde{x}^{\circ 2}+\overline{c})\oslash(B\widetilde{x}+\overline{c})
 \end{align}
 where $\oslash$ denotes Hadamard division. To summarize, $\mathcal{F}(x,a)=0$ is a system of $K$ equations and $\mathcal{G}(x,a)=0$ a system of $K+M$ equations. $x$ contains $K$ unknowns (since $x_{0}=0$ and $x_{K+1}=1$) and $a$ contains $K+M$ unknowns. In total, there are $M+2K$ equations and $M+2K$ unknowns. 
-
+\begin{align}
+	0&=B'a^{\circ 2}-2(B'a)\circ\widetilde{x}\\
+	0&=(Bx^{\circ 2}+\overline{c})-2(Bx+\overline{c})\circ a
+\end{align}
 \pagebreak
 \begin{landscape}
 	\subsection{Example: $A$, $B$, and $C$ when $M=4$ an $N=2$}
+	Note that the columns of $A$ are all the same. The same is true for $B$. 
 	\tiny
 	\begin{align}
 		A&=\left[\input{index/a_file}\right]\\
