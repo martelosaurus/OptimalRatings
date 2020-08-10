@@ -1,7 +1,13 @@
 # general imports
-import numpy as np
 from functools import lru_cache
+
+# matplotlib imports
+from matplotlib import rc
 from matplotlib import pyplot as plt
+
+# numpy imports
+import numpy as np
+from numpy.linalg import norm
 
 # scipy imports
 from scipy.integrate import fixed_quad
@@ -11,6 +17,7 @@ from scipy.sparse import spdiags
 
 # TODO: remove this
 np.set_printoptions(linewidth=160)
+rc('font', size=12)
 
 # -----------------------------------------------------------------------------
 # Beta distribution
@@ -34,6 +41,7 @@ def beta(e,a,b,e_bar):
 		#raise Exception('Trying to evaluate error PDF out of its support')
 		return _beta(e,a,b,e_bar)/_beta_wgts(a,b,e_bar)
 
+# TODO: use the structure of A to simplify _alpha
 @np.vectorize
 def _alpha(i,j,M,N,a,b,e_bar,d_bar):
 	y0 = 2.*d_bar*(i+M)-e_bar	# y_{i}
@@ -45,7 +53,7 @@ def _alpha(i,j,M,N,a,b,e_bar,d_bar):
 # message
 class Message:
 
-	def __init__(self,M,N,a,b):
+	def __init__(self,M=1,N=2,a=1.,b=1.,tol=1.e-10):
 		"""
 		Parameters 
 		----------
@@ -73,48 +81,63 @@ class Message:
 		self.e_bar = .5/self.N
 		self.d_bar = .5/self.K
 
+		# tolerance
+		self.tol = tol
+
 		# A matrix
-		# TODO: remove I, J, A, B, C from attributes
-		self.I = hankel(np.arange(-self.M,0),np.arange(-1,self.K))
-		self.J = np.tile(np.arange(0,self.K+1),(self.M,1))
-		self.A = _alpha(self.I,self.J,M,N,a,b,self.e_bar,self.d_bar)
+		# TODO: what are the first columns of I and J?
+		I = hankel(np.arange(-self.M,0),np.arange(-1,self.K))
+		J = np.tile(np.arange(0,self.K+1),(self.M,1))
+		#self.A = _alpha(I,J,M,N,a,b,self.e_bar,self.d_bar)
+		self.A = _alpha(I[:,0],J[:,0],M,N,a,b,self.e_bar,self.d_bar)
+		self.A = np.tile(self.A,(self.K+1,1)).T
 
 		# B matrix	
 		z = np.zeros(self.K)
 		A_L = np.vstack((self.A[:,:-1],z))
 		A_R = np.vstack((z,self.A[:,1:]))
-		self._data = A_L-A_R
+		_data = A_L-A_R
 		_diags = np.arange(0,-(self.M+1),-1)
-		B = spdiags(self._data,_diags,self.M+self.K,self.K)
-		self.B = B
+		self.B = spdiags(_data,_diags,self.M+self.K,self.K)
 
-		# c_bar 
-		#self.c_bar = self.A[:,-1].sum()
-		self.c_bar = self.A[:,-1]
+		# c vector
+		self.c = np.hstack((np.zeros(self.K),self.A[:,-1]))
 
 		# solve for breakpoints
-		def f(x):
-			u_l = np.ones(self.K+self.M)
-			a = .5*(B.dot(x**2.)+self.c_bar)/(B.dot(x)+self.c_bar)
-			X2 = B.T.dot(u_l)
-			X1 = -2.*B.T.dot(a)
-			X0 = B.T.dot(a**2.)
-			return .5*(-X1+np.sqrt(X1**2.-4.*X2*X0))/X2
+		def h_map(x):
+			a = .5*(self.B.dot(x**2.)+self.c)/(self.B.dot(x)+self.c)
+			return .5*self.B.T.dot(a**2.)/self.B.T.dot(a)
 
 		x = np.linspace(0.,1.,self.K+2)
-		x = x[1:-1]
-		while True:
-			print(x)
-			plt.plot(x)
-			plt.show()
-			x = f(x)
+		x_new = x[1:-1]
+		x_old = None
+		it = 0
+		while x_old is None or norm(x_new-x_old)>self.tol:
+			it += 1
+			x_old = x_new
+			x_new = h_map(x_old)
+
+		# TODO: setup with a maxiter
+		self.x_sol = np.hstack((0,x_new,1))
+		print(str(it) + ' iterations')
 
 	def alpha(self,i,j):
 		return _alpha(i,j,self.M,self.N,self.a,self.b,self.e_bar,self.d_bar)
 	
 	def plot(self):
-		plt.plot(self.x_sol.x)
+		m = np.linspace(0.,1.,self.K+2)
+		plt.plot(self.x_sol,m,linewidth=4)
+		plt.xlim([0,1])
+		plt.ylim([-.1,1.1])
+		plt.xlabel("state $q$")
+		plt.ylabel("message $m$")
+		plt.title("$M$ = " + str(self.M) + 
+			", $N$ = " + str(self.N) + 
+			" ($\\epsilon$ = " + str(.5/self.N) + 
+			"), $a$ = " + str(self.a) + 
+			", $b$ = " + str(self.b))
+		plt.grid()
 		plt.show()
 
-my = Message(10,4,2.,2.)
-my.plot()
+m_big = Message(M=100,N=4,a=2.1,b=2.1)
+m_big.plot()

@@ -186,7 +186,8 @@ respectively. If $g(x_{i})>0$, then for $j=1,\ldots,K$, we have
 	&=\sum_{i=j-1-M}^{j-2}{\left((x_{j}-a_{i})^{2}\alpha_{i,j-1}-(x_{j}-a_{i+1})^{2}\alpha_{i+1,j}\right)}\\
 	&=\sum_{i=j-1-M}^{j-2}{\left(\left(x_{j}^{2}-2a_{i}x_{j}-a_{i}^{2}\right)\alpha_{i,j-1}-\left(x_{j}^{2}-2a_{i+1}x_{j}-a_{i+1}^{2}\right)\alpha_{i+1,j}\right)}\\
 	&=x_{j}^{2}\left[\sum_{i=j-1-M}^{j-2}{(\alpha_{i,j-1}-\alpha_{i+1,j})}\right]-2x_{j}\left[\sum_{i=j-1-M}^{j-2}{\left(a_{i}\alpha_{i,j-1}-a_{i+1}\alpha_{i+1,j}\right)}\right]\notag\\
-	&\hspace{.5in}+\left[\sum_{i=j-1-M}^{j-2}{\left(a_{i}^{2}\alpha_{i,j-1}-a_{i+1}^{2}\alpha_{i+1,j}\right)}\right]
+	&\hspace{.5in}+\left[\sum_{i=j-1-M}^{j-2}{\left(a_{i}^{2}\alpha_{i,j-1}-a_{i+1}^{2}\alpha_{i+1,j}\right)}\right]\\
+	&=-2x_{j}\left[\sum_{i=j-1-M}^{j-2}{\left(a_{i}\alpha_{i,j-1}-a_{i+1}\alpha_{i+1,j}\right)}\right]+\left[\sum_{i=j-1-M}^{j-2}{\left(a_{i}^{2}\alpha_{i,j-1}-a_{i+1}^{2}\alpha_{i+1,j}\right)}\right]
 \end{align}
 Let the $(i,j)$-the element of the matrix $B\in\mathbb{R}^{(M+K)\times K}$ be given by
 \begin{equation}
@@ -200,14 +201,10 @@ Let the $(i,j)$-the element of the matrix $B\in\mathbb{R}^{(M+K)\times K}$ be gi
 \end{equation}
 so that
 \begin{equation}
-	0=\mathcal{F}(\widetilde{x},a):=(B'u)\circ\widetilde{x}^{\circ 2}-2(B'a)\circ\widetilde{x}+B'a^{\circ 2}\label{eq:F_map}
+	0=\mathcal{F}(\widetilde{x},a):=-2(B'a)\circ\widetilde{x}+B'a^{\circ 2}\label{eq:F_map}
 	%0=\mathcal{F}(\widetilde{x},a):&=(\widetilde{x}\circ \widetilde{x})\circ(B'u)-(2\widetilde{x})\circ(B'a)+u\circ(B'(a\circ a))\label{eq:F_map}\\
 \end{equation}
-where $\circ$ denotes Hadamard multiplication, $u=(1,\ldots,1)'\in\mathbb{R}^{K+M}$, $\widetilde{x}=(x_{1},\ldots,x_{K})'\in\mathbb{R}^{K}$, and $\mathcal{F}:\mathbb{R}^{K}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{K}$. Hence,
-\begin{equation}
-	x^{\circ}=\left(B'a+\left((B'a)^{\circ 2}-(B'u)\circ(B'a^{\circ 2})\right)^{\circ\frac{1}{2}}\right)\oslash(B'u)
-\end{equation}
-(This is just the positive root of the quadratic in Equation \ref{eq:F_map}).
+where $\circ$ denotes Hadamard multiplication, $u=(1,\ldots,1)'\in\mathbb{R}^{K+M}$, $\widetilde{x}=(x_{1},\ldots,x_{K})'\in\mathbb{R}^{K}$, and $\mathcal{F}:\mathbb{R}^{K}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{K}$. 
 % ---------------------------------------------------------------------------- %
 % uniformly distributed state
 \subsection{Uniformly Distributed State}
@@ -236,18 +233,15 @@ It transpires that for $i=-M,\ldots,K-1$ and $j=1,\ldots,K$, $[B]_{i,j}=[C]_{i,j
 \end{equation}
 We have 
 \begin{equation}\label{eq:G_map}
-	0=\mathcal{G}(x,a):=C(x\circ x)-2a\circ (Cx)
+	0=\mathcal{G}(x,a):=Cx^{\circ 2}-2a\circ (Cx)
 \end{equation}
 where $\mathcal{G}:\mathbb{R}^{K+2}\times\mathbb{R}^{M+K}\rightarrow\mathbb{R}^{M+K}$. Hence,
 \begin{align}
-	a&=\frac{1}{2}(C(x\circ x))\oslash(Cx)\\
-	&=\frac{1}{2}(B(\widetilde{x}\circ \widetilde{x})+\overline{c})\oslash(B\widetilde{x}+\overline{c})
+	a&=\frac{1}{2}(Cx^{\circ 2})\oslash(Cx)\\
+	&=\frac{1}{2}(B\widetilde{x}^{\circ 2}+\overline{c})\oslash(B\widetilde{x}+\overline{c})
 \end{align}
-where $\oslash$ denotes Hadamard division. To summarize, $\mathcal{F}(x,a)=0$ is a system of $K$ equations and $\mathcal{G}(x,a)=0$ a system of $K+M$ equations. $x$ contains $K$ unknowns (since $x_{0}=0$ and $x_{K+1}=1$) and $a$ contains $K+M$ unknowns. In total, there are $M+2K$ equations and $M+2K$ unknowns. We setup the contraction as follows:
-\begin{equation}
-	\widetilde{x}_{k}=
-\end{equation}
-where $\widetilde{x}_{k}$ denotes the $k$-th iteration (not the $k$-th element).
+where $\oslash$ denotes Hadamard division. To summarize, $\mathcal{F}(x,a)=0$ is a system of $K$ equations and $\mathcal{G}(x,a)=0$ a system of $K+M$ equations. $x$ contains $K$ unknowns (since $x_{0}=0$ and $x_{K+1}=1$) and $a$ contains $K+M$ unknowns. In total, there are $M+2K$ equations and $M+2K$ unknowns. 
+
 \pagebreak
 \begin{landscape}
 	\subsection{Example: $A$, $B$, and $C$ when $M=4$ an $N=2$}
