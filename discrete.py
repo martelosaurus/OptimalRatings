@@ -41,19 +41,32 @@ def beta(e,a,b,e_bar):
 		#raise Exception('Trying to evaluate error PDF out of its support')
 		return _beta(e,a,b,e_bar)/_beta_wgts(a,b,e_bar)
 
+@np.vectorize
+def quad(e,b,e_bar):
+	return .5/e_bar+b/3.-b*(e/e_bar)**2.
+
 # TODO: use the structure of A to simplify _alpha
 @np.vectorize
-def _alpha(i,j,M,N,a,b,e_bar,d_bar):
+#def _alpha(i,j,M,N,a,b,e_bar,d_bar):
+def _alpha(i,j,M,N,b,e_bar,d_bar):
+	#y0 = 2.*d_bar*(i+M)-e_bar	# y_{i}
+	#y1 = y0+2.*d_bar			# y_{i+1}		
+	#f = lambda m_til : beta(m_til-2.*d_bar*j,a,b,e_bar)	
+	#return fixed_quad(f,y0,y1)[0]
 	y0 = 2.*d_bar*(i+M)-e_bar	# y_{i}
 	y1 = y0+2.*d_bar			# y_{i+1}		
-	f = lambda m_til : beta(m_til-2.*d_bar*j,a,b,e_bar)	
+	f = lambda m_til : quad(m_til-2.*d_bar*j,b,e_bar)	
 	return fixed_quad(f,y0,y1)[0]
+	#y0 = 2.*d_bar*(i-j+M)-e_bar # y_{i-j}
+	#y1 = y0+2.*d_bar # y_{i+1-j}
+	#return (d_bar/(3.*e_bar))*(3.+2.*b*e_bar**2.)-(b/3.)*(y1**3.-y0**3.)
 
 # -----------------------------------------------------------------------------
 # message
 class Message:
 
-	def __init__(self,M=1,N=2,a=1.,b=1.,tol=1.e-10):
+	#def __init__(self,M=1,N=2,a=1.,b=1.,tol=1.e-10):
+	def __init__(self,M=1,N=2,b=1.,tol=1.e-10):
 		"""
 		Parameters 
 		----------
@@ -73,7 +86,7 @@ class Message:
 		self.N = N
 
 		# error distribution
-		self.a = a
+		#self.a = a
 		self.b = b
 
 		# knot spacing
@@ -89,7 +102,9 @@ class Message:
 		I = hankel(np.arange(-self.M,0),np.arange(-1,self.K))
 		J = np.tile(np.arange(0,self.K+1),(self.M,1))
 		#self.A = _alpha(I,J,M,N,a,b,self.e_bar,self.d_bar)
-		self.A = _alpha(I[:,0],J[:,0],M,N,a,b,self.e_bar,self.d_bar)
+		#self.A = _alpha(I[:,0],J[:,0],M,N,a,b,self.e_bar,self.d_bar)
+		#self.A = np.tile(self.A,(self.K+1,1)).T
+		self.A = _alpha(I[:,0],J[:,0],M,N,b,self.e_bar,self.d_bar)
 		self.A = np.tile(self.A,(self.K+1,1)).T
 
 		# B matrix	
@@ -122,22 +137,41 @@ class Message:
 		print(str(it) + ' iterations')
 
 	def alpha(self,i,j):
-		return _alpha(i,j,self.M,self.N,self.a,self.b,self.e_bar,self.d_bar)
+		#return _alpha(i,j,self.M,self.N,self.a,self.b,self.e_bar,self.d_bar)
+		return _alpha(i,j,self.M,self.N,self.b,self.e_bar,self.d_bar)
 	
-	def plot(self):
+	def plot_msg(self,fname):
 		m = np.linspace(0.,1.,self.K+2)
 		plt.plot(self.x_sol,m,linewidth=4)
 		plt.xlim([0,1])
 		plt.ylim([-.1,1.1])
 		plt.xlabel("state $q$")
 		plt.ylabel("message $m$")
+		#plt.title("$M$ = " + str(self.M) + 
+			#", $N$ = " + str(self.N) + 
+			#" ($\\epsilon$ = " + str(.5/self.N) + 
+			#"), $a$ = " + str(self.a) + 
+			#", $b$ = " + str(self.b))
 		plt.title("$M$ = " + str(self.M) + 
 			", $N$ = " + str(self.N) + 
 			" ($\\epsilon$ = " + str(.5/self.N) + 
-			"), $a$ = " + str(self.a) + 
-			", $b$ = " + str(self.b))
+			"), $b$ = " + str(self.b))
 		plt.grid()
-		plt.show()
+		plt.savefig(fname)
+		plt.close()
 
-m_big = Message(M=100,N=4,a=2.1,b=2.1)
-m_big.plot()
+	def plot_err(self,fname,freq_min,freq_max,n_plot=100):
+		e_plot = np.linspace(-self.e_bar,self.e_bar,n_plot)
+		plt.plot(e_plot,quad(e_plot,self.b,self.e_bar),linewidth=4)
+		plt.xlim([-1.5*self.e_bar,1.5*self.e_bar])
+		plt.ylim([freq_min,freq_max])
+		plt.xlabel("error $e$")
+		plt.ylabel("frequency")
+		plt.xticks([-self.e_bar,0.,self.e_bar])
+		plt.title("$M$ = " + str(self.M) + 
+			", $N$ = " + str(self.N) + 
+			" ($\\epsilon$ = " + str(.5/self.N) + 
+			"), $b$ = " + str(self.b))
+		plt.grid()
+		plt.savefig(fname)
+		plt.close()

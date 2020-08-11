@@ -5,4 +5,4 @@
 \contentsline {subsection}{\numberline {3.2}Message Cost}{5}{subsection.3.2}% 
 \contentsline {subsection}{\numberline {3.3}First-Order Conditions}{7}{subsection.3.3}% 
 \contentsline {subsection}{\numberline {3.4}Uniformly Distributed State}{8}{subsection.3.4}% 
-\contentsline {subsection}{\numberline {3.5}Example: $A$, $B$, and $C$ when $M=4$ an $N=2$}{10}{subsection.3.5}% 
+\contentsline {subsection}{\numberline {3.5}Quadratic Error}{9}{subsection.3.5}% 
