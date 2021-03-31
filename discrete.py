@@ -17,7 +17,7 @@ from scipy.sparse import spdiags
 
 # TODO: remove this
 np.set_printoptions(linewidth=160)
-rc('font', size=14)
+rc('font', size=30)
 
 # -----------------------------------------------------------------------------
 # Beta distribution
@@ -158,6 +158,7 @@ class Message:
                                 " ($\\epsilon$ = " + str(.5/self.N) + 
                                 "), $b$ = " + str(self.b))
                 plt.grid()
+                plt.tight_layout()
                 plt.savefig(fname)
                 plt.close()
 
@@ -175,5 +176,6 @@ class Message:
                                 " ($\\epsilon$ = " + str(.5/self.N) + 
                                 "), $b$ = " + str(self.b))
                 plt.grid()
+                plt.tight_layout()
                 plt.savefig(fname)
                 plt.close()

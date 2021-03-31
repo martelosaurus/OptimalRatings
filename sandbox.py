@@ -6,5 +6,5 @@ while B:
 	n = len(B)
 	_b = B.pop()
 	m = Message(M=100,N=4,b=_b)
-	m.plot_msg("../latex/Model_Figures/msg" + str(n) + ".pdf",title=False)
-	m.plot_err("../latex/Model_Figures/err" + str(n) + ".pdf",2.,6.,title=False)
+	m.plot_msg("../new_tex/Model_Figures/msg" + str(n) + ".pdf",title=False)
+	m.plot_err("../new_tex/Model_Figures/err" + str(n) + ".pdf",2.,6.,title=False)
