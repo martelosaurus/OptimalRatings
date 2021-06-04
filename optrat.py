@@ -39,25 +39,6 @@ def _Q(I,i,j,a,b,_n=11):
     """
     return fixed_quad(lambda q: (q**i)*(I(q)**j),a,b,n=_n)[0]
 
-#------------------------------------------------------------
-class Message:
-
-    def __init__(self):
-
-class Continuous(Message):
-
-    def __init__(self):
-
-class Discrete(Message):
-
-    def __init__(self):
-
-class Identity(Message):
-
-    def __init__(self):
-
-#------------------------------------------------------------
-
 def _A(I,x1,x2):
     """
     Optimal [A]ction given that x1 < q < x2

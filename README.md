@@ -4,9 +4,24 @@ Forthcoming at *Management Science*
 
 We look at two dimensions: the importance function and the error distribution. In one set of analyses, we assume uniform importance and non-uniform error. In the other, we assume non-uniform importance and uniform error.
 
-Numerical solutions for Optimal Ratings
+## Non-Uniform error, Uniform Importance
 
-## uniform error, non-uniform importance
+Discrete messages
+
+```python
+from discrete import Message
+from matplotlib import pyplot as plt
+
+B = [-.2,-.1,0.,1.,2.,4.]
+while B:
+    n = len(B)
+    _b = B.pop()
+    m = Message(M=100,N=4,b=_b)
+    m.plot_msg("msg" + str(n) + ".pdf",title=False)
+    m.plot_err("err" + str(n) + ".pdf",2.,6.,title=False)
+```
+
+## Uniform Error, Non-Uniform Importance
 
 ```python
 # importance function(s)
@@ -20,18 +35,6 @@ I = {
 for i in I:
 	M = []
 	for n in [5,20,100]:
-		M = M + [dm.Message(n,I[i])]
+		M = M + [Message(n,I[i])]
 	dm.mplot(M)
-```
-
-## non-uniform error, uniform importance
-
-Discrete messages
-
-```python
-from discrete import Message
-
-m = Message(M=100,N=4,b=2)
-m.plot_msg("../new_tex/Model_Figures/msg" + str(n) + ".pdf",title=False)
-m.plot_err("../new_tex/Model_Figures/err" + str(n) + ".pdf",2.,6.,title=False)
 ```
