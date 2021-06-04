@@ -1,12 +1,15 @@
 # Ratings and Cooperative Information Transmission
+
+We look at two dimensions: the importance function and the error distribution. In one set of analyses, we assume uniform importance and non-uniform error. In the other, we assume non-uniform importance and uniform error.
+
 Numerical solutions for Optimal Ratings
 
 ```python
 # importance function(s)
 I = {
-		'i1' : lambda x: x**3., 
-		'i2' : lambda x: x**(-1.5),
-		'i3' : lambda x: (6.*(x-.5)**2.+.5)**3.
+	'i1' : lambda x: x**3., 
+	'i2' : lambda x: x**(-1.5),
+	'i3' : lambda x: (6.*(x-.5)**2.+.5)**3.
 	}
 
 # for each importance function, plot discrete messages of size 5, 20, 100 
