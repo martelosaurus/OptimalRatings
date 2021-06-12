@@ -23,7 +23,7 @@ rc('font', size=30)
 # Beta distribution
 @np.vectorize
 def _beta(e,a,b,e_bar):
-p = .5*(1.+e/e_bar)
+    p = .5*(1.+e/e_bar)
     f = p**(a-1.)*(1.-p)**(b-1.)
     return f
 
@@ -81,54 +81,54 @@ class Message:
 
         # knot spacing
         self.K = self.M*self.N
-            self.e_bar = .5/self.N
-            self.d_bar = .5/self.K
+        self.e_bar = .5/self.N
+        self.d_bar = .5/self.K
 
-            # tolerance
-            self.tol = tol
+        # tolerance
+        self.tol = tol
 
-            # A matrix
-            # TODO: what are the first columns of I and J?
-            I = hankel(np.arange(-self.M,0),np.arange(-1,self.K))
-            J = np.tile(np.arange(0,self.K+1),(self.M,1))
-            self.A = _alpha(I[:,0],J[:,0],M,N,b,self.e_bar,self.d_bar)
-            self.A = np.tile(self.A,(self.K+1,1)).T
+        # A matrix
+        # TODO: what are the first columns of I and J?
+        I = hankel(np.arange(-self.M,0),np.arange(-1,self.K))
+        J = np.tile(np.arange(0,self.K+1),(self.M,1))
+        self.A = _alpha(I[:,0],J[:,0],M,N,b,self.e_bar,self.d_bar)
+        self.A = np.tile(self.A,(self.K+1,1)).T
 
-            # B matrix      
-            z = np.zeros(self.K)
-            A_L = np.vstack((self.A[:,:-1],z))
-            A_R = np.vstack((z,self.A[:,1:]))
-            _data = A_L-A_R
-            _diags = np.arange(0,-(self.M+1),-1)
-            self.B = spdiags(_data,_diags,self.M+self.K,self.K)
+        # B matrix      
+        z = np.zeros(self.K)
+        A_L = np.vstack((self.A[:,:-1],z))
+        A_R = np.vstack((z,self.A[:,1:]))
+        _data = A_L-A_R
+        _diags = np.arange(0,-(self.M+1),-1)
+        self.B = spdiags(_data,_diags,self.M+self.K,self.K)
 
-            # c vector
-            self.c = np.hstack((np.zeros(self.K),self.A[:,-1]))
+        # c vector
+        self.c = np.hstack((np.zeros(self.K),self.A[:,-1]))
 
-            # solve for breakpoints
-            def h_map(x):
-                a = .5*(self.B.dot(x**2.)+self.c)/(self.B.dot(x)+self.c)
-                return .5*self.B.T.dot(a**2.)/self.B.T.dot(a)
+        # solve for breakpoints
+        def h_map(x):
+            a = .5*(self.B.dot(x**2.)+self.c)/(self.B.dot(x)+self.c)
+            return .5*self.B.T.dot(a**2.)/self.B.T.dot(a)
 
-            x = np.linspace(0.,1.,self.K+2)
-            x_new = x[1:-1]
-            x_old = None
-            it = 0
-            while x_old is None or norm(x_new-x_old)>self.tol:
-                it += 1
-                x_old = x_new
-                x_new = h_map(x_old)
+        x = np.linspace(0.,1.,self.K+2)
+        x_new = x[1:-1]
+        x_old = None
+        it = 0
+        while x_old is None or norm(x_new-x_old)>self.tol:
+            it += 1
+            x_old = x_new
+            x_new = h_map(x_old)
 
-            # TODO: setup with a maxiter
-            self.x_sol = np.hstack((0,x_new,1))
-            print(str(it) + ' iterations')
+        # TODO: setup with a maxiter
+        self.x_sol = np.hstack((0,x_new,1))
+        self.m_sol = np.linspace(0.,1.,self.K+2)
+        print(str(it) + ' iterations')
 
     def alpha(self,i,j):
         return _alpha(i,j,self.M,self.N,self.b,self.e_bar,self.d_bar)
     
     def plot_msg(self,fname,title=True):
-        m = np.linspace(0.,1.,self.K+2)
-        plt.plot(self.x_sol,m,linewidth=4)
+        plt.plot(self.x_sol,self.m_sol,linewidth=4)
         plt.xlim([0,1])
         plt.ylim([-.1,1.1])
         plt.xlabel("state $q$")
@@ -142,10 +142,12 @@ class Message:
         plt.tight_layout()
         plt.savefig(fname)
         plt.close()
+        return self.m_sol, self.x_sol
 
     def plot_err(self,fname,freq_min,freq_max,title=True,n_plot=100):
         e_plot = np.linspace(-self.e_bar,self.e_bar,n_plot)
-        plt.plot(e_plot,quad(e_plot,self.b,self.e_bar),linewidth=4)
+        y_plot = quad(e_plot,self.b,self.e_bar)
+        plt.plot(e_plot,y_plot,linewidth=4)
         plt.xlim([-1.5*self.e_bar,1.5*self.e_bar])
         plt.ylim([freq_min,freq_max])
         plt.xlabel("error $e$")
@@ -160,3 +162,4 @@ class Message:
         plt.tight_layout()
         plt.savefig(fname)
         plt.close()
+        return e_plot, y_plot
