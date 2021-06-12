@@ -24,6 +24,7 @@ while B:
 ## Uniform Error, Non-Uniform Importance
 
 ```python
+from optrat import Message, mplot
 # importance function(s)
 I = {
     'i1' : lambda x: x**3., 
@@ -36,5 +37,5 @@ for i in I:
     M = []
     for n in [5,20,100]:
         M = M + [Message(n,I[i])]
-    dm.mplot(M)
+   	mplot(M)
 ```
