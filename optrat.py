@@ -1,3 +1,4 @@
+
 """
 Package for optimal ratings.
 
@@ -19,11 +20,21 @@ where e is distributed on [-e_bar,e_bar] according to the PDF f. She then takes
 an action A(m_tilde). The sender and receiver incur the cost (q-A(m_tilde))I(q)
 where I:[0,1]->[0,1] is the importance function. 
 """
+# matplotlib imports
+from matplotlib import rc
+from matplotlib import pyplot as plt
+
+# numpy imports
 import numpy as np
-import matplotlib.pyplot as plt
+
+# scipy imports
 from scipy import integrate, optimize
 from scipy.integrate import fixed_quad, dblquad
 import csv
+
+# TODO: remove this
+np.set_printoptions(linewidth=160)
+rc('font', size=30)
 
 def _Q(I,i,j,a,b,_n=11):
     """
@@ -156,10 +167,10 @@ def mplot(M,nplot=1000):
     q = np.linspace(0.,1.,nplot)
     cplt = np.zeros(nplot)
     for n in range(0,nplot):
-            cplt[n] = _cts_msg_fun(I,q[n])
+        cplt[n] = _cts_msg_fun(I,q[n])
     plt.plot(q,cplt,'-r')
     for m in M:
-            plt.plot(q,(np.digitize(q,m.M)-1.)/(m.N-1.),'-b')
+        plt.plot(q,(np.digitize(q,m.M)-1.)/(m.N-1.),'-b')
     plt.plot(q,q,'--k')
     plt.plot(q,cplt,'-r')
     plt.axis([0.,1.,0.,1.])
@@ -170,29 +181,29 @@ def mplot(M,nplot=1000):
     plt.show()
 
 def mdrop(M,fname='messages.csv',ndrop=1000):
-	"""
-	Writes a list of message function to disk
-	
-	Parameters
-	----------
-	I : callable
-		Importance function I:[0,1]->[0,1]
+    """
+    Writes a list of message function to disk
+    
+    Parameters
+    ----------
+    I : callable
+            Importance function I:[0,1]->[0,1]
 
-	"""
-	I = M[0].I
-	q = np.linspace(0.,1.,ndrop)
-	cplt = np.zeros(ndrop)
-	with open(fname,'w') as csvfile:
-		writer = csv.writer(csvfile)
-		R = ['q','I','m_inf']
-		for m in M:
-			R = R + ['m_'+str(m.N)]
-		writer.writerow(R)
-		for n in range(0,ndrop):
-			R = [q[n],I(q[n]),_cts_msg_fun(I,q[n])]
-			for m in M:
-				R = R + [np.digitize(q[n],m.M)/(1.*m.N)] 
-			writer.writerow(R)
+    """
+    I = M[0].I
+    q = np.linspace(0.,1.,ndrop)
+    cplt = np.zeros(ndrop)
+    with open(fname,'w') as csvfile:
+        writer = csv.writer(csvfile)
+        R = ['q','I','m_inf']
+        for m in M:
+            R = R + ['m_'+str(m.N)]
+        writer.writerow(R)
+        for n in range(0,ndrop):
+            R = [q[n],I(q[n]),_cts_msg_fun(I,q[n])]
+            for m in M:
+                R = R + [np.digitize(q[n],m.M)/(1.*m.N)] 
+            writer.writerow(R)
 
 def eplot(I,nplot=4):
 	"""
