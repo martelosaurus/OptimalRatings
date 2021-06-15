@@ -1,32 +1,3 @@
-"""
-Organization
-------------
-We either assume that the optimal message function is smooth (in which case we 
-compute it using the calculus of variations) or we assume that it is discrete.
-
-Model
------
-The sender and receiver agree on a message function m:[0,1]->[0,1]. The sender
-privately observes q, which is uniformly distributed on [0,1]. She sends the 
-receiver the message m(q). The receiver receives the message m_tilde = m(q)+e, 
-where e is distributed on [-e_bar,e_bar] according to the PDF f. She then takes
-an action A(m_tilde). The sender and receiver incur the cost (q-A(m_tilde))I(q)
-where I:[0,1]->[0,1] is the importance function. 
-
-Common Parameters
------------------
-I : callable
-	Importance function I:[0,1]->[0,1]
-
-x1, x2 : float, float
-	Given x1 < q < x2
-M : int
-        Number of knots per message
-N : int
-        Number of messages
-nplot : int
-        Number of knots at which to plot the message
-"""
 # matplotlib imports
 from matplotlib import rc
 from matplotlib import pyplot as plt
@@ -39,72 +10,6 @@ from scipy import integrate, optimize
 from scipy.integrate import fixed_quad, dblquad
 import csv
 
-# -----------------------------------------------------------------------------
-# auxiliary functions
-
-def _Q(I,i,j,a,b,_n=11):
-    """[Q]uadrature with _n knots: returns \int_{a}^{b}{q^{i}I(q)^{j}dq)"""
-    return fixed_quad(lambda q: (q**i)*(I(q)**j),a,b,n=_n)[0]
-
-def _A(I,x1,x2):
-    """Optimal [A]ction given that x1 < q < x2""" 
-    if x1 == x2:
-        return x1
-    else:
-        return _Q(I,1.,1.,x1,x2)/_Q(I,0.,1.,x1,x2)
-	
-def _X(I,x1,x2):
-    """ ne[X]t step"""
-    if x1 == x2:
-        return x1
-    else:
-        f = lambda x3: x2-(_A(I,x1,x2)+_A(I,x2,x3))/2.
-        return optimize.newton(f,x2)
-
-def _S(I,x1,N):
-    """non-linear [S]hooting"""
-    x = np.zeros(N+1)
-    x[1] = x1
-    for n in range(0,N-1): 
-        x[n+2] = _X(I,x[n],x[n+1]) 
-    return x
-
-def D(I,N):
-    """optimal [D]iscrete message function"""
-    x1s = optimize.newton(lambda x1: _S(I,x1,N)[-1]-1.,1./N)
-    return _S(I,x1s,N) 
-
-def _cts_msg_fun(I,q):
-    """ optimal[C]ontinuous message function"""
-    return _Q(I,0.,(1./3),0.,q)/_Q(I,0.,(1./3),0.,1.)
-
-class Message():
-
-    def __init__(self,N,I,nplot=1000):
-        self.N = N
-        self.I = I
-        self.M = D(I,self.N) 
-        self.nplot = nplot
-
-    def plot_msg(self,nplot=1000):
-        I = M[0].I
-        q = np.linspace(0.,1.,nplot)
-        cplt = np.zeros(nplot)
-        for n in range(0,nplot):
-            cplt[n] = _cts_msg_fun(I,q[n])
-        plt.plot(q,cplt,color="tab:orange")
-        plt.plot(q,(np.digitize(q,m.M)-1.)/(m.N-1.),color="tab:blue")
-        plt.plot(q,q,'--k')
-        plt.plot(q,cplt,color="tab:orange")
-        plt.axis([0.,1.,0.,1.])
-        plt.legend(['asymptotic message','optimal discrete'])
-        plt.xlabel('state $(q)$')
-        plt.ylabel('message $(m)$')
-        plt.grid()
-        plt.show()
-
-# -----------------------------------------------------------------------------
-# functions
 def _fixed_quad(*args,**kwargs):
     """Wrapper for fixed_quad that returns the integral (without the error)"""
     return fixed_quad(*args,**kwargs)[0]

@@ -139,4 +139,22 @@ class Message:
         plt.tight_layout()
         plt.savefig(fname)
         plt.close()
-        return self.m_sol, self.x_sol
+
+    def plot_err(self,fname,freq_min,freq_max,title=True,n_plot=100):
+        e_plot = np.linspace(-self.e_bar,self.e_bar,n_plot)
+        y_plot = quad(e_plot,self.b,self.e_bar)
+        plt.plot(e_plot,y_plot,linewidth=4)
+        plt.xlim([-1.5*self.e_bar,1.5*self.e_bar])
+        plt.ylim([freq_min,freq_max])
+        plt.xlabel("error $e$")
+        plt.ylabel("frequency")
+        plt.xticks([-self.e_bar,0.,self.e_bar])
+        if title:
+            plt.title("$M$ = " + str(self.M) + 
+                ", $N$ = " + str(self.N) + 
+                " ($\\epsilon$ = " + str(.5/self.N) + 
+                "), $b$ = " + str(self.b))
+        plt.grid()
+        plt.tight_layout()
+        plt.savefig(fname)
+        plt.close()
