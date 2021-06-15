@@ -4,13 +4,14 @@ Forthcoming at *Management Science*
 
 We look at two dimensions: the importance function and the error distribution. In one set of analyses, we assume uniform importance and non-uniform error. In the other, we assume non-uniform importance and uniform error.
 
+The sender and receiver agree on a message function m:[0,1]->[0,1]. The sender privately observes q, which is uniformly distributed on [0,1]. She sends the receiver the message m(q). The receiver receives the message m_tilde = m(q)+e, where e is distributed on [-e_bar,e_bar] according to the PDF f. She then takes an action A(m_tilde). The sender and receiver incur the cost (q-A(m_tilde))I(q) where I:[0,1]->[0,1] is the importance function. 
+
 ## Non-Uniform error, Uniform Importance
 
 Discrete messages
 
 ```python
-from discrete import Message
-from matplotlib import pyplot as plt
+from constant_I import Message
 
 B = [-.2,-.1,0.,1.,2.,4.]
 while B:
@@ -24,7 +25,8 @@ while B:
 ## Uniform Error, Non-Uniform Importance
 
 ```python
-from optrat import Message, mplot
+from constant_f import Message
+
 # importance function(s)
 I = {
     'i1' : lambda x: x**3., 
@@ -34,8 +36,6 @@ I = {
 
 # for each importance function, plot discrete messages of size 5, 20, 100 
 for i in I:
-    M = []
     for n in [5,20,100]:
-        M = M + [Message(n,I[i])]
-   	mplot(M)
+		Message(n,I[i]).plot_msg()
 ```
