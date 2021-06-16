@@ -2,13 +2,13 @@
 
 Forthcoming at *Management Science*
 
-We look at two dimensions: the importance function and the error distribution. In one set of analyses, we assume uniform importance and non-uniform error. In the other, we assume non-uniform importance and uniform error.
-
 The sender and receiver agree on a message function `m:[0,1]->[0,1]`. The sender privately observes `q`, which is uniformly distributed on `[0,1]`. She sends the receiver the message `m(q)`. The receiver receives the message `m_tilde = m(q)+e`, where `e` is distributed on `[-e_bar,e_bar]` according to the PDF `f`. She then takes an action `A(m_tilde)`. The sender and receiver incur the cost `(q-A(m_tilde))^2I(q)` where `I:[0,1]->[0,1]` is the importance function. 
+
+We look at two dimensions: the importance function and the error distribution. In one set of analyses, we assume uniform importance and non-uniform error. In the other, we assume non-uniform importance and uniform error.
 
 ## Non-Uniform Error, Uniform Importance
 
-`I(q)=1` and `f(e)=`.
+`I(q)=1` and `f` is the PDF of a random variable that is distributed according to a Beta distribution on `[-e_bar,e_bar]` where `f` is symmetric about zero. 
 
 
 ```python
@@ -25,7 +25,7 @@ while B:
 
 ## Uniform Error, Non-Uniform Importance
 
-`f(e)` is constant and `I(q)=`.
+`f(e)=1/(2*e_bar)` is constant and `I` is specified below.
 
 ```python
 from constant_f import Message
@@ -40,7 +40,7 @@ I = {
 # for each importance function, plot discrete messages of size 5, 20, 100 
 for i in I:
     for n in [5,20,100]:
-		Message(n,I[i]).plot_msg()
-		m.plot_msg("msg" + str(n) + ".pdf",title=False)
-		m.plot_err("err" + str(n) + ".pdf",2.,6.,title=False)
+        Message(n,I[i]).plot_msg()
+        m.plot_msg("msg" + str(n) + ".pdf",title=False)
+        m.plot_err("err" + str(n) + ".pdf",2.,6.,title=False)
 ```
