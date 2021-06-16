@@ -20,7 +20,7 @@ np.set_printoptions(linewidth=160)
 rc('font', size=30)
 
 # -----------------------------------------------------------------------------
-# Beta distribution
+# auxiliary functions
 @np.vectorize
 def _beta(e,a,b,e_bar):
     p = .5*(1.+e/e_bar)
@@ -54,7 +54,7 @@ def _alpha(i,j,M,N,b,e_bar,d_bar):
     return fixed_quad(f,y0,y1)[0]
 
 # -----------------------------------------------------------------------------
-# message
+# uniform importance, non-uniform error message
 class Message:
 
     def __init__(self,M=1,N=2,b=1.,tol=1.e-10):
@@ -121,9 +121,6 @@ class Message:
         self.m_sol = np.linspace(0.,1.,self.K+2)
         print(str(it) + ' iterations')
 
-    def alpha(self,i,j):
-        return _alpha(i,j,self.M,self.N,self.b,self.e_bar,self.d_bar)
-    
     def plot_msg(self,fname,title=True):
         plt.plot(self.x_sol,self.m_sol,color="tab:blue",linewidth=4)
         plt.xlim([0,1])

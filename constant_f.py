@@ -1,22 +1,4 @@
 """
-Organization
-------------
-We either assume that the optimal message function is smooth (in which case we 
-compute it using the calculus of variations) or we assume that it is discrete.
-
-Common Parameters
------------------
-I : callable
-	Importance function I:[0,1]->[0,1]
-
-x1, x2 : float, float
-	Given x1 < q < x2
-M : int
-        Number of knots per message
-N : int
-        Number of messages
-nplot : int
-        Number of knots at which to plot the message
 """
 # matplotlib imports
 from matplotlib import rc
@@ -30,8 +12,39 @@ from scipy import integrate, optimize
 from scipy.integrate import fixed_quad, dblquad
 import csv
 
+# TODO: remove this
+np.set_printoptions(linewidth=160)
+rc('font', size=20)
+
 # -----------------------------------------------------------------------------
 # auxiliary functions
+
+# Common Parameters
+# -----------------
+# I : callable
+#    Importance function I:[0,1]->[0,1]
+# x1, x2 : float, float
+#    Given x1 < q < x2
+# M : int
+#    Number of knots per message
+# N : int
+#    Number of messages
+# nplot : int
+#    Number of knots at which to plot the message
+
+def _fixed_quad(*args,**kwargs):
+    """Wrapper for fixed_quad that returns the integral (without the error)"""
+    return fixed_quad(*args,**kwargs)[0]
+
+def fixed_dblquad_tri(func,a,b,gfun,hfun):
+    """
+    Homebrewed double quadrature using scipy.integrate.fixed_quad.
+    Parameters 
+    ----------
+    See help(scipy.integrate.dblquad)
+    """
+    f = lambda x: _fixed_quad(lambda y: func(y,x),gfun(x),hfun(x))
+    return _fixed_quad(np.vectorize(f),a,b)
 
 def _Q(I,i,j,a,b,_n=11):
     """[Q]uadrature with _n knots: returns \int_{a}^{b}{q^{i}I(q)^{j}dq)"""
@@ -66,9 +79,11 @@ def D(I,N):
     return _S(I,x1s,N) 
 
 def _cts_msg_fun(I,q):
-    """ optimal[C]ontinuous message function"""
+    """ optimal [C]ontinuous message function with uniform error"""
     return _Q(I,0.,(1./3),0.,q)/_Q(I,0.,(1./3),0.,1.)
 
+# -----------------------------------------------------------------------------
+# uniform error, non-uniform importance message
 class Message():
 
     def __init__(self,N,I,nplot=1000):
@@ -77,7 +92,7 @@ class Message():
         self.M = D(I,self.N) 
         self.nplot = nplot
 
-    def plot_msg(self,nplot=1000):
+    def plot_msg(self,fname,nplot=1000):
         I = M[0].I
         q = np.linspace(0.,1.,nplot)
         cplt = np.zeros(nplot)
@@ -92,29 +107,16 @@ class Message():
         plt.xlabel('state $(q)$')
         plt.ylabel('message $(m)$')
         plt.grid()
-        plt.show()
+        plt.tight_layout()
+        plt.savefig(fname)
+        plt.close()
 
 # -----------------------------------------------------------------------------
-# functions
-def _fixed_quad(*args,**kwargs):
-    """Wrapper for fixed_quad that returns the integral (without the error)"""
-    return fixed_quad(*args,**kwargs)[0]
-
-def fixed_dblquad_tri(func,a,b,gfun,hfun):
-    """
-    Homebrewed double quadrature using scipy.integrate.fixed_quad.
-    Parameters 
-    ----------
-    See help(scipy.integrate.dblquad)
-    """
-    f = lambda x: _fixed_quad(lambda y: func(y,x),gfun(x),hfun(x))
-    return _fixed_quad(np.vectorize(f),a,b)
-
+# costs for identity and discrete message functions
 def identity_cost(func,e_bar,tol=1.e-10):
     """
     Cost of identity message function with constant importance function
-	'identity_cost' stands alone because it needs to run faster than 
-	Smooth.cost. 
+	'identity_cost' stands alone because it needs to run fast.
     
     Parameters
     ----------
@@ -124,12 +126,14 @@ def identity_cost(func,e_bar,tol=1.e-10):
         Support parameter for the error distribution (see above).
     tol : float
         Error PDF should integrate to unity (+/- tol)
+
     Notes
     -----
     The action function kinks at 1-e_bar and 1+e_bar. Therefore, identity_cost 
     breaks the integration problem into three parts. The action function is 
     computed using scipy.integrate.fixed_quad, which caches weights/knots, so
     should be fast. 
+
     There are 9 anonymous functions. Guido would not approve.
     """
 
@@ -175,10 +179,11 @@ def discrete_cost(N):
     ----------
     N : int
         There are N+1 messages
-	Notes
-	-----
-	The discrete message function has the same cost regardless of the error 
-	distribution. 
+
+    Notes
+    -----
+    The discrete message function has the same cost regardless of the error 
+    distribution. 
     """
     e_bar = 1./(2.*N) 
     return (1./3.)*(e_bar**2.)/(1.+2.*e_bar)**2.
