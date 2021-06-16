@@ -22,26 +22,6 @@ rc('font', size=30)
 # -----------------------------------------------------------------------------
 # auxiliary functions
 @np.vectorize
-def _beta(e,a,b,e_bar):
-    p = .5*(1.+e/e_bar)
-    f = p**(a-1.)*(1.-p)**(b-1.)
-    return f
-
-@lru_cache(maxsize=None)
-def _beta_wgts(a,b,e_bar):
-    # NOTES: speed *should* be okay with caching, but could be a bottleneck
-    return fixed_quad(lambda e : _beta(e,a,b,e_bar),-e_bar,e_bar)[0]
-
-@np.vectorize
-def beta(e,a,b,e_bar):
-    """beta distribution on [-e_bar,+e_bar]"""
-    if e < -e_bar or e > e_bar:
-        return 0.
-    else:
-        #raise Exception('Trying to evaluate error PDF out of its support')
-        return _beta(e,a,b,e_bar)/_beta_wgts(a,b,e_bar)
-
-@np.vectorize
 def quad(e,b,e_bar):
     return .5/e_bar+b/3.-b*(e/e_bar)**2.
 
@@ -62,11 +42,11 @@ class Message:
         Parameters 
         ----------
         M : int
-                Number of knots per message
+            Number of knots per message
         N : int
-                Number of messages
-        a, b : float
-                Error parameters
+            Number of messages
+        b : float
+            Error parameter
 
         """
         # primitives
