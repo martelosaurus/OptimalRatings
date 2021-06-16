@@ -8,7 +8,7 @@ We look at two dimensions: the importance function and the error distribution. I
 
 ## Non-Uniform Error, Uniform Importance
 
-`I(q)=1` and `f` is the PDF of a random variable that is distributed according to a Beta distribution on `[-e_bar,e_bar]` where `f` is symmetric about zero. 
+`I(q)=1` and `f` is the PDF of a random variable that is distributed according to a Beta distribution on `[-e_bar,e_bar]`. One of the two parameters is pinned-down by the assumption that `f` is symmetric about zero. The other parameter is free and denoted by `b`.
 
 
 ```python
