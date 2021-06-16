@@ -14,7 +14,7 @@ import csv
 
 # TODO: remove this
 np.set_printoptions(linewidth=160)
-rc('font', size=15)
+rc('font', size=20)
 
 # -----------------------------------------------------------------------------
 # auxiliary functions
@@ -97,16 +97,16 @@ class Message():
         cplt = np.zeros(nplot)
         for n in range(0,nplot):
             cplt[n] = _cts_msg_fun(self.I,q[n])
-        plt.plot(q,cplt,color="tab:orange")
-        plt.plot(q,(np.digitize(q,self.M)-1.)/(self.N-1.),color="tab:blue")
-        plt.plot(q,q,'--k')
-        plt.plot(q,cplt,color="tab:orange")
+        plt.plot(q,cplt,color="tab:orange",linewidth=3)
+        plt.plot(q,(np.digitize(q,self.M)-1.)/(self.N-1.),color="tab:blue",linewidth=3)
+        plt.plot(q,q,'--k',linewidth=3)
+        plt.plot(q,cplt,color="tab:orange",linewidth=3)
         plt.axis([0.,1.,0.,1.])
-        plt.legend(['asymptotic message','optimal discrete'],loc='upper left')
+        #plt.legend(['asymptotic message','optimal discrete'],loc='upper left')
         plt.xlabel('state $(q)$')
         plt.ylabel('message $(m)$')
         if title:
-            pass
+            plt.title("$T=" + str(self.N) + "$")
         plt.grid()
         plt.tight_layout()
         plt.savefig(fname)

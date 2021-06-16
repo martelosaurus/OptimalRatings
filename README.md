@@ -37,9 +37,9 @@ I = {
     'i3' : lambda x: (6.*(x-.5)**2.+.5)**3.
     }
 
-# for each importance function, plot discrete messages of size 5 and 100 
+# for each importance function, plot discrete messages of size 5 and 20
 for i in I:
-    for n in [5,100]:
+    for n in [5,20]:
         m = Message(n,I[i])
         m.plot_msg("msg" + i + str(n) + ".pdf",title=False)
 ```
