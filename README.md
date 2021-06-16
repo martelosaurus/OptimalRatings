@@ -25,7 +25,7 @@ while B:
 
 ## Uniform Error, Non-Uniform Importance
 
-`f(e)=1/(2*e_bar)` is constant and `I` is specified below.
+`f(e)=1/(2*e_bar)` and `I` is specified below.
 
 ```python
 from constant_f import Message
@@ -37,9 +37,9 @@ I = {
     'i3' : lambda x: (6.*(x-.5)**2.+.5)**3.
     }
 
-# for each importance function, plot discrete messages of size 5, 20, 100 
+# for each importance function, plot discrete messages of size 5 and 100 
 for i in I:
-    for n in [5,20,100]:
+    for n in [5,100]:
         m = Message(n,I[i])
         m.plot_msg("msg" + i + str(n) + ".pdf",title=False)
 ```
