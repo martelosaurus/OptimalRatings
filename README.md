@@ -8,7 +8,7 @@ We look at two dimensions: the importance function and the error distribution. I
 
 ## Non-Uniform Error, Uniform Importance
 
-`I(q)=1` and `f` is the PDF of a random variable that is distributed according to a quadratic distribution on `[-e_bar,e_bar]`. We require that (1) `f` is symmetric about zero and (2) `f` integrates to one, which leaves one parameter we denote by `b`.
+`I(q)=1` and `f` is the PDF of a random variable that is distributed according to a quadratic distribution on `[-e_bar,e_bar]`. We require that (1) `f` is symmetric about zero and (2) `f` integrates to one on `[-e_bar,e_bar]`, which leaves one free parameter we denote by `b`.
 
 
 ```python
