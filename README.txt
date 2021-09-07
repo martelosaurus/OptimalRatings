@@ -1,12 +1,6 @@
-The sender and receiver agree on a message function `m:[0,1]->[0,1]`. The sender privately observes `q`, which is uniformly distributed on `[0,1]`. She sends the receiver the message `m(q)`. The receiver receives the message `m_tilde = m(q)+e`, where `e` is distributed on `[-e_bar,e_bar]` according to the PDF `f`. She then takes an action `A(m_tilde)`. The sender and receiver incur the cost `((q-A(m_tilde))^2)*I(q)` where `I:[0,1]->[0,1]` is the importance function. 
-
-We look at two dimensions: the importance function and the error distribution. In one set of analyses, we assume uniform importance and non-uniform error. In the other, we assume non-uniform importance and uniform error. 
-
-`I(q)=1` and `f` is the PDF of a random variable that is distributed according to a quadratic distribution on `[-e_bar,e_bar]`. We require that (1) `f` is symmetric about zero and (2) `f` integrates to one on `[-e_bar,e_bar]`, which leaves one free parameter we denote by `b`.
-
-
 # --------
 # FIGURE 6
+# --------
 
 from constant_I import Message
 
@@ -39,10 +33,10 @@ for i in I:
 # -------------
 # FIGURE 11, 15
 
-# -------------
-
+# ---------
 # FIGURE 12
-Dow Jones Industrial Average, retrieved from The Wall Street Journal; https://www.wsj.com/market-data/quotes/index/DJIA/historical-prices, September 2, 2021. 
+
+# Dow Jones Industrial Average, 1885-02-16 through 20210-09-03, retrieved from MeasuringWorth; https://www.measuringworth.com/datasets/DJA/index.php, September 7, 2021. 
 
 # ------------
 # FIGURES 8-10
