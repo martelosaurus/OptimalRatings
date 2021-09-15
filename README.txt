@@ -1,6 +1,5 @@
-# --------
+# ------------------------------------------------------------------------------
 # FIGURE 6
-# --------
 
 from constant_I import Message
 
@@ -14,7 +13,7 @@ while B:
 
 from constant_f import Message
 
-# ------------
+# ------------------------------------------------------------------------------
 # FIGURES 8-10
 
 # importance function(s)
@@ -30,14 +29,15 @@ for i in I:
         m = Message(n,I[i])
         m.plot_msg("msg" + i + str(n) + ".pdf",title=False)
 
-# -------------
+# ------------------------------------------------------------------------------
 # FIGURE 11, 15
 
-# ---------
-# FIGURE 12
+# ------------------------------------------------------------------------------
+# FIGURE 12: DJIA
 
 # Dow Jones Industrial Average, 1885-02-16 through 20210-09-03, retrieved from MeasuringWorth; https://www.measuringworth.com/datasets/DJA/index.php, September 7, 2021. 
 
-# ------------
-# FIGURES 8-10
+# ------------------------------------------------------------------------------
+# FIGURES 13-14: WFA
 
+# Data courtesy of Joseph Zechner.
