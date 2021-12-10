@@ -42,5 +42,5 @@ ax2.set_ylabel("Message")
 xt = np.r_[-4:5:1]
 ax1.set_xticks(xt/100)
 ax1.set_xticklabels([str(t)+"%" for t in xt])
-ax2.legend(["Message Function"],loc="upper left")
+ax2.legend(["Implied Message Function"],loc="upper left")
 plt.savefig("djia_plot.pdf")

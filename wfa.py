@@ -1,10 +1,5 @@
-import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
-from scipy.integrate import fixed_quad
-from scipy.optimize import root
-from scipy.sparse import spdiags
-from numpy.linalg import norm
 
 # ------------------------------------------------------------------------------
 # Data 
@@ -27,24 +22,23 @@ plt.yticks(yt,[str(t) + "%" for t in yt])
 plt.title("Distribution of submission reviews for 2014\n"
     "Western Finance Association Meetings")
 # save
-plt.savefig("wfa_hist.pdf")
+plt.savefig("../text/Model_Figures/wfa_hist.pdf")
 plt.close()
 
 # ------------------------------------------------------------------------------
 # quality distribution (at halfpoints)
 g_wfa_x = .5*(X_wfa[1:]+X_wfa[:-1])
-#g_wfa_y = (.1/(X_wfa[1:]-X_wfa[:-1]))**3
-#g_wfa_y = .1/(X_wfa[1:]-X_wfa[:-1])
+g_wfa_y = (.1/(X_wfa[1:]-X_wfa[:-1]))**3
 
 # plot
 fig, ax1 = plt.subplots()
 ax2 = ax1.twinx()
 ax1.plot((1+m)/N,m,"--",color="tab:blue",linewidth=2)
 ax1.plot(X_wfa,m,".-",color="tab:blue",linewidth=2)
-ax2.plot(g_wfa_x,g_wfa_x**2,'.-k')
+ax2.plot(g_wfa_x,g_wfa_y,'.-k')
 ax1.set_xlabel("Paper quality percentile ($q$)")
 ax1.set_ylabel("Referee score")
-ax2.set_ylabel("Density")
+ax2.set_ylabel("Importance")
 xt = np.linspace(0,1,N)
 yt = np.r_[0:N]
 ax1.set_xticks(xt)
@@ -56,4 +50,4 @@ ax2.axis([0,1,-1,11])
 ax1.legend(["Straight talk","WFA reviews"])
 ax2.legend(["Inferred importance"],loc="upper center")
 plt.title("WFA Program Committee Reviews")
-plt.savefig("wfa_dist.pdf")
+plt.savefig("../text/Model_Figures/wfa_dist.pdf")
