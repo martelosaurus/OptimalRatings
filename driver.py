@@ -1,6 +1,5 @@
 # ------------------------------------------------------------------------------
 # FIGURE 6
-
 from constant_I import Message
 
 B = [-.2,-.1,0.,1.,2.,4.]
@@ -11,10 +10,9 @@ while B:
     m.plot_msg("msg" + str(n) + ".pdf",title=False)
     m.plot_err("err" + str(n) + ".pdf",2.,6.,title=False)
 
-from constant_f import Message
-
 # ------------------------------------------------------------------------------
 # FIGURES 8-10
+from constant_f import Message
 
 # importance function(s)
 I = {
@@ -30,14 +28,16 @@ for i in I:
         m.plot_msg("msg" + i + str(n) + ".pdf",title=False)
 
 # ------------------------------------------------------------------------------
-# FIGURE 11, 15
+# FIGURE 11: DJIA
+
+# Data Note: Dow Jones Industrial Average, 1885-02-16 through 20210-09-03, retrieved from MeasuringWorth; https://www.measuringworth.com/datasets/DJA/index.php, September 7, 2021. 
+from djia import _djia
+_djia()
 
 # ------------------------------------------------------------------------------
-# FIGURE 12: DJIA
+# FIGURES 12-13: WFA
 
-# Dow Jones Industrial Average, 1885-02-16 through 20210-09-03, retrieved from MeasuringWorth; https://www.measuringworth.com/datasets/DJA/index.php, September 7, 2021. 
+# Data Note: Courtesy of Joseph Zechner.
+from wfa import _wfa
+_wfa()
 
-# ------------------------------------------------------------------------------
-# FIGURES 13-14: WFA
-
-# Data courtesy of Joseph Zechner.
